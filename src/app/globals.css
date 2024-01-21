@@ -2,7 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+@layer base {
+  h1 {
+    @apply text-2xl
+  }
+  h2 {
+    @apply text-xl
+  }
+  h3 {
+    @apply text-lg
+  }
+  h4 {
+    @apply text-base
+  }
+  h5 {
+    @apply text-sm
+  }
+  h6 {
+    @apply text-xs
+  }
+}
+
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -24,4 +45,4 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-}
+} */

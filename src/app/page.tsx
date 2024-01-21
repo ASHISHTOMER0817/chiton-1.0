@@ -1,113 +1,181 @@
-import Image from 'next/image'
+// 'use client'
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+// import React, { useEffect, useState } from "react";
+import Header from "./components/header";
+import fetchedData from "@/app/components/fetchedData";
+import Image from "next/image";
+import homePage from "@/../public/homePage.jpg";
+import menHoodie from "@/../public/menHoodie.jpg";
+import CardLayout from "./components/cardlayout";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import ProductPage from "./productPage/page";
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+export default async function Home() {
+	const categoriesCard = [
+		{
+			link: menHoodie,
+			Gender: "Men",
+			Name: "Hoodies & Sweatshirts",
+		},
+		{
+			link: menHoodie,
+			Gender: "Ladies",
+			Name: "Trousers",
+		},
+		{
+			link: menHoodie,
+			Gender: "Ladies",
+			Name: "Sweaters & Cardigans",
+		},
+		{
+			link: menHoodie,
+			Gender: "Ladies",
+			Name: "Clothes",
+		},
+		{
+			link: menHoodie,
+			Gender: "Ladies",
+			Name: "Trousers",
+		},
+		{
+			link: menHoodie,
+			Gender: "Men",
+			Name: "Jackets & Coats",
+		},
+	];
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
+{/*	const router = useRouter();
+	const page = () => {
+		router.push("/productPage");
+	};
+	const [data, setData] = useState([]);
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+	useEffect(() => {
+		const serverData = async () => {
+			const dataRcvd = await fetchedData("list","0");
+			return setData(dataRcvd);
+		};
+		serverData();
+	}, []);  */}
+
+
+		const data = await fetchedData('list', '0', '0839915011')
+
+		
+
+	return (
+		<div className=" ">
+			<Header />
+
+			<div className="flex flex-col items-center">
+				<div className="w-3/4 flex flex-col items-center ">
+					<div className="flex justify-between">
+						<span>
+							Estimated delivery time: 2-7 days
+						</span>
+						<span>
+							Members get free shipping upto Rs.
+							1999
+						</span>
+						<span>
+							Free and flexible 15 days return
+						</span>
+					</div>
+					<div
+						className="bg-no-repeat bg-center bg-cover relative text-center"
+						style={{
+							backgroundImage: `url('https://images.pexels.com/photos/1450114/pexels-photo-1450114.jpeg'); height: 750px; width: 1140px`,
+						}}
+					>
+						<div className=" mt-96 border border-purple-200 text-center inline-block">
+							<h1 className=" text-white">
+								Attention set on fancy joggers
+							</h1>
+							<h5 className=" text-white">
+								keep it coordinated, comfy and
+								casual
+							</h5>
+							<button className=" bg-white text-black font-extrabold">
+								Look here
+							</button>
+						</div>
+					</div>
+					<div className="text-black font-extrabold underline">
+						Popular Categories
+					</div>
+					<div className="flex justify-between w-full">
+						{categoriesCard.map(
+							({ link, Gender, Name }) => {
+								return (
+									<div className="flex flex-col  w-24">
+										<Image
+											src={link}
+											alt=""
+										/>
+										<div className="text-gray-500">
+											{Gender}
+										</div>
+										<div className="text-wrap">
+											{Name}
+										</div>
+									</div>
+								);
+							}
+						)}
+					</div>
+					<div
+						className="bg-no-repeat bg-center relative text-center"
+						style={{
+							backgroundImage: `url('https://images.pexels.com/photos/9853460/pexels-photo-9853460.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); height: 750px; width: 1140px `,
+						}}
+					>
+						<div className=" mt-96  text-center inline-block">
+							<h1 className=" text-white">
+								Attention set on fancy joggers
+							</h1>
+							<h5 className=" text-white">
+								keep it coordinated, comfy and
+								casual
+							</h5>
+							<button className=" bg-white text-black font-extrabold">
+								Look here
+							</button>
+						</div>
+					</div>
+					<h4 className="w-full text-left">New Arrivals</h4>
+					<div className="flex flex-wrap justify-between ">
+						{data.results.map(
+							({	name,
+								allArticleImages,
+								price,
+								allArticleCodes
+							}: {name: String, allArticleImages: String, price: {formattedValue: String}, allArticleCodes: String[]}) => {
+								const image = allArticleImages.length > 0 ? allArticleImages[0]: '';
+								const actualPrice: String = price.formattedValue;
+								const alternate = allArticleImages.length > 0 ? allArticleImages[1]: '';
+								const code = allArticleCodes[0]
+								return (
+									<div
+										className="flex flex-col text-left w-52 text-sm"
+									> <Link  href={"/productPage"}>
+										<CardLayout
+											image={image}
+											alternate={alternate}
+											name={name}
+											price={actualPrice}
+											codes={code}
+											/>
+											</Link>
+									</div>
+								);
+							}
+						)}
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 }

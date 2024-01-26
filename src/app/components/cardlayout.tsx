@@ -1,28 +1,39 @@
 'use client'
 
 import Image from "next/image";
-import { useRouter } from "next/router";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useContext, useEffect } from "react";
+// import { UserContext } from "./abc";
+import ProductContext from "./productContext";
+import { UserContext } from "./abc";
 
 interface HomePage {
 	image: string;
 	name: String;
 	price: String;
 	alternate: string
-	codes: String
-
+	codes: string
 }
 
+
+
+
 const CardLayout:React.FC<HomePage> =({ image, alternate, name, price, codes }) => {
-		// const photos = image.toString()
-		// const alternative = alternate.toString()
-		const route = useRouter()
-		const pageForward = () => {
-			route.push('../productPage')
-		}
+
+	const {setUser} = useContext(UserContext)
+	
+	const	router = useRouter()
+	function pageForward (prdctCode:string) {
+		// ProductContext(prdctCode)
+	
+		setUser(prdctCode)
+		router.push('@/app/productPage')
+		
+	}
+
 	return (
 		< >
-			<Image onClick={ ()=>pageForward()} src={image} alt={alternate} width={200} height={350} />
+			<Image onClick={ ()=>pageForward(codes)} src={image} alt={alternate} width={200} height={350} />
 			<p className="">{name}</p>
 			<p>{price}</p>
 		</>

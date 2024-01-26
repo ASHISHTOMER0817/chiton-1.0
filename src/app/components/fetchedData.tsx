@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export default async function fetchedData(path: String, index: String, productcode: String) {
+export default async function fetchedData(path: String, productcode: string, index: String, pagesize:string ) {
   
   const options = {
     method: 'GET',
@@ -11,7 +11,7 @@ export default async function fetchedData(path: String, index: String, productco
       country: 'us',
       productcode: productcode,
       currentpage: index,
-      pagesize: '30',
+      pagesize: pagesize,
     },
     headers: {
       'X-RapidAPI-Key': 'b1de8876damsh6882c98db67483bp17156djsnced71ceb7ee8',

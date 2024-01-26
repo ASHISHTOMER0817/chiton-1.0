@@ -1,17 +1,10 @@
-// 'use client'
-
-// import React, { useEffect, useState } from "react";
 import Header from "./components/header";
 import fetchedData from "@/app/components/fetchedData";
 import Image from "next/image";
-import homePage from "@/../public/homePage.jpg";
 import menHoodie from "@/../public/menHoodie.jpg";
 import CardLayout from "./components/cardlayout";
-import { useRouter } from "next/router";
 import Link from "next/link";
-import ProductPage from "./productPage/page";
-
-
+// import ProductContext from "./components/productContext";
 
 export default async function Home() {
 	const categoriesCard = [
@@ -46,25 +39,7 @@ export default async function Home() {
 			Name: "Jackets & Coats",
 		},
 	];
-
-{/*	const router = useRouter();
-	const page = () => {
-		router.push("/productPage");
-	};
-	const [data, setData] = useState([]);
-
-	useEffect(() => {
-		const serverData = async () => {
-			const dataRcvd = await fetchedData("list","0");
-			return setData(dataRcvd);
-		};
-		serverData();
-	}, []);  */}
-
-
-		const data = await fetchedData('list', '0', '0839915011')
-
-		
+	const data = await fetchedData('list', '', '0', '30')
 
 	return (
 		<div className=" ">
@@ -149,14 +124,17 @@ export default async function Home() {
 					<div className="flex flex-wrap justify-between ">
 						{data.results.map(
 							({	name,
-								allArticleImages,
+								images,
 								price,
 								allArticleCodes
-							}: {name: String, allArticleImages: String, price: {formattedValue: String}, allArticleCodes: String[]}) => {
-								const image = allArticleImages.length > 0 ? allArticleImages[0]: '';
+							}: {name: String, images:{url: string, baseUrl: string}[], price: {formattedValue: String}, allArticleCodes: String[]}) => {
+								const image = images.length > 0 ? images[0]?.url: '';
 								const actualPrice: String = price.formattedValue;
-								const alternate = allArticleImages.length > 0 ? allArticleImages[1]: '';
-								const code = allArticleCodes[0]
+								const alternate = images.length > 0 ? images[0]?.baseUrl: '';
+
+								const code = allArticleCodes[0].toString()
+								
+
 								return (
 									<div
 										className="flex flex-col text-left w-52 text-sm"

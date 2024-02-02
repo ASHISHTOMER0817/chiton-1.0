@@ -22,7 +22,7 @@ export default async function fetchedData(path: String, productcode: string, ind
   try {
     const response = await axios.request(options);
     const products = response.data
-    console.log("the products are: ", products)
+    console.log("the products are: ",    products.results)
     return products
 
   } catch (error) {

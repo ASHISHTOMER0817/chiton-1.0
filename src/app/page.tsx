@@ -126,13 +126,14 @@ export default async function Home() {
 							({	name,
 								images,
 								price,
-								allArticleCodes
-							}: {name: String, images:{url: string, baseUrl: string}[], price: {formattedValue: String}, allArticleCodes: String[]}) => {
+								articles
+							}: {name: String, images:{url: string, baseUrl: string}[], price: {formattedValue: String}, articles:{code: string}[] }, index: number) => {
 								const image = images.length > 0 ? images[0]?.url: '';
 								const actualPrice: String = price.formattedValue;
 								const alternate = images.length > 0 ? images[0]?.baseUrl: '';
 
-								const code = allArticleCodes[0].toString()
+								const code = articles[0]?.code
+								// const code = 'abc'
 								
 
 								return (
@@ -140,6 +141,8 @@ export default async function Home() {
 										className="flex flex-col text-left w-52 text-sm"
 									> <Link  href={"/productPage"}>
 										<CardLayout
+											index= {index}
+											key={index}
 											image={image}
 											alternate={alternate}
 											name={name}

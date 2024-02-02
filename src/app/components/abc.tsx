@@ -4,22 +4,32 @@ import React, { createContext, useState, ReactNode, Dispatch, SetStateAction } f
 interface UserContextType {
   user: string;
   setUser: Dispatch<SetStateAction<string>>;
+  indexNo: number;
+  setIndexNo: Dispatch<SetStateAction<number>>;
 }
 
 const defaultValue: UserContextType = {
   user: '',
   setUser: () => {}, // Provide a default function
+  indexNo: 2,
+  setIndexNo: () => {}, // Provide a default function
+
 };
 
 export const UserContext = createContext<UserContextType>(defaultValue);
 
 const UserContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState('');
+  const [indexNo, setIndexNo]= useState(Number)
 
   const contextValue: UserContextType = {
     user,
     setUser,
+    indexNo,
+    setIndexNo
   };
+
+
 
   return (
     <UserContext.Provider value={contextValue}>

@@ -20,7 +20,7 @@ export default function Header() {
 						<Image src={favorites} width={50} alt="icon" />
 						<div className="mr-3">Favorites</div>
 						<Image src={shoppingBag} width={21} alt="icon" />
-						<div className="mr-3">Shopping bag</div>
+						{/* <div className="mr-3"> <Link src={'@/app/shopping'}  >Shopping bag</Link></div> */}
 					</nav>
 				</div>
 				<div>

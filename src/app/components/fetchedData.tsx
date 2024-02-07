@@ -9,7 +9,7 @@ export default async function fetchedData(path: String, productcode: string, ind
     params: {
       lang: 'en',
       country: 'us',
-      productcode:productcode?productcode:'' ,
+      productcode: productcode?productcode:'' ,
       currentpage: index,
       pagesize: pagesize,
     },

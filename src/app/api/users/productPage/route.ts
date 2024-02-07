@@ -13,7 +13,7 @@ export async function POST(request:NextRequest) {
             const reqBody = await request.json()
             const {url, name, price, netQuantity, articleCode} = reqBody
 
-                  const getCookies =  request.cookies.get('cookies')?.value || ''
+                  const getCookies =   request.cookies.get('token')?.value || ''
                   if(getCookies !== undefined) {
                         const decodedToken: any = jwt.verify(getCookies!, process.env.JWT_SECRET_KEY!)
                        const userId = decodedToken.id

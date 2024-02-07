@@ -35,8 +35,8 @@ const CardLayout:React.FC<HomePage> =({ image, alternate, name, price, codes, in
 
 	return (
 		< >
-			<Image onClick={ ()=>pageForward(codes, index)} src={image} alt={alternate} width={200} height={350} />
-			<p className="">{name}</p>
+			<Image onClick={ ()=>pageForward(codes, index)} src={image} alt={alternate} width={200}  />
+			<p className="h-auto">{name}</p>
 			<p>{price}</p>
 		</>
 	);

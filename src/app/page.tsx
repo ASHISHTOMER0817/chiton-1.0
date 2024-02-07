@@ -75,10 +75,11 @@ export default async function Home() {
 					</div>
 					<div className="flex justify-between w-full">
 						{categoriesCard.map(
-							({ link, Gender, Name }) => {
+							({ link, Gender, Name }, index) => {
 								return (
 									<div className="flex flex-col  w-24">
 										<Image
+										key={index}
 											src={link}
 											alt=""
 										/>

@@ -156,9 +156,11 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 							<Image
 							key={index}
 								src={baseUrl}
-								className="mr-2"
+								className="mr-2 h-auto"
 								width={50}
 								height={70}
+								layout="responsive"
+								
 								alt={"image..."}
 							/>
 						</>
@@ -218,10 +220,10 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 					<p>{description}</p>
 
 					<h6>Size:</h6>
-					{allDetails.map(({ heading, value }) => {
+					{allDetails.map(({ heading, value }, index) => {
 						return (
 							<>
-								<span className="font-medium">
+								<span key={index} className="font-medium">
 									{heading}
 								</span>
 								<p>{value}</p>
@@ -257,10 +259,10 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 						</p> */}
 					<h4>Materials in this product explained</h4>
 
-					{materialDetails.map(({ name, description }) => {
+					{materialDetails.map(({ name, description }, index) => {
 						return (
-							<>
-								<h6>{name} </h6>
+							< >
+								<h6 key={index}>{name} </h6>
 								<p>{description} </p>
 							</>
 						);

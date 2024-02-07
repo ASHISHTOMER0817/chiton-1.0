@@ -22,7 +22,7 @@ export default function login() {
 			
 			const verify = await response.data.success
 			const message = await response.data.message
-			if(verify) {
+			if(verify === true) {
 				router.push('/member')
 
 			}else{

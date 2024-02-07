@@ -35,11 +35,11 @@ const products = new mongoose.Schema({
       },
       price: {
             type: String,
-            required: true,
+            
       },
       netQuantity: {
             type: String,
-            required: true,
+            
       },
       articleCode: {
             type: String,

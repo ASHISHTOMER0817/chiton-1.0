@@ -48,12 +48,12 @@ export default async function page({ params }: { params: { pid: string } }) {
 		<Header/>
 		<div className="flex ">
 			<div className="flex justify-around flex-wrap w-2/3">
-				{allArticle.galleryDetails.map(({baseUrl}: {baseUrl:string})=> {
+				{allArticle.galleryDetails.map(({baseUrl}: {baseUrl:string}, index:number)=> {
 
 
 					return (
 						<>
-						<Image src={baseUrl} width={479} height={718} alt={"product-Image"}/>
+						<Image key={index} src={baseUrl} width={479} height={718} layout="responsive" className="h-auto"  alt={"product-Image"}/>
 						</>
 					)
 				})}

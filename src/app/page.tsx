@@ -1,4 +1,5 @@
 import Header from "./components/header";
+import DeliveryStats from "./components/deliveryStats";
 import fetchedData from "@/app/components/fetchedData";
 import Image from "next/image";
 import menHoodie from "@/../public/menHoodie.jpg";
@@ -48,16 +49,7 @@ export default async function Home() {
 			<div className="flex flex-col items-center">
 				<div className="w-3/4 flex flex-col items-center ">
 					<div className="flex justify-between">
-						<span>
-							Estimated delivery time: 2-7 days
-						</span>
-						<span>
-							Members get free shipping upto Rs.
-							1999
-						</span>
-						<span>
-							Free and flexible 15 days return
-						</span>
+						<DeliveryStats/>
 					</div>
 					<div
 						className="bg-no-repeat bg-center bg-cover relative text-center"
@@ -133,13 +125,12 @@ export default async function Home() {
 								const alternate = images.length > 0 ? images[0]?.baseUrl: '';
 
 								const code = articles[0]?.code
-								// const code = 'abc'
 								
 
 								return (
 									<div
 										className="flex flex-col text-left w-52 text-sm"
-									> <Link  href={"/productPage"}>
+									> <Link  href={`/productPage/${code}`}>
 										<CardLayout
 											index= {index}
 											key={index}

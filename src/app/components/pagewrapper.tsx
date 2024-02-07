@@ -1,6 +1,6 @@
 // Client Component
 import ProductContext from './productContext';
-import Page from '../productPage/page';
+import Page from '../productPage/[pid]/page';
 
 export default function PageWrapper() {
     const { user, indexNo } = ProductContext();

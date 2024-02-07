@@ -2,39 +2,42 @@
 import Image from "next/image";
 import heart from "@/../public/heart.svg";
 import { useState } from "react";
+import information from "@/../public/information.svg";
+import arrowDropDown from "@/../public/arrowDropDown.svg";
+import axios from "axios";
 
-export function ProductImages({ galleryDetails }: { galleryDetails: string }) {
-	return (
-		<>
-			<Image src={galleryDetails} alt={"image..."} />
-		</>
-	);
-}
+// export function ProductImages({ galleryDetails }: { galleryDetails: string }) {
+// 	return (
+// 		<>
+// 			<Image src={galleryDetails} alt={"image..."} />
+// 		</>
+// 	);
+// }
 
 interface productLayoutTypes {
 	name: string;
 	price: string;
 	colorDescription: string;
-	allArticleImage: string[];
-	variantSizes: { filterCode: string }[] | undefined;
+	allArticleImage: { galleryDetails: { baseUrl: string }[] }[];
+	// variantSizes: { filterCode: string }[] | undefined;
 	description: string;
-	measurements: string[];
+	// measurements: string;
 	lengthCollection: string;
 	sleeveLength: string;
 	fits: string;
-	// styleCollection: string;
 	presentationTypes: string;
 	color: string;
 	pattern: string;
-	Concept: string;
+	// Concept: string;
 	whitePrice: string;
 	articleCountryOfProduction: string;
 
-	compositions: { name: string; percentage: string }[];
-	aggregatedSustainabilityCompositions: string;
+	// compositions: { name: string; percentage: string }[];
+	// aggregatedSustainabilityCompositions: string;
 	materialDetails: { name: string; description: string }[];
 
 	careInstructions: string[];
+	productCode: string;
 }
 
 const ProductLayout: React.FC<productLayoutTypes> = ({
@@ -42,29 +45,29 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 	price,
 	colorDescription,
 	allArticleImage,
-	variantSizes,
+	// variantSizes,
 	description,
-	measurements,
+	// measurements,
 	lengthCollection,
 	sleeveLength,
 	fits,
-	// styleCollection,
 	presentationTypes,
 	color,
 	pattern,
-	Concept,
+	// Concept,
 	whitePrice,
 	articleCountryOfProduction,
-	compositions,
-	aggregatedSustainabilityCompositions,
+	// compositions,
+	// aggregatedSustainabilityCompositions,
 	materialDetails,
 	careInstructions,
+	productCode
 }) => {
 	const allDetails = [
-		{
-			heading: "size:",
-			value: `${measurements[0]}, ${measurements[1]}`,
-		},
+		// {
+		// 	heading: "size:",
+		// 	value: measurements,
+		// },
 		{
 			heading: "Length:",
 			value: lengthCollection,
@@ -77,18 +80,14 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 			heading: "fit:",
 			value: fits,
 		},
-		// {
-		// 	heading: "Neckline:",
-		// 	value: styleCollection,
-		// },
 		{
 			heading: "Description:",
 			value: `${color}, ${pattern}`,
 		},
-		{
-			heading: "Concept:",
-			value: Concept,
-		},
+		// {
+		// 	heading: "Concept:",
+		// 	value: Concept,
+		// },
 		{
 			heading: "Price (MRP):",
 			value: `${whitePrice} incl. of all taxes`,
@@ -114,7 +113,7 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 	const [fit, setFit] = useState("hidden");
 	const [material, setMaterial] = useState("hidden");
 	const [guide, setGuide] = useState("hidden");
-	const [SizeState, setSizeState] = useState("hidden");
+	// const [SizeState, setSizeState] = useState("hidden");
 
 	function changeState(fit: string, material: string, guide: string) {
 		setFit(fit);
@@ -122,41 +121,64 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 		setGuide(guide);
 	}
 	function showSizes() {
-		setSizeState("");
+		// setSizeState("");
+
 	}
+
+
+async function productCart () {
+	try{
+		const response = await axios.post('/api/users/productCart', productCode)
+		console.log(`${productCode} has been posted`)
+	}
+	catch(error:any){
+		console.log('productCart function not working', error.message)
+	}
+}
+
 
 	return (
 		<>
-			<div>
-				<div>
-					<h4>{name}</h4>
-					<Image src={heart} alt={"icon"} />
-				</div>
-				<p>MRP inclusive of all taxes</p>
-				<h3>{price}</h3>
-				<div>{colorDescription}</div>
-				{allArticleImage.map((img) => {
+			<div className="flex justify-between items-center">
+				<h5 className="font-bold">{name}</h5>
+				<Image src={heart} alt={"icon"} />
+			</div>
+			<h6 className="text-gray-600 font-extrabold">
+				MRP inclusive of all taxes
+			</h6>
+			<h3>{price}</h3>
+			<h6 className="text-gray-600 font-extrabold">{colorDescription}</h6>
+			<div className="flex justify-start flex-wrap">
+				{allArticleImage.map(({ galleryDetails }) => {
+					const baseUrl = galleryDetails[0]?.baseUrl;
 					return (
 						<>
-							<Image src={img} alt={"image..."} />
+							<Image
+								src={baseUrl}
+								className="mr-2"
+								width={15}
+								height={25}
+								alt={"image..."}
+							/>
 						</>
 					);
 				})}
-				<div>
-					{/* <Image src={""} alt={""} />{" "} */}
-					<p>Delivery time: 2-7 days</p>
-					<button onClick={() => showSizes}>
-						Add{" "}
-						<div className="border ">
+			</div>
+			<button
+				className="h-11 font-extrabold bg-black text-white w-full my-7"
+				onClick={productCart}
+			>
+				Add{" "}
+				{/* <div className="border ">
 							<h5 className={SizeState}>Size:</h5>
 							<li className={SizeState}>
 								{variantSizes !== undefined
 									? variantSizes.map(
 											({
 												filterCode,
-											}) => {
+											}, index:number) => {
 												return (
-													<ul className="  my-3 hover:bg-slate-500">
+													<ul className="  my-3 hover:bg-slate-500" key={index} >
 														{
 															filterCode
 														}
@@ -166,49 +188,56 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 									  )
 									: ""}
 							</li>
-						</div>
-					</button>
+						</div> */}
+			</button>
+			<div className="flex justify-start">
+				<Image
+					src={information}
+					alt={"icon"}
+					className="mr-2"
+				/>{" "}
+				<h6 className="font-bold text-gray-600 ">
+					Delivery time: 2-7 days
+				</h6>
+			</div>
+			<h6 className="font-extrabold text-center my-5">
+				Delivery and Payment
+			</h6>
+
+			{/* <Image src={""} alt={""} /> */}
+			<p>(10 reviews)</p>
+			
+				<div className="h-10 flex justify-between items-center border-t border-gray-600 w-full" 
+				onClick={() => fit !== 'hidden'? setFit('hidden'): changeState("", "hidden", "hidden")}>
+					{" "}
+					<div>Description and Fit</div>
+					<Image src={arrowDropDown} alt={""} />
 				</div>
-				<p>Delivery and Payment</p>
+				<div className={`${fit} text-left flex flex-col`}>
+					<p>{description}</p>
 
-				{/* <Image src={""} alt={""} /> */}
-				<p>(10) reviews</p>
-				<button
-					className="border border-gray-600 border-l-0 border-r-0"
-					onClick={() =>
-						changeState("", "hidden", "hidden")
-					}
-				>
-					Description and Fit
-					<div className={`${fit} text-left flex flex-col`}>
-						<p>{description}</p>
+					<h6>Size:</h6>
+					{allDetails.map(({ heading, value }) => {
+						return (
+							<>
+								<span className="font-medium">
+									{heading}
+								</span>
+								<p>{value}</p>
+							</>
+						);
+					})}
+				</div>
+			
 
-						<h6>Size:</h6>
-						{allDetails.map(({ heading, value }) => {
-							return (
-								<>
-									<span className="font-medium">
-										{heading}
-									</span>
-									<p>{value}</p>
-								</>
-							);
-						})}
-					</div>
-				</button>
-
-				<button
-					className="border border-gray-600 border-l-0 border-r-0"
-					onClick={() =>
-						changeState("hidden", "", "hidden")
-					}
-				>
-					Materials
-					<div
-						className={`${material} text-left flex flex-col`}
-					>
-						<h4>Composition</h4>
-						<ul>
+			
+				<div className="h-10 flex justify-between items-center border-t border-gray-600 w-full" onClick={() =>{ material !== 'hidden' ? setMaterial('hidden'): changeState("hidden", "", "hidden")}}>
+					<div>Materials</div>
+					<Image src={arrowDropDown} alt={""} />
+				</div>
+				<div className={`${material} text-left flex flex-col`}>
+					<h4>Composition</h4>
+					{/* <ul>
 							{compositions.map(
 								({ name, percentage }) => {
 									return (
@@ -220,54 +249,42 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 									);
 								}
 							)}{" "}
-						</ul>
-						<span className="font-medium">
-							{" "}
-							Material:{" "}
-						</span>
-						<p>
+						</ul> */}
+					<span className="font-medium"> Material: </span>
+					{/* <p>
 							{aggregatedSustainabilityCompositions}
-						</p>
-						<h4>Materials in this product explained</h4>
+						</p> */}
+					<h4>Materials in this product explained</h4>
 
-						{materialDetails.map(
-							({ name, description }) => {
-								return (
-									<>
-										<h6>{name} </h6>
-										<p>
-											{description}{" "}
-										</p>
-									</>
-								);
-							}
-						)}
-					</div>
-				</button>
+					{materialDetails.map(({ name, description }) => {
+						return (
+							<>
+								<h6>{name} </h6>
+								<p>{description} </p>
+							</>
+						);
+					})}
+				</div>
+			
 
-				<button
-					className="border border-gray-600 border-l-0 border-r-0"
-					onClick={() =>
-						changeState("hidden", "hidden", "")
-					}
-				>
-					Care Guide
-					<div
-						className={`${guide} text-left flex flex-col`}
-					>
-						<h4>Care instructions</h4>
-						<ul>
-							{careInstructions.map((e) => {
-								return (
-									<>
-										<li>{e}</li>
-									</>
-								);
-							})}
-						</ul>
-					</div>
-				</button>
-			</div>
+			
+				<div className="h-10 flex justify-between items-center border-t border-gray-600 w-full" onClick={() => { guide !== 'hidden'? setGuide('hidden'): changeState("hidden", "hidden", "")}}>
+					<div>Care Guide</div>
+					<Image src={arrowDropDown} alt={"icon"} />
+				</div>
+				<div className={`${guide} text-left flex flex-col`}>
+					<h4>Care instructions</h4>
+					<ul>
+						{careInstructions.map((e) => {
+							return (
+								<>
+									<li>{e}</li>
+								</>
+							);
+						})}
+					</ul>
+				</div>
+			
 		</>
 	);
 };

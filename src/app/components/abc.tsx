@@ -1,11 +1,30 @@
 'use client'
 import React, { createContext, useState, ReactNode, Dispatch, SetStateAction } from 'react';
 
+type ShoppingDataUpdater = {
+  url: string;
+  quantity: string;
+  productName: string;
+  articleNo: string;
+  price: string;
+  size: string;
+};
+
 interface UserContextType {
   user: string;
   setUser: Dispatch<SetStateAction<string>>;
   indexNo: number;
   setIndexNo: Dispatch<SetStateAction<number>>;
+  shoppingData: ShoppingDataUpdater;
+  setShoppingData:  Dispatch<SetStateAction<{
+    url: string;
+    quantity: string;
+    productName: string;
+    articleNo: string;
+    price: string;
+    size: string;
+  }>>
+
 }
 
 const defaultValue: UserContextType = {
@@ -13,6 +32,13 @@ const defaultValue: UserContextType = {
   setUser: () => {}, // Provide a default function
   indexNo: 2,
   setIndexNo: () => {}, // Provide a default function
+  shoppingData: { url: '',
+    quantity: '',
+    productName: '',
+    articleNo: '',
+    price: '',
+    size: '',},
+  setShoppingData: () => {}, 
 
 };
 
@@ -21,12 +47,15 @@ export const UserContext = createContext<UserContextType>(defaultValue);
 const UserContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState('');
   const [indexNo, setIndexNo]= useState(Number)
+  const [shoppingData, setShoppingData] = useState<ShoppingDataUpdater>(defaultValue.shoppingData)
 
   const contextValue: UserContextType = {
     user,
     setUser,
     indexNo,
-    setIndexNo
+    setIndexNo,
+    shoppingData,
+    setShoppingData
   };
 
 

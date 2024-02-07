@@ -24,6 +24,30 @@ const UserSchema = new mongoose.Schema({
 
 })
 
+const products = new mongoose.Schema({
+      url: {
+            type: String,
+            required: true,
+      },
+      name: {
+            type: String,
+            required: true,
+      },
+      price: {
+            type: String,
+            required: true,
+      },
+      netQuantity: {
+            type: String,
+            required: true,
+      },
+      articleCode: {
+            type: String,
+            required: true,
+            unique: true
+      },
+})
+
 
 const User = mongoose.models.users || mongoose.model('users', UserSchema)
 const CartSchema = new mongoose.Schema({
@@ -31,13 +55,10 @@ const CartSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: User,
             required: true
-
       },
-      product_Code: {
-            type: String,
-            required: true,
-            unique: true,
-      }
+      product: [products]
+           
+      
 })
 
 const Cart = mongoose.models.carts || mongoose.model('carts', CartSchema)

@@ -4,19 +4,10 @@ import Inputspace from "../components/inputSpace";
 import Image from "next/image";
 import close from "@/../public/close.png";
 import { useState } from "react";
-import DatabaseConnection from "../../dbConfig/dbConfig";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-// export function emailExistence(user: any) {
-// 	const [visibility, setVisibility] = useState("");
-// 	const [margin, setMargin] = useState("");
-// 	if (user) {
-// 		setVisibility("hidden");
-// 		setMargin("mt-2");
-// 	}
-// }
 export default function login() {
 	const [existingUser, setExistingUser] = useState('')
 	const router = useRouter()
@@ -65,7 +56,7 @@ export default function login() {
 
 			}
 			else if(success === true) {
-				router.push('@/app/login')
+				router.push('/login')
 			}
 
 		} catch (error) {
@@ -82,8 +73,6 @@ export default function login() {
 					<Image
 					
 						src={close}
-						// width={15}
-						// height={15}
 						alt="close"
 						className="w-3 h-3"
 						/>

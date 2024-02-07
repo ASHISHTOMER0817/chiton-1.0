@@ -1,10 +1,10 @@
 "use client";
 import Image from "next/image";
 import heart from "@/../public/heart.svg";
-import { useState } from "react";
+import { ButtonHTMLAttributes, DetailedHTMLProps, useState } from "react";
 import information from "@/../public/information.svg";
 import arrowDropDown from "@/../public/arrowDropDown.svg";
-import axios from "axios";
+// import axios from "axios";
 
 // export function ProductImages({ galleryDetails }: { galleryDetails: string }) {
 // 	return (
@@ -20,6 +20,7 @@ interface productLayoutTypes {
 	colorDescription: string;
 	allArticleImage: { galleryDetails: { baseUrl: string }[] }[];
 	// variantSizes: { filterCode: string }[] | undefined;
+	sendData: React.MouseEventHandler<HTMLButtonElement> ;
 	description: string;
 	// measurements: string;
 	lengthCollection: string;
@@ -37,7 +38,6 @@ interface productLayoutTypes {
 	materialDetails: { name: string; description: string }[];
 
 	careInstructions: string[];
-	productCode: string;
 }
 
 const ProductLayout: React.FC<productLayoutTypes> = ({
@@ -45,6 +45,7 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 	price,
 	colorDescription,
 	allArticleImage,
+	sendData,
 	// variantSizes,
 	description,
 	// measurements,
@@ -61,7 +62,6 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 	// aggregatedSustainabilityCompositions,
 	materialDetails,
 	careInstructions,
-	productCode
 }) => {
 	const allDetails = [
 		// {
@@ -126,15 +126,15 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 	}
 
 
-async function productCart () {
-	try{
-		const response = await axios.post('/api/users/productCart', productCode)
-		console.log(`${productCode} has been posted`)
-	}
-	catch(error:any){
-		console.log('productCart function not working', error.message)
-	}
-}
+// async function productCart () {
+// 	try{
+// 		const response = await axios.post('/api/users/productCart', productCode)
+// 		console.log(`${productCode} has been posted`)
+// 	}
+// 	catch(error:any){
+// 		console.log('productCart function not working', error.message)
+// 	}
+// }
 
 
 	return (
@@ -149,15 +149,16 @@ async function productCart () {
 			<h3>{price}</h3>
 			<h6 className="text-gray-600 font-extrabold">{colorDescription}</h6>
 			<div className="flex justify-start flex-wrap">
-				{allArticleImage.map(({ galleryDetails }) => {
+				{allArticleImage.map(({ galleryDetails }, index) => {
 					const baseUrl = galleryDetails[0]?.baseUrl;
 					return (
 						<>
 							<Image
+							key={index}
 								src={baseUrl}
 								className="mr-2"
-								width={15}
-								height={25}
+								width={50}
+								height={70}
 								alt={"image..."}
 							/>
 						</>
@@ -166,7 +167,7 @@ async function productCart () {
 			</div>
 			<button
 				className="h-11 font-extrabold bg-black text-white w-full my-7"
-				onClick={productCart}
+				onClick={sendData}
 			>
 				Add{" "}
 				{/* <div className="border ">

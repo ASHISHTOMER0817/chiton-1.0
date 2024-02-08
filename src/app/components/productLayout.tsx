@@ -1,18 +1,10 @@
 "use client";
 import Image from "next/image";
 import heart from "@/../public/heart.svg";
-import { ButtonHTMLAttributes, DetailedHTMLProps, useState } from "react";
+import { useState } from "react";
 import information from "@/../public/information.svg";
 import arrowDropDown from "@/../public/arrowDropDown.svg";
-// import axios from "axios";
-
-// export function ProductImages({ galleryDetails }: { galleryDetails: string }) {
-// 	return (
-// 		<>
-// 			<Image src={galleryDetails} alt={"image..."} />
-// 		</>
-// 	);
-// }
+import axios from "axios";
 
 interface productLayoutTypes {
 	name: string;
@@ -20,7 +12,7 @@ interface productLayoutTypes {
 	colorDescription: string;
 	allArticleImage: { galleryDetails: { baseUrl: string }[] }[];
 	// variantSizes: { filterCode: string }[] | undefined;
-	sendData: React.MouseEventHandler<HTMLButtonElement> ;
+	productCode: string ;
 	description: string;
 	// measurements: string;
 	lengthCollection: string;
@@ -32,6 +24,7 @@ interface productLayoutTypes {
 	// Concept: string;
 	whitePrice: string;
 	articleCountryOfProduction: string;
+	baseUrl: string;
 
 	// compositions: { name: string; percentage: string }[];
 	// aggregatedSustainabilityCompositions: string;
@@ -45,7 +38,7 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 	price,
 	colorDescription,
 	allArticleImage,
-	sendData,
+	productCode,
 	// variantSizes,
 	description,
 	// measurements,
@@ -62,6 +55,7 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 	// aggregatedSustainabilityCompositions,
 	materialDetails,
 	careInstructions,
+	baseUrl
 }) => {
 	const allDetails = [
 		// {
@@ -126,22 +120,37 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 	}
 
 
+
+
+
+
+	// const productDetails = {
+	// 	url: baseUrl,
+	// 	name: name,
+	// 	price: price,
+	// 	quantity: 1,
+	// 	articleCode: productCode,
+	// }
+
+
 // async function productCart () {
 // 	try{
-// 		const response = await axios.post('/api/users/productCart', productCode)
-// 		console.log(`${productCode} has been posted`)
+// 		const response = await axios.post('../api/users/productCart', productDetails)
+// 		console.log(`${productDetails} has been posted`)
+// 		const message = response.data.message;
+// 		return message
 // 	}
 // 	catch(error:any){
 // 		console.log('productCart function not working', error.message)
+// 		return error.message
 // 	}
 // }
-
 
 	return (
 		<>
 			<div className="flex justify-between items-center">
 				<h5 className="font-bold">{name}</h5>
-				<Image src={heart} alt={"icon"} />
+				<Image src={heart} alt={"icon"} height={10} width={10}  />
 			</div>
 			<h6 className="text-gray-600 font-extrabold">
 				MRP inclusive of all taxes
@@ -159,7 +168,6 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 								className="mr-2 h-auto"
 								width={50}
 								height={70}
-								layout="responsive"
 								
 								alt={"image..."}
 							/>
@@ -167,9 +175,9 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 					);
 				})}
 			</div>
-			<button
+			<form
 				className="h-11 font-extrabold bg-black text-white w-full my-7"
-				onClick={sendData}
+				// onClick={productCart}
 			>
 				Add{" "}
 				{/* <div className="border ">
@@ -192,12 +200,14 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 									: ""}
 							</li>
 						</div> */}
-			</button>
+			</form>
 			<div className="flex justify-start">
 				<Image
 					src={information}
 					alt={"icon"}
 					className="mr-2"
+					height={10}
+					width={10}
 				/>{" "}
 				<h6 className="font-bold text-gray-600 ">
 					Delivery time: 2-7 days
@@ -214,7 +224,7 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 				onClick={() => fit !== 'hidden'? setFit('hidden'): changeState("", "hidden", "hidden")}>
 					{" "}
 					<div>Description and Fit</div>
-					<Image src={arrowDropDown} alt={""} />
+					<Image src={arrowDropDown} alt={""} height={10} width={10} />
 				</div>
 				<div className={`${fit} text-left flex flex-col`}>
 					<p>{description}</p>
@@ -236,7 +246,7 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 			
 				<div className="h-10 flex justify-between items-center border-t border-gray-600 w-full" onClick={() =>{ material !== 'hidden' ? setMaterial('hidden'): changeState("hidden", "", "hidden")}}>
 					<div>Materials</div>
-					<Image src={arrowDropDown} alt={""} />
+					<Image src={arrowDropDown} alt={""} height={10} width={10} />
 				</div>
 				<div className={`${material} text-left flex flex-col`}>
 					<h4>Composition</h4>
@@ -273,7 +283,7 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 			
 				<div className="h-10 flex justify-between items-center border-t border-gray-600 w-full" onClick={() => { guide !== 'hidden'? setGuide('hidden'): changeState("hidden", "hidden", "")}}>
 					<div>Care Guide</div>
-					<Image src={arrowDropDown} alt={"icon"} />
+					<Image src={arrowDropDown} alt={"icon"} height={10} width={10} />
 				</div>
 				<div className={`${guide} text-left flex flex-col`}>
 					<h4>Care instructions</h4>

@@ -13,14 +13,14 @@ export default function Header() {
 		<>
 			<header className=" ">
 				<div className="flex justify-between">
-					<Image src={Logo} alt="Logo" />
+					<Image priority={true} quality={50} width={150} height={100} className="max-w-40" src={Logo} alt="Logo" />
 					<nav className="flex items-center">
-						<Image src={selectPatientIcon} width={19} alt="icon" />
+						<Image src={selectPatientIcon} width={19} height={19} alt="icon" />
 						<div className="mr-3"><Link href={'/login'}> login </Link></div>
-						<Image src={favorites} width={50} alt="icon" />
+						<Image src={favorites} width={20} height={20}  alt="icon" />
 						<div className="mr-3">Favorites</div>
-						<Image src={shoppingBag} width={21} alt="icon" />
-						{/* <div className="mr-3"> <Link src={'@/app/shopping'}  >Shopping bag</Link></div> */}
+						<Image src={shoppingBag} width={21} height={21} alt="icon" />
+						<div className="mr-3"> <Link href={'@/app/shopping'}  >Shopping bag</Link></div>
 					</nav>
 				</div>
 				<div>
@@ -32,7 +32,7 @@ export default function Header() {
 						<li>Sports</li>
 					</ul>
 					<search className="flex justify-end">
-						<Image src={searchIcon} alt="icon" />
+						<Image src={searchIcon} alt="icon" height={15} width={15} />
 						<input className="float-right" placeholder="Search..." />
 					</search>
 				</div>

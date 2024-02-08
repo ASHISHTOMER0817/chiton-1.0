@@ -7,7 +7,7 @@ import CardLayout from "./components/cardlayout";
 import Link from "next/link";
 // import ProductContext from "./components/productContext";
 
-export default async function Home() {
+export default async function Page() {
 	const categoriesCard = [
 		{
 			link: menHoodie,
@@ -77,9 +77,10 @@ export default async function Home() {
 						{categoriesCard.map(
 							({ link, Gender, Name }, index) => {
 								return (
-									<div className="flex flex-col  w-24">
+									<div key={index} className="flex flex-col  w-24 ">
 										<Image
-										key={index}
+										height={144}
+										width={94}
 											src={link}
 											alt=""
 										/>
@@ -115,7 +116,7 @@ export default async function Home() {
 					</div>
 					<h4 className="w-full text-left">New Arrivals</h4>
 					<div className="flex flex-wrap justify-between ">
-						{data.results.map(
+						{data?.results.map(
 							({	name,
 								images,
 								price,
@@ -129,12 +130,11 @@ export default async function Home() {
 								
 
 								return (
-									<div
+									<div key={index}
 										className="flex flex-col text-left w-52 text-sm"
 									> <Link  href={`/productPage/${code}`}>
 										<CardLayout
 											index= {index}
-											key={index}
 											image={image}
 											alternate={alternate}
 											name={name}

@@ -8,7 +8,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 
 
-export default function login() {
+export default function Page() {
 	const router = useRouter()
 	const [user, setUser] = useState<{[key:string]:string}>({
 		email: '',
@@ -52,10 +52,10 @@ export default function login() {
 			<div className="bg-slate-400 p-3 m-auto w-1/3 ">
 				<div className="flex justify-between text-center">
 					<h2>Sign in</h2>
-					<Image src={close} alt="close" />
+					<Image src={close} alt="close" height={15} width={15} />
 				</div>
 				<p className="my-4 text-center">
-					Become a member -don't miss out on deals, offers,
+					Become a member and never forgo the deals, offers,
 					discounts and bonus vouchers.
 				</p>
 				<form className="flex flex-col">

@@ -8,7 +8,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-export default function login() {
+export default function Page() {
 	const [existingUser, setExistingUser] = useState('')
 	const router = useRouter()
 	const [user, setUser] = useState<{ [key: string]: string }>({
@@ -71,7 +71,8 @@ export default function login() {
 					<h2>Become a member</h2>
 					<Link href={"/"} >
 					<Image
-					
+					height={12}
+					width={12} 
 						src={close}
 						alt="close"
 						className="w-3 h-3"
@@ -79,7 +80,7 @@ export default function login() {
 						</Link>
 				</div>
 				<p className="my-4 text-center">
-					Become a member -don't miss out on deals, offers,
+					Become a member and forgo the deals, offers,
 					discounts and bonus vouchers.
 				</p>
 				<form className="flex flex-col">

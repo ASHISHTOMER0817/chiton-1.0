@@ -222,12 +222,12 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 					<h6>Size:</h6>
 					{allDetails.map(({ heading, value }, index) => {
 						return (
-							<>
-								<span key={index} className="font-medium">
+							<div key={index}>
+								<span  className="font-medium">
 									{heading}
 								</span>
 								<p>{value}</p>
-							</>
+							</div>
 						);
 					})}
 				</div>
@@ -261,10 +261,10 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 
 					{materialDetails.map(({ name, description }, index) => {
 						return (
-							< >
+							< div key={index}>
 								<h6 key={index}>{name} </h6>
 								<p>{description} </p>
-							</>
+							</div>
 						);
 					})}
 				</div>
@@ -278,11 +278,11 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 				<div className={`${guide} text-left flex flex-col`}>
 					<h4>Care instructions</h4>
 					<ul>
-						{careInstructions.map((e) => {
+						{careInstructions.map((e, index) => {
 							return (
-								<>
+								<div key={index}>
 									<li>{e}</li>
-								</>
+								</div>
 							);
 						})}
 					</ul>

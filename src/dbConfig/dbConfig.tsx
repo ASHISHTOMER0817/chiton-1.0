@@ -11,7 +11,7 @@ if(process.env.MONGODB_URL !== undefined){
       })
       connection.on('error', (err) => {
           console.log('MongoDB connection error. Please make sure MongoDB is running.' + err);
-          process.exit();
+          process.exitCode = 1
       })
 }
 

@@ -48,7 +48,7 @@ export default async function page({ params }: { params: { pid: string } }) {
 		<Header/>
 		<div className="flex ">
 			<div className="flex justify-around flex-wrap w-2/3">
-				{allArticle.galleryDetails.map(({baseUrl}: {baseUrl:string}, index:number)=> {
+				{allArticle.galleryDetails.map(({baseUrl}: {baseUrl:string}, index: number)=> {
 
 
 					return (
@@ -61,6 +61,7 @@ export default async function page({ params }: { params: { pid: string } }) {
 			</div>
 			<section className="w-1/3 m-4">
 				<ProductLayout
+				
 						name={allArticle?.name}
 						price={product?.whitePrice?.price}
 						colorDescription={allArticle?.colourDescription}

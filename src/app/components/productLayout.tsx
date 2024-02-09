@@ -158,12 +158,12 @@ const ProductLayout: React.FC<productLayoutTypes> = ({
 			<h3>{price}</h3>
 			<h6 className="text-gray-600 font-extrabold">{colorDescription}</h6>
 			<div className="flex justify-start flex-wrap">
-				{allArticleImage.map(({ galleryDetails }, index) => {
+				{allArticleImage.map(({ galleryDetails }) => {
 					const baseUrl = galleryDetails[0]?.baseUrl;
 					return (
 						<>
 							<Image
-							key={index}
+							
 								src={baseUrl}
 								className="mr-2 h-auto"
 								width={50}

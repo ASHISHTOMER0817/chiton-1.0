@@ -1,10 +1,10 @@
 import Logo from "../../../public/Logo.svg";
 import Image from "next/image";
 import Link from 'next/link'
-import searchIcon from "../../../public/search-icon.svg";
-import selectPatientIcon from "../../../public/select-patient-icon.svg";
-import favorites from "../../../public/favorites.svg";
-import shoppingBag from "../../../public/shopping-bag.svg";
+import searchIcon from "@/../public/search-icon.svg";
+import selectPatientIcon from "@/../public/select-patient-icon.svg";
+import favorites from "@/../public/favorites.svg";
+import shoppingBag from "@/../public/shopping-bag.svg";
 
 // import Login from '../login/page'
 
@@ -17,7 +17,7 @@ export default function Header() {
 					<nav className="flex items-center">
 						<Image src={selectPatientIcon} width={19} height={19} alt="icon" />
 						<div className="mr-3"><Link href={'/login'}> login </Link></div>
-						<Image src={favorites} width={20} height={20}  alt="icon" />
+						<Image src={favorites} width={40} className="h-auto"  alt="icon" />
 						<div className="mr-3">Favorites</div>
 						<Image src={shoppingBag} width={21} height={21} alt="icon" />
 						<div className="mr-3"> <Link href={'@/app/shopping'}  >Shopping bag</Link></div>

@@ -6,6 +6,7 @@ import  close  from "@/../public/close.png";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Footer from "../components/footer";
 
 
 export default function Page() {
@@ -48,11 +49,11 @@ export default function Page() {
 		},
 	];
 	return (
-		<div className="">
+		<div className=" font-sans">
 			<div className="bg-slate-400 p-3 m-auto w-1/3 ">
-				<div className="flex justify-between text-center">
+				<div className="flex justify-between text-center items-center">
 					<h2>Sign in</h2>
-					<Image src={close} alt="close" height={15} width={15} />
+					<Image src={close} alt="close" className="h-4 w-4"  />
 				</div>
 				<p className="my-4 text-center">
 					Become a member and never forgo the deals, offers,
@@ -86,6 +87,7 @@ export default function Page() {
 				</button>
 				<button className="text-center py-3 w-4/5 mx-auto block border border-black" > <Link href={'/member'}> Become a member </Link></button>
 			</div>
+			
 		</div>
 	);
 }

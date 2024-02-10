@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Header from "@/app/components/header";
 import fetchedData from "../../components/fetchedData";
 import Image from "next/legacy/image";
-import ProductLayout from "../../components/productLayout";
 import arrowDropDown from "@/../public/arrowDropDown.svg";
 import information from "@/../public/information.svg";
 import heart from "@/../public/heart.svg";

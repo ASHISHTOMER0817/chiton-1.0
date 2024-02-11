@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken"
-import { cookies } from "next/headers";
-
 import { Cart, User } from "@/model/schema";
 import dbConfig from "@/dbConfig/dbConfig";
 
@@ -12,33 +10,31 @@ export async function POST(request: NextRequest) {
 
             const reqBody = await request.json()
             const { url, name, price, netQuantity, articleCode } = reqBody
-            console.log('route --', reqBody)
-
-
 
             const getCookies = request.cookies.get('token')?.value || ''
-            console.log(getCookies)
-
-
-
-            // check if their is token.
+            const decodedToken: any = jwt.verify(getCookies, process.env.SECRET_KEY!)
+            
             if (getCookies === undefined) {
 
                   return NextResponse.json({
                         message: 'didnt find any cookies', success: false
                   })
             }
+            const {email} = decodedToken
+            const user = await User.findOne({email})
+            console.log('whawt is this -- ',user)
 
-            const decodedToken: any = jwt.verify(getCookies, process.env.JWT_SECRET_KEY!)
-            const userId = decodedToken.id
-           
-            const user = await User.findOne(userId)
-            const newProduct = new Cart({
-                  user_id: user,
+            const newProduct = await new Cart({
+                  email_id: user.email,
                   product: { url, name, price, netQuantity, articleCode }
             })
-            const productSaved = await newProduct.save()
-            console.log(productSaved)
+            console.log(newProduct)
+            
+            // IT IS WORKING TILL HERE
+            
+            const addProduct = await newProduct.save();
+            console.log( 'product added',addProduct)
+
             return NextResponse.json({
                   message: 'Order has been added', success: true
             })

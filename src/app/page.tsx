@@ -49,13 +49,13 @@ export default async function Page() {
 
 			<div className="">
 				<div className="w-2/3 m-auto ">
-					<div className="flex justify-around text-sm mb-3 mt-5">
+					<div className="flex justify-around text-xs mb-3 mt-5 sm:flex-col sm:text-nowrap sm:text-center sm:mb-5">
 						<DeliveryStats/>
 					</div>
 					<div
 						className="bg-no-repeat bg-center bg-cover relative text-center "
 						style={{
-							backgroundImage: `url('https://images.pexels.com/photos/1450114/pexels-photo-1450114.jpeg'); height: 750px; width: 75%; margin: auto;`,
+							backgroundImage: `url('https://images.pexels.com/photos/1450114/pexels-photo-1450114.jpeg'); height: 750px; width: 75%; margin: auto`,
 						}}
 					>
 						<div className=" mt-96 border border-purple-200 text-center inline-block">
@@ -80,7 +80,8 @@ export default async function Page() {
 								return (
 									<div key={index} className="flex flex-col  w-24 ">
 										<Image
-										height={144}
+										className=" sm:h-36 sm:w-auto"
+										// height={144}
 										width={94}
 											src={link}
 											alt=""
@@ -99,7 +100,7 @@ export default async function Page() {
 					<div
 						className="bg-no-repeat bg-center relative text-center "
 						style={{
-							backgroundImage: `url('https://images.pexels.com/photos/9853460/pexels-photo-9853460.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); height: 750px; width: 75%; margin: auto; `,
+							backgroundImage: `url('https://images.pexels.com/photos/9853460/pexels-photo-9853460.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); height: 750px; width: 75%; margin: auto `,
 						}}
 					>
 						<div className=" mt-96  text-center inline-block">

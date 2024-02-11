@@ -37,3 +37,6 @@ next-env.d.ts
 
 #dataFetching 
 # /src/app/components/fetchedData.tsx
+.env
+.gitignore
+.gitignore

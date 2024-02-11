@@ -1,9 +1,9 @@
 export default function deliveryStats() {
 	return (
 		<>
-			<span>Estimated delivery time: 2-7 days</span>
-			<span>Members get free shipping upto Rs. 1999</span>
-			<span>Free and flexible 15 days return</span>
+			<div className="sm:p-3">Estimated delivery time: 2-7 days</div>
+			<div className="sm:p-3">Members get free shipping upto Rs. 1999</div>
+			<div className="sm:p-3">Free and flexible 15 days return</div>
 		</>
 	);
 }

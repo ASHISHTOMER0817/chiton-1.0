@@ -32,13 +32,14 @@ export async function POST(request: NextRequest) {
                   password:hashedPassword,
             })
 
+            //Saving new member
             const savedUser = await newUser.save();
             console.log(savedUser)
 
             return NextResponse.json({
                   message: "User created successfully",
                   success: true,
-                  // savedUser
+                 
             })
       } catch (error: any) {
             console.log("route.ts got some problem")

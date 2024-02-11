@@ -7,12 +7,10 @@ import arrowDropDown from "@/../public/arrowDropDown.svg";
 import information from "@/../public/information.svg";
 import heart from "@/../public/heart.svg";
 import axios from "axios";
+import Footer from "@/app/components/footer";
 
 export default function Page({ params }: { params: { pid: string } }) {
 
-
-	
-	
 	const [fit, setFit] = useState("hidden");
 	const [material, setMaterial] = useState("hidden");
 	const [guide, setGuide] = useState("hidden");
@@ -54,19 +52,15 @@ export default function Page({ params }: { params: { pid: string } }) {
 	const productDetails = {
 		url: product?.articlesList[0]?.galleryDetails[0]?.baseUrl,
 		name: product?.name,
-		price: product?.articlesList[0]?.whitePrice?.price,
-		quantity: 'abc',
+		price: product?.articlesList[0]?.whitePrice !== undefined ? product?.articlesList[0]?.whitePrice.price: '',
+		quantity: product?.articlesList[0]?.netQuantity !== undefined ? product?.articlesList[0]?.netQuantity: '',
 		articleCode: product?.articlesList[0]?.code,
 	}
 
 
-
-	
-
 	 async function sendData() {
 
 		try{
-
 			const response = await axios.post('/api/users/productPage', productDetails)
 			 console.log( 'page.tsx --',productDetails)
 			const message = await response.data.message
@@ -103,7 +97,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 		},
 		{
 			heading: "Country of production:",
-			value: product?.articlesList[0]?.countryOfProduction,
+			value: product?.articlesList[0]?.countryOfProduction !== undefined ? product?.articlesList[0]?.countryOfProduction: product?.articlesList[0]?.articleCountryOfProduction,
 		},
 		{
 			heading: "Common generic name:",
@@ -377,6 +371,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 			<section className="w-3/5 mx-auto">
 				<h1 className="text-left" onClick={sendData}>Styled with</h1>
 			</section>
+			<Footer/>
 		</>
 	);
 }

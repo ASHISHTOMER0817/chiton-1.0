@@ -22,12 +22,16 @@ export default function Page() {
 			const response = await axios.post('/api/users/login', user)
 			
 			const verify = await response.data.success
+			
 			const message = await response.data.message
+			console.log(verify, message)
 			if(verify === true) {
 				router.push('/member')
 
 			}else{
 				console.log(message)
+				
+
 			}
 		}catch(error: any) {
 			console.log("loginPage has some error", error)

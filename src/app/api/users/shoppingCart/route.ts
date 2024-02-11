@@ -11,16 +11,16 @@ export async function GET (request: NextRequest) {
             
             
             const cookie =  cookies().get('token')?.value ||''
-            console.log(cookie)
+            // console.log(cookie)
             const decodedToken:any =  jwt.verify(cookie, process.env.SECRET_KEY!)
-            console.log(decodedToken)
-            const {email} = decodedToken;
+            // console.log(decodedToken)
+            const {email_id} = decodedToken;
                         
-            if(email !== undefined) {
-                  const cart = await Cart.findOne({email})
-                  console.log(cart)
+            if(email_id !== undefined) {
+                  const cart = await Cart.findOne({email_id})
+                  // console.log('cart--', cart)
                   const products =  await cart.product
-                  console.log(products)
+                  // console.log(products)
                   return NextResponse.json({
                       Headers:  products, success: true, message: 'product being shown in the cart'
                   })

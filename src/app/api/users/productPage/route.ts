@@ -4,6 +4,7 @@ import { Cart, User } from "@/model/schema";
 import dbConfig from "@/dbConfig/dbConfig";
 
 
+
 dbConfig()
 export async function POST(request: NextRequest) {
       try {
@@ -13,35 +14,38 @@ export async function POST(request: NextRequest) {
 
             const getCookies = request.cookies.get('token')?.value || ''
             const decodedToken: any = jwt.verify(getCookies, process.env.SECRET_KEY!)
-            
+
             if (getCookies === undefined) {
 
                   return NextResponse.json({
                         message: 'didnt find any cookies', success: false
                   })
             }
-            const {email} = decodedToken
-            const user = await User.findOne({email})
-            console.log('whawt is this -- ',user)
+            const { email } = decodedToken
+            const user = await User.findOne({ email })
+            console.log('whawt is this -- ', user)
 
-            const newProduct = await new Cart({
-                  email_id: user.email,
-                  product: { url, name, price, netQuantity, articleCode }
-            })
+
+            const query = { email_id: user.email };
+            const update = { $set: { product: { url, name, price, netQuantity, articleCode } }};
+                  const options = { upsert: true };
+                  const newProduct = await Cart.updateOne(
+                        query, update, options
+                  )
             console.log(newProduct)
-            
+
             // IT IS WORKING TILL HERE
-            
-            const addProduct = await newProduct.save();
-            console.log( 'product added',addProduct)
+
+            // const addProduct = await newProduct.save();
+            console.log('product added', newProduct)
 
             return NextResponse.json({
-                  message: 'Order has been added', success: true
-            })
+                        message: 'Order has been added', success: true
+                  })
 
-      } catch (error: any) {
-            return NextResponse.json({
-                  message: 'productPage route is having problems', success: false
-            })
+            } catch (error: any) {
+                  return NextResponse.json({
+                        message: 'productPage route is having problems', success: false
+                  })
+            }
       }
-}

@@ -63,7 +63,7 @@ export default function Page() {
 					Become a member and never forgo the deals, offers,
 					discounts and bonus vouchers.
 				</p>
-				<form className="flex flex-col">
+				<form className="flex flex-col" >
 					{inputarr.map(({ label, type, classList }, index) => {
 						const stateChange = label.toLowerCase().replace(" ","")
 						return (
@@ -86,7 +86,7 @@ export default function Page() {
 					<div className="underline">Forget Password?</div>
 				</div>
 
-				<button className="bg-black text-center text-white py-3 my-4 w-4/5 mx-auto block" onClick={loginDetails}>
+				<button className="bg-black text-center text-white py-3 my-4 w-4/5 mx-auto block"  type="submit" onClick={loginDetails}>
 					Sign in
 				</button>
 				<button className="text-center py-3 w-4/5 mx-auto block border border-black" > <Link href={'/member'}> Become a member </Link></button>

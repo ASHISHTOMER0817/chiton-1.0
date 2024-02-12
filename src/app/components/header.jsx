@@ -10,8 +10,8 @@ import shoppingBag from "@/../public/shopping-bag.svg";
 
 export default function Header() {
 	return (
-		<>
-			<header className=" ">
+		
+			<header className=" bg-gray-200">
 				<div className="flex justify-between text-sm">
 					<Image priority={true} quality={100} width={150}   className="max-w-40 h-auto" src={Logo} alt="Logo" />
 					<nav className="flex items-center">
@@ -23,22 +23,22 @@ export default function Header() {
 						<div className="mr-3"> <Link href={'@/app/shopping'}  >Shopping bag</Link></div>
 					</nav>
 				</div>
-				<div className="flex sm:flex-col">
-					<ul className="flex justify-evenly my-3 ml-auto w-4/5 sm:flex sm:flex-col sm:items-center sm:justify-normal sm:mx-auto sm:h-2/4 sm:text-sm   ">
+				<div className="flex items-center sm:flex-col">
+					<ul className="flex font-semibold text-sm justify-evenly my-3 ml-auto w-1/3   sm:flex sm:flex-col sm:items-center sm:justify-normal sm:mx-auto sm:h-2/4    ">
 						<li className="hover:underline underline-offset-1 my-1">Ladies</li>
 						<li className="hover:underline underline-offset-1 my-1">Men</li>
 						<li className="hover:underline underline-offset-1 my-1">Baby</li>
 						<li className="hover:underline underline-offset-1 my-1">Kids</li>
 						<li className="hover:underline underline-offset-1 my-1">Sports</li>
 					</ul>
-					<search className="flex border border-b-gray-700 ml-auto w-1/12 sm:ml-auto sm:w-1/3 sm:mr-0 ">
-						<Image src={searchIcon} alt="icon" height={25} className="h-auto" />
-						<input className=" text-sm"  placeholder="Search..." />
+					<search className="flex border-b border-b-gray-700 ml-auto h-fit sm:w-1/3 sm:mr-0 ">
+						<Image src={searchIcon} alt="icon" className="h-auto" />
+						<input className=" text-sm bg-gray-200 focus:outline-none"  placeholder="Search..." />
 					</search>
 				</div>
 				
 			</header>
-		</>
+		
 	);
 }
 

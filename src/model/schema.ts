@@ -51,7 +51,7 @@ const products = new mongoose.Schema({
 
 const User = mongoose.models.users || mongoose.model('users', UserSchema)
 const CartSchema = new mongoose.Schema({
-      email_id: {
+      email: {
             type: String,
             unique: true,
             required: true

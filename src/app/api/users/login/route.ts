@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
                   const tokenData = {
                         user_id: user._id,
                         username: user.username,
-                        email_id: user.email
+                        email: user.email
                   }
                   const token = jwt.sign(tokenData, process.env.SECRET_KEY!, { expiresIn: "10h" })
                   cookies().set('token', token, { secure: true })

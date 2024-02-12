@@ -20,32 +20,83 @@ export async function POST(request: NextRequest) {
                   return NextResponse.json({
                         message: 'didnt find any cookies', success: false
                   })
+            } else {
+
+                  const { email } = decodedToken
+                  const user = await User.findOne({ email })
+                  const cart = await Cart.findOne({ email })
+                  console.log('whawt is this -- ', user)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  if (cart === null) {
+
+
+                        const newCart = await new Cart({
+                              email: user.email,
+                              product: {
+                                    url, name, price, netQuantity, articleCode
+                              }
+                        })
+                        const savedCart = await newCart.save();
+                        console.log(savedCart)
+                        console.log( 'Successfully created',newCart)
+                        return NextResponse.json({
+                              message: 'Successfully created new Cart', success: true
+
+                        })
+
+
+
+
+                        
+                        
+                  }else {
+
+
+                        const query = { email: cart.email };
+                        const update = { $push: { product: { url, name, price, netQuantity, articleCode } } };
+                        // const options = { upsert: true };
+                        const newProduct = await Cart.updateOne(
+                              query, update
+                        )
+                              console.log(  'Successfully pushed -',newProduct)
+                        return NextResponse.json({
+                              message: 'Successfully added new Product', success: true
+                        })
+
+                       
+                  }
             }
-            const { email } = decodedToken
-            const user = await User.findOne({ email })
-            console.log('whawt is this -- ', user)
 
 
-            const query = { email_id: user.email };
-            const update = { $set: { product: { url, name, price, netQuantity, articleCode } }};
-                  const options = { upsert: true };
-                  const newProduct = await Cart.updateOne(
-                        query, update, options
-                  )
-            console.log(newProduct)
 
-            // IT IS WORKING TILL HERE
 
-            // const addProduct = await newProduct.save();
-            console.log('product added', newProduct)
 
+
+
+
+
+
+
+
+
+      } catch (error: any) {
             return NextResponse.json({
-                        message: 'Order has been added', success: true
-                  })
-
-            } catch (error: any) {
-                  return NextResponse.json({
-                        message: 'productPage route is having problems', success: false
-                  })
-            }
+                  message: 'productPage route is having problems', success: false
+            })
       }
+}

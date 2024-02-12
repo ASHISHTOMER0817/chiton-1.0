@@ -44,7 +44,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 		}
 
 		fetchData();
-	}, []);
+	}, [params.pid]);
 
 
 
@@ -171,13 +171,14 @@ export default function Page({ params }: { params: { pid: string } }) {
 								galleryDetails: {
 									baseUrl: string;
 								}[];
-							}) => {
+							}, index:number) => {
 								const baseUrl =
 									galleryDetails[0]
 										?.baseUrl;
 								return (
 									<>
 										<Image
+										key={index}
 											src={baseUrl}
 											className="mr-2 h-auto"
 											width={50}
@@ -285,9 +286,9 @@ export default function Page({ params }: { params: { pid: string } }) {
 						<h4>Composition</h4>
 						<ul> 
 							{ product?.articlesList[0]?.compositions === undefined ? '': product?.articlesList[0]?.compositions[0].materials.map(
-								({ name, percentage }:{ name:string, percentage:string}) => {
+								({ name, percentage }:{ name:string, percentage:string}, index: number) => {
 									return (
-										<li>
+										<li key={index}>
 											{name}
 											{": "}
 											{percentage}
@@ -314,7 +315,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 									name: string;
 									description: string;
 								},
-								index: string
+								index: number
 							) => {
 								return (
 									<div key={index}>
@@ -355,7 +356,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 						<h4>Care instructions</h4>
 						<ul>
 							{product?.articlesList[0]?.careInstructions.map(
-								(e: string, index: string) => {
+								(e: string, index: number) => {
 									return (
 										<div key={index}>
 											<li>{e}</li>

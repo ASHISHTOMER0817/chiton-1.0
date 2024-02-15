@@ -30,7 +30,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 					"detail",
 					params.pid,
 					"",
-					""
+					"","products"
 				);
 				
 				setProduct(data?.product);
@@ -107,7 +107,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 
 	return(
 		<>
-			<Header />
+			{/* <Header /> */}
 
 
 

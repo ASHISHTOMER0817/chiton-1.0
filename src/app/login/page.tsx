@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import Footer from "../components/footer";
 
 
-export default function Page() {
+export default function Page({className, overlay}:{className:string, overlay: ()=> void}) {
 	const router = useRouter()
 	const [user, setUser] = useState<{[key:string]:string}>({
 		email: '',
@@ -53,11 +53,11 @@ export default function Page() {
 		},
 	];
 	return (
-		<div className=" font-sans">
+		<div className= {`font-sans ${className}`} >
 			<div className="bg-slate-400 p-3 m-auto w-1/3 ">
 				<div className="flex justify-between text-center items-center">
 					<h2>Sign in</h2>
-					<Image src={close} alt="close" className="h-4 w-4"  />
+					<Image src={close} alt="close" className="h-4 w-4" onClick={overlay} />
 				</div>
 				<p className="my-4 text-center">
 					Become a member and never forgo the deals, offers,

@@ -57,7 +57,7 @@ export default function Page() {
 
 	return (
 		<div className="bg-gray-200  ">
-			<Header />
+			{/* <Header /> */}
 			<div className=" bg-gray-200 w-2/3 mx-auto sm:w-10/12 ">
 				<div className="flex justify-around text-xs sm:text-nowrap py-3">
 					<DeliveryStats />

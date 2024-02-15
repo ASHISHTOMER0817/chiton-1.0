@@ -1,3 +1,4 @@
+"use client";
 import Header from "./components/header";
 import DeliveryStats from "./components/deliveryStats";
 import fetchedData from "@/app/components/fetchedData";
@@ -7,117 +8,313 @@ import CardLayout from "./components/cardlayout";
 import Link from "next/link";
 import Footer from "./components/footer";
 // import ProductContext from "./components/productContext";
+import AndreaImage from "@/../public/AndreaImage.jpg";
+import coat from "@/../public/coat.jpeg";
+import Login from "@/app/login/page";
+import { useState } from "react";
+import "./filter.css";
+import trousers from "@/../public/trousers.jpg";
+import sweatshirt from "@/../public/sweatshirt.webp";
+import cardigan from "@/../public/cardigan.jpg";
+import coatWmen from "@/../public/coatWmen.jpg";
+import coatMen from "@/../public/coatMen.jpeg";
+import jeans from "@/../public/jeans.webp";
+import shirts from "@/../public/shirts.jpg";
+import cargoPants from "@/../public/cargoPants.jpg";
+import home from "@/../public/home.jpg";
 
-export default async function Page() {
+{
+	/* ASYNC*/
+}
+export default function Page() {
+	const [child, setChild] = useState("hidden");
+	const [parent, setParent] = useState("");
+	const [flow, setFlow] = useState("");
+	const [overlay, setOverlay] = useState(false);
+
 	const categoriesCard = [
 		{
-			link: menHoodie,
+			link: sweatshirt,
 			Gender: "Men",
 			Name: "Hoodies & Sweatshirts",
 		},
 		{
-			link: menHoodie,
+			link: trousers,
 			Gender: "Ladies",
 			Name: "Trousers",
 		},
 		{
-			link: menHoodie,
+			link: cardigan,
 			Gender: "Ladies",
 			Name: "Sweaters & Cardigans",
 		},
 		{
-			link: menHoodie,
+			link: coatWmen,
 			Gender: "Ladies",
-			Name: "Clothes",
+			Name: "Jackets & Coats",
 		},
 		{
-			link: menHoodie,
-			Gender: "Ladies",
-			Name: "Trousers",
-		},
-		{
-			link: menHoodie,
+			link: coatMen,
 			Gender: "Men",
 			Name: "Jackets & Coats",
 		},
+		{
+			link: jeans,
+			Gender: "Men",
+			Name: "Jeans",
+		},
+		{
+			link: shirts,
+			Gender: "Men",
+			Name: "Shirts",
+		},
 	];
-	const data = await fetchedData('list', '', '0', '30')
 
+
+	const preference = [
+		'Ladies','Men','Divided','Baby','Kids','H&M HOME','Sport'
+	]
+	// const data = await fetchedData('list', '', '0', '30', 'products')
+
+	function change() {
+		if (overlay) {
+			setParent("parent");
+			setChild("child");
+			setFlow("overflow-hidden");
+			setOverlay(false);
+		} else {
+			setParent("");
+			setChild("hidden");
+			setFlow("");
+		}
+	}
 	return (
-		<div className=" ">
-			<Header />
+		<div className={flow}>
+			<div className={parent}>
+				{/* <Header /> */}
+				<Login className={child} overlay={change} />
+				<div
+					className="text-center w-2/4 mx-auto"
+					onClick={async () => {
+						setOverlay(true), change();
+					}}
+				>
+					{" "}
+					Login
+				</div>
+				<div className="">
+					<div className="w-7/12 m-auto ">
+						<div className="flex justify-around text-xs mb-3 mt-5 sm:flex-col sm:text-nowrap sm:text-center sm:mb-5">
+							<DeliveryStats />
+						</div>
+						<div className="w-full border text-center mb-3 bg-pink-300 bg-gradient-to-r from-yellow-100 to-pink-100">
+							<p className="text-sm font-bold mt-5 mb-2">
+								Transit into the new season
+							</p>
+							<p className="text-[10px]">
+								Dive into the treasure trove,
+								starting Rs.799
+							</p>
+							<nav className="grid grid-rows-1 grid-flow-col gap-4 justify-center my-4 text-white">
+								<button className="bg-black p-2 text-sm font-semibold ">
+									Women
+								</button>
+								<button className="bg-black p-2 text-sm font-semibold ">
+									Men
+								</button>
+								<button className="bg-black p-2 text-sm font-semibold ">
+									Kids
+								</button>
+								<button className="bg-black p-2 text-sm font-semibold ">
+									Sports
+								</button>
+								<button className="bg-black p-2 text-sm font-semibold ">
+									Home
+								</button>
+							</nav>
+						</div>
+						<div className="relative mx-auto h-[620px] border border-black">
+							<Image
+								src={coat}
+								className="absolute overflow-hidden"
+								quality={40}
+								fill={true}
+								priority={true}
+								objectFit="cover"
+								alt={"image"}
+							/>
+							<div className="   text-center text-white absolute top-[80%] left-2/4 transform -translate-x-1/2 -translate-y-1/2">
+								<h4 className="text mb-3">TIMELESS STYLES</h4>
+								<h1 className="  pb-4 text-4xl font-extrabold">
+									New arrivals
+								</h1>
+								<h5 className=" text-base font-bold">
+									A modern update on lace, embroidery and tailoring.
+								</h5>
+								<button className=" bg-white text-black font-extrabold p-2  mt-2">
+									Look here
+								</button>
+							</div>
+						</div>
+						<div className="relative mx-auto h-[620px] border  mt-6">
+							<Image
+								src={cargoPants}
+								className="absolute overflow-hidden"
+								quality={100}
+								fill={true}
+								priority={true}
+								objectFit="cover"
+								alt={"image"}
+							/>
+							<div className="   text-center absolute top-[80%] left-2/4 transform -translate-x-1/2 -translate-y-1/2">
+								<h1 className=" text-white pb-4 text-3xl font-extrabold">
+									Street Approved Apparel
+								</h1>
+								<h5 className=" text-white text-base font-bold">
+									Cargos with unmatched
+									comfort
+								</h5>
+								<button className=" bg-white text-black font-extrabold p-2  mt-2">
+									Shop Now
+								</button>
+							</div>
+						</div>
+						<div
+							className={`w-full h-32 border relative text-center  my-5  bg-center`}
+						>
+							<Image
+								src={home}
+								className="absolute w-full h-full z-0 object-cover"
+								objectFit="cover"
+								alt={"home Decore"}
+							/>
+							<div className="top-1/2 left-1/2 absolute transform -translate-x-1/2 -translate-y-1/2 text-white ">
+								<p className="text-sm font-bold mt-5 mb-2 z-10 text-nowrap">
+									H&M HOME: New timeless
+									pieces
+								</p>
+								<p className="text-[10px] z-10 text-nowrap">
+									Exclusive offer await! New
+									to shopping home? Check
+									"My account page
+								</p>
+								<nav className="  grid grid-rows-1 grid-flow-col gap-4 justify-center mt-4 z-10">
+									<button className="bg-white p-2 text-sm font-bold text-black ">
+										Shop now
+									</button>
+									<button className="bg-white p-2 text-sm font-bold text-black ">
+										My account
+									</button>
+								</nav>
+							</div>
+						</div>
 
-			<div className="">
-				<div className="w-2/3 m-auto ">
-					<div className="flex justify-around text-xs mb-3 mt-5 sm:flex-col sm:text-nowrap sm:text-center sm:mb-5">
-						<DeliveryStats/>
-					</div>
-					<div
-						className="bg-no-repeat bg-center bg-cover relative text-center "
-						style={{
-							backgroundImage: `url('https://images.pexels.com/photos/1450114/pexels-photo-1450114.jpeg'); height: 750px; width: 75%; margin: auto`,
-						}}
-					>
-						<div className=" mt-96 border border-purple-200 text-center inline-block">
-							<h1 className=" text-white">
-								Attention set on fancy joggers
-							</h1>
-							<h5 className=" text-white">
-								keep it coordinated, comfy and
-								casual
-							</h5>
-							<button className=" bg-white text-black font-extrabold">
-								Look here
-							</button>
+						<h2 className="text-black font-extrabold underline mt-5 mb-3">
+							Popular Categories
+						</h2>
+						<div className="flex justify-around w-full text-sm m-5">
+							{categoriesCard.map(
+								(
+									{ link, Gender, Name },
+									index
+								) => {
+									return (
+										<div
+											key={index}
+											className="flex flex-col  w-24 "
+										>
+											<Image
+												className=" sm:h-36 sm:w-auto"
+												// height={144}
+												width={
+													94
+												}
+												src={
+													link
+												}
+												alt=""
+											/>
+											<div className="text-gray-500 text-xs font-bold">
+												{Gender}
+											</div>
+											<div className="text-wrap text-sm font-medium">
+												{Name}
+											</div>
+										</div>
+									);
+								}
+							)}
 						</div>
-					</div>
-					<h2 className="text-black font-extrabold underline mt-5 mb-3">
-						Popular Categories
-					</h2>
-					<div className="flex justify-around w-full text-sm m-5">
-						{categoriesCard.map(
-							({ link, Gender, Name }, index) => {
+						<div className="bg-no-repeat bg-center relative mx-auto h-[620px] border border-black">
+							{" "}
+							<Image
+								src={AndreaImage}
+								className="absolute overflow-hidden"
+								quality={100}
+								fill={true}
+								priority={true}
+								objectFit="cover"
+								alt={"image"}
+							/>
+							<div className=" text-center text-white absolute top-[80%] left-2/4 transform -translate-x-1/2 -translate-y-1/2">
+								<h1 className="mb-2 ">
+									New Seasonal faves
+								</h1>
+								<h4 className=" mb-3  font-bold">
+									Cute styles & smart classics for your lil ones!
+								</h4>
+								
+								<button className=" bg-white text-black font-extrabold p-2  mt-3">
+									Look here
+								</button>
+							</div>
+						</div>
+						<h4 className="text-black font-extrabold underline mt-5 mb-3">
+							New Arrivals
+						</h4>
+
+
+						<div className="w-full grid-rows-1 grid-flow-col mt-3 text-center grid gap-2 justify-start">
+							{preference.map((e, index)=> {
 								return (
-									<div key={index} className="flex flex-col  w-24 ">
-										<Image
-										className=" sm:h-36 sm:w-auto"
-										// height={144}
-										width={94}
-											src={link}
-											alt=""
-										/>
-										<div className="text-gray-500">
-											{Gender}
-										</div>
-										<div className="text-wrap">
-											{Name}
-										</div>
+									<>
+									<div key={index}  className="px-3 py-2 rounded-[30px] border hover:bg-red-400">
+										{e}
 									</div>
-								);
-							}
-						)}
-					</div>
-					<div
-						className="bg-no-repeat bg-center relative text-center "
-						style={{
-							backgroundImage: `url('https://images.pexels.com/photos/9853460/pexels-photo-9853460.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); height: 750px; width: 75%; margin: auto `,
-						}}
-					>
-						<div className=" mt-96  text-center inline-block">
-							<h1 className=" text-white">
-								Attention set on fancy joggers
-							</h1>
-							<h5 className=" text-white">
-								keep it coordinated, comfy and
-								casual
-							</h5>
-							<button className=" bg-white text-black font-extrabold">
-								Look here
-							</button>
+									</>
+								)
+							})}
 						</div>
-					</div>
-					<h4 className="text-black font-extrabold underline mt-5 mb-3">New Arrivals</h4>
-					<div className="flex flex-wrap justify-between ">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						{/* <div className="flex flex-wrap justify-between ">
 						{data?.results.map(
 							({	name,
 								images,
@@ -149,10 +346,11 @@ export default async function Page() {
 								);
 							}
 						)}
+					</div> */}
 					</div>
 				</div>
+				<Footer />
 			</div>
-			<Footer/>
 		</div>
 	);
 }

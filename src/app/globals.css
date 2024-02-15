@@ -23,6 +23,16 @@
   }
 }
 
+/* CSS */
+@layer components {
+  .after-component::after {
+    @apply absolute -z-10 top-0 left-0 w-screen h-screen  bg-opacity-50 backdrop-filter backdrop-blur-sm;
+    content: '';
+  }
+}
+
+
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;

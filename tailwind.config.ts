@@ -13,11 +13,15 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      
     },
     screens: {
       'sm': {'max': '639px'}
     }
   },
   plugins: [],
+  corePlugins: {
+    backdropFilter: true,
+  }
 }
 export default config

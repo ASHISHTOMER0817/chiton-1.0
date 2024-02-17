@@ -19,7 +19,7 @@ const config: Config = {
       'sm': {'max': '639px'}
     }
   },
-  plugins: [],
+  plugins: [ require('tailwind-scrollbar-hide')],
   corePlugins: {
     backdropFilter: true,
   }

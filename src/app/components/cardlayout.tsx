@@ -1,6 +1,6 @@
 'use client'
 
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
 // import { UserContext } from "./abc";
@@ -33,9 +33,12 @@ const CardLayout:React.FC<HomePage> =({ image, alternate, name, price, codes, in
 
 	}
 
+
+
+	                                            
 	return (
 		< >
-			<Image onClick={ ()=>pageForward(codes, index)} src={image} alt={alternate} width={200} height={300}  />
+			<Image className=" " onClick={ ()=>pageForward(codes, index)} src={image} alt={alternate} width={200} height={300}  />
 			<p className="h-auto font-medium text-xs">{name}</p>
 			<p className="font-medium text-xs">{price}</p>
 		</>

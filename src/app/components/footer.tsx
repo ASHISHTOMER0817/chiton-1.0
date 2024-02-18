@@ -17,9 +17,13 @@ function footer() {
 
 			<ul className=" grid grid-rows-1 grid-flow-col gap-8 justify-center ">
                       
-                        <li>Ladies</li>
+                        <li>Women</li>
+                        <li>Divided</li>
+                        <li>Men</li>
                         <li>Baby</li>
                         <li>Kids</li>
+                        <li>H&M HOME</li>
+                        <li>Beauty </li>
                         <li>Sport</li>
                   </ul>
 			<ul>

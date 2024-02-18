@@ -1,4 +1,5 @@
-"use client";
+'use client'
+
 import Logo from "../../../public/Logo.svg";
 import Image from "next/image";
 import Link from "next/link";
@@ -39,223 +40,178 @@ export default function Header() {
 					"",
 					"categories"
 				);
-				 
-				setGroup(response)
+				for(let i= 0; i< response.length -1;i++ ){
+					if (response[i].CatName === variety){
+						console.log("the response i is: ", response[i]);
+						setGroup(response[i])
+						return;
+					}
+				}
 				// setRender(true);
 				// setArticles("hidden");
 			} catch (error) {
-				return console.error("yes this is error", error);
+				 console.log("yes this is error", error);
 			}
 		}
-		fetchNewData();
-	}, []);
+		if(trigger) {
+
+			fetchNewData();
+		}
+	}, [trigger]);
 	
-	function proposition () {
-		for (let i= 0; i<group.length-2; i++) {
-			if(group[i]?.CatName === 'Sport') {
-				return setGroup(data[i])
-			}
-		}
-		setInitialRender(true)
+
+	    
+
+
+
+	function triggerfetchedData() {
+		setTrigger(true)
+		setArticles("");
+	}
+
+	function triggerWindowCollapse() {
+		articles !== "hidden" ? setArticles("hidden") : "";
+		setTrigger(false);
 	}
 
 
 
-	// function triggerfetchedData() {
-	// 	setTrigger((prevTrigger) => !prevTrigger);
-	// 	setArticles("");
-	// }
-
-	// function triggerWindowCollapse() {
-	// 	articles !== "hidden" ? setArticles("hidden") : "";
-	// }
-
-
-
 	return (
-		<div>
-			<button onClick={proposition}>trigger</button>
-			<div>{ initialRender == true? '' : group?.CategoriesArray !== undefined ? group?.CategoriesArray[0]?.CategoryValue : '' }</div>
 
-			{/* <section
-				onMouseEnter={() => {
-					setArticles("");
-				}}
-				className={`w-2/4 mx-auto border-t-4 ${articles} border-t-black`}
-			>
-				{group.CategoriesArray.map(
-					({ CategoryValue }, index) => {
-						console.log(group.CategoriesArray[index])
-						return (
-							<>
-								<tr
-									key={index}
-									className="my-8"
-								>
-									{CategoryValue}
-								</tr>
-							</>
-						);
-					}
-				)}
-			</section> */}
-		</div>
+			<header className=" bg-gray-200 ">
+				<div className="flex justify-between text-sm">
+					<Image
+						priority={true}
+						quality={100}
+						width={150}
+						className="max-w-40 h-auto"
+						src={Logo}
+						alt="Logo"
+					/>
+					<nav className="flex items-center">
+						<Image
+							src={selectPatientIcon}
+							width={19}
+							className="h-auto"
+							alt="icon"
+						/>
+						<div className="mr-3">
+							<Link href={"/login"}> login </Link>
+						</div>
+						<Image
+							src={favorites}
+							width={50}
+							className="h-auto -mr-3"
+							alt="icon"
+						/>
+						<div className="mr-3 hover:cursor-pointer">
+							Favorites
+						</div>
+						<Image
+							src={shoppingBag}
+							width={21}
+							className="h-auto"
+							alt="icon"
+						/>
+						<div className="mr-3">
+							{" "}
+							<Link href={"@/app/shopping"}>
+								Shopping bag
+							</Link>
+						</div>
+					</nav>
+				</div>
+				<div className="flex items-center sm:flex-col">
+					<ul className="flex font-semibold text-sm justify-evenly my-3 ml-auto w-1/3   sm:flex sm:flex-col sm:items-center sm:justify-normal sm:mx-auto sm:h-2/4    ">
+						{navbar.map((e, index) => {
+							const handleMouseEnter = (category) => {
+								setVariety(category);
+								triggerfetchedData();
+							};
+							
+							return (
+								<>
+									<li
+										onMouseEnter={()=> { handleMouseEnter(e)}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		// 	<header className=" bg-gray-200 ">
-		// 		<div className="flex justify-between text-sm">
-		// 			<Image
-		// 				priority={true}
-		// 				quality={100}
-		// 				width={150}
-		// 				className="max-w-40 h-auto"
-		// 				src={Logo}
-		// 				alt="Logo"
-		// 			/>
-		// 			<nav className="flex items-center">
-		// 				<Image
-		// 					src={selectPatientIcon}
-		// 					width={19}
-		// 					className="h-auto"
-		// 					alt="icon"
-		// 				/>
-		// 				<div className="mr-3">
-		// 					<Link href={"/login"}> login </Link>
-		// 				</div>
-		// 				<Image
-		// 					src={favorites}
-		// 					width={50}
-		// 					className="h-auto -mr-3"
-		// 					alt="icon"
-		// 				/>
-		// 				<div className="mr-3 hover:cursor-pointer">
-		// 					Favorites
-		// 				</div>
-		// 				<Image
-		// 					src={shoppingBag}
-		// 					width={21}
-		// 					className="h-auto"
-		// 					alt="icon"
-		// 				/>
-		// 				<div className="mr-3">
-		// 					{" "}
-		// 					<Link href={"@/app/shopping"}>
-		// 						Shopping bag
-		// 					</Link>
-		// 				</div>
-		// 			</nav>
-		// 		</div>
-		// 		<div className="flex items-center sm:flex-col">
-		// 			<ul className="flex font-semibold text-sm justify-evenly my-3 ml-auto w-1/3   sm:flex sm:flex-col sm:items-center sm:justify-normal sm:mx-auto sm:h-2/4    ">
-		// 				{navbar.map((e, index) => {
-		// 					const handleMouseEnter = (category) => {
-		// 						setVariety(category);
-		// 						triggerfetchedData();
-		// 					};
-		// 					// setVariety(e);
-		// 					return (
-		// 						<>
-		// 							<li
-		// 								onMouseEnter={()=> {triggerfetchedData(), handleMouseEnter(e)}
-
-		// 								}
-		// 								onMouseLeave={
-		// 									triggerWindowCollapse
-		// 								}
-		// 								className="hover:underline underline-offset-4 my-1"
-		// 								key={index}
-		// 							>
-		// 								{e}
-		// 							</li>
-		// 						</>
-		// 					);
-		// 				})}
-		// 			</ul>
-		// 			<search className="flex border-b border-b-gray-700 ml-auto h-fit sm:w-1/3 sm:mr-0 ">
-		// 				<Image
-		// 					src={searchIcon}
-		// 					alt="icon"
-		// 					className="h-auto"
-		// 				/>
-		// 				<input
-		// 					className=" text-sm bg-gray-200 focus:outline-none"
-		// 					placeholder="Search..."
-		// 				/>
-		// 			</search>
-		// 		</div>
-		// 		<section
-		// 			onMouseEnter={() => {
-		// 				setArticles("");
-		// 			}}
-		// 			className={`w-2/4 mx-auto border-t-4 ${articles} border-t-black`}
-		// 		>
-		// 			{group.CategoriesArray.map(
-		// 				({ CategoryValue, CategoriesArray }, index) => {
-		// 					return (
-		// 						<>
-		// 							<table key={index}>
-		// 								<thead>
-		// 									<tr className="my-8">
-		// 										{" "}
-		// 										{
-		// 											CategoryValue
-		// 										}{" "}
-		// 									</tr>
-		// 								</thead>
-		// 								<tbody>
-		// 									{CategoriesArray.map(
-		// 										(
-		// 											{
-		// 												CategoryValue,
-		// 											},
-		// 											index
-		// 										) => {
-		// 											return (
-		// 												<>
-		// 													<tr
-		// 														key={
-		// 															index
-		// 														}
-		// 														className="my-5 hover:underline underline-offset-4"
-		// 													>
-		// 														{
-		// 															CategoryValue
-		// 														}
-		// 													</tr>
-		// 												</>
-		// 											);
-		// 										}
-		// 									)}
-		// 								</tbody>
-		// 							</table>
-		// 						</>
-		// 					);
-		// 				}
-		// 			)}
-		// 		</section>
-		// 	</header>
+										}
+										onMouseLeave={
+											triggerWindowCollapse
+										}
+										className="hover:underline underline-offset-4 my-1"
+										key={index}
+									>
+										{e}
+									</li>
+								</>
+							);
+						})}
+					</ul>
+					<search className="flex border-b border-b-gray-700 ml-auto h-fit sm:w-1/3 sm:mr-0 ">
+						<Image
+							src={searchIcon}
+							alt="icon"
+							className="h-auto"
+						/>
+						<input
+							className=" text-sm bg-gray-200 focus:outline-none"
+							placeholder="Search..."
+						/>
+					</search>
+				</div>
+				<section
+					onMouseEnter={() => {
+						setArticles("");
+					}}
+					onMouseLeave={()=> {
+						setArticles('hidden')
+					}}
+					className={`w-2/4 mx-auto border-t-0 ${articles} border-t-black`}
+				>
+					{ group !== undefined || null ? group.CategoriesArray.map(
+						({ CategoryValue, CategoriesArray }, index) => {
+							return (
+								<>
+									<table key={index}>
+										<thead>
+											<tr className="mb-8">
+												{" "}
+												{
+													CategoryValue
+												}{" "}
+											</tr>
+										</thead>
+										<tbody>
+											{CategoriesArray ? CategoriesArray.map(
+												(
+													{
+														CategoryValue,
+													},
+													index
+												) => {
+													return (
+														<>
+															<tr
+																key={
+																	index
+																}
+																className="my-8 hover:underline underline-offset-4"
+															>
+																{
+																	CategoryValue
+																}
+															</tr>
+														</>
+													);
+												}
+											): ''}
+										</tbody>
+									</table>
+								</>
+							);
+						}
+					): ''}
+				</section>
+			</header>
 	);
 }

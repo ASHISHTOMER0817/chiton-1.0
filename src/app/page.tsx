@@ -93,27 +93,27 @@ export default function Page() {
 		"Sport",
 	];
 
-	useEffect(() => {
-		async function getData() {
-			try {
-				const response = await fetchedData(
-					"list",
-					"",
-					"0",
-					"16",
-					"products"
-				);
-				console.log(response);
-				setData(response);
-			} catch (error: any) {
-				return console.log(
-					"there is a problem in home --page.jsx",
-					error
-				);
-			}
-		}
-		getData();
-	}, []);
+	// useEffect(() => {
+	// 	async function getData() {
+	// 		try {
+	// 			const response = await fetchedData(
+	// 				"list",
+	// 				"",
+	// 				"0",
+	// 				"16",
+	// 				"products"
+	// 			);
+	// 			console.log(response);
+	// 			setData(response);
+	// 		} catch (error: any) {
+	// 			return console.log(
+	// 				"there is a problem in home --page.jsx",
+	// 				error
+	// 			);
+	// 		}
+	// 	}
+	// 	getData();
+	// }, []);
 
 	function change() {
 		if (overlay) {
@@ -131,7 +131,7 @@ export default function Page() {
 	return (
 		<div className={flow}>
 			<div className={parent}>
-				{/* <Header /> */}
+				<Header />
 				<Login className={child} overlay={change} />
 				<div
 					className="text-center w-2/4 mx-auto"
@@ -300,7 +300,7 @@ export default function Page() {
 								alt={"image"}
 							/>
 							<div className=" text-center text-white absolute top-[80%] left-2/4 transform -translate-x-1/2 -translate-y-1/2">
-								<h1 className="mb-2 ">
+								<h1 className="mb-2 font-extrabold">
 									New Seasonal faves
 								</h1>
 								<h4 className=" mb-3  font-bold">
@@ -334,7 +334,7 @@ export default function Page() {
 						</div>
 
 						{/* BELOW IS THE CAROUSEL FUNCTION */}
-						<div className="relative flex items-center">
+						{/* <div className="relative flex items-center">
 							<MdChevronLeft
 								className="opacity-50 hover:opacity-100 cursor-pointer "
 								onClick={slideLeft}
@@ -428,7 +428,7 @@ export default function Page() {
 								onClick={slideRight}
 								size={40}
 							/>
-						</div>
+						</div> */}
 					</div>
 				</div>
 				<Footer />

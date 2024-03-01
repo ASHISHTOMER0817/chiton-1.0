@@ -24,6 +24,21 @@ const UserSchema = new mongoose.Schema({
 
 })
 
+const favorites = new mongoose.Schema({
+      name: {
+            type: String,
+            required: true,
+      },
+      url:{
+            type:String,
+            required: true,
+      },
+      price:{
+            type:String,
+            required:true
+      }
+})
+
 const products = new mongoose.Schema({
       url: {
             type: String,
@@ -56,7 +71,8 @@ const CartSchema = new mongoose.Schema({
             unique: true,
             required: true
       },
-      product: [products]
+      product: [products],
+      favorite: [favorites]
            
       
 })

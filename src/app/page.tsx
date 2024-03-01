@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import Header from "./components/header";
 import DeliveryStats from "./components/deliveryStats";
 import fetchedData from "@/app/components/fetchedData";
@@ -131,17 +131,8 @@ export default function Page() {
 	return (
 		<div className={flow}>
 			<div className={parent}>
-				<Header />
+				<Header overlay={async()=> {setOverlay(true), change()}} />
 				<Login className={child} overlay={change} />
-				<div
-					className="text-center w-2/4 mx-auto"
-					onClick={async () => {
-						setOverlay(true), change();
-					}}
-				>
-					{" "}
-					Login
-				</div>
 				<div className="">
 					<div className="w-7/12 m-auto ">
 						<div className="flex justify-around text-xs mb-3 mt-5 sm:flex-col sm:text-nowrap sm:text-center sm:mb-5">
@@ -324,7 +315,7 @@ export default function Page() {
 									<>
 										<div
 											key={index}
-											className="px-3 py-2 rounded-[30px] border hover:bg-red-400"
+											className="px-3 py-2 rounded-[30px] border hover:bg-red-500"
 										>
 											{e}
 										</div>

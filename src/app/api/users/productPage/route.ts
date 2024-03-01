@@ -27,24 +27,7 @@ export async function POST(request: NextRequest) {
                   const cart = await Cart.findOne({ email })
                   console.log('whawt is this -- ', user)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                   if (cart === null) {
-
-
                         const newCart = await new Cart({
                               email: user.email,
                               product: {
@@ -53,32 +36,24 @@ export async function POST(request: NextRequest) {
                         })
                         const savedCart = await newCart.save();
                         console.log(savedCart)
-                        console.log( 'Successfully created',newCart)
+                        console.log('Successfully created', newCart)
                         return NextResponse.json({
                               message: 'Successfully created new Cart', success: true
-
                         })
 
-
-
-
-                        
-                        
-                  }else {
-
-
+                  } else {
                         const query = { email: cart.email };
                         const update = { $push: { product: { url, name, price, netQuantity, articleCode } } };
                         // const options = { upsert: true };
                         const newProduct = await Cart.updateOne(
                               query, update
                         )
-                              console.log(  'Successfully pushed -',newProduct)
+                        console.log('Successfully pushed -', newProduct)
                         return NextResponse.json({
                               message: 'Successfully added new Product', success: true
                         })
 
-                       
+
                   }
             }
 

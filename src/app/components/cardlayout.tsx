@@ -1,11 +1,11 @@
 'use client'
 
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
-// import { UserContext } from "./abc";
-import ProductContext from "./productContext";
 import { UserContext } from "./abc";
+import { FaHeart } from "react-icons/fa";
+
 
 interface HomePage {
 	image: string;
@@ -14,13 +14,11 @@ interface HomePage {
 	alternate: string
 	codes: string
 	index: number
+	favorites: ()=> void
 	
 }
 
-
-
-
-const CardLayout:React.FC<HomePage> =({ image, alternate, name, price, codes, index }) => {
+const CardLayout:React.FC<HomePage> =({ image, alternate, name, price, codes, index, favorites }) => {
 
 	const {setUser, setIndexNo} = useContext(UserContext)
 	
@@ -38,7 +36,11 @@ const CardLayout:React.FC<HomePage> =({ image, alternate, name, price, codes, in
 	                                            
 	return (
 		< >
-			<Image className=" " onClick={ ()=>pageForward(codes, index)} src={image} alt={alternate} width={200} height={300}  />
+			<div className="relative">
+
+			<Image className=" w-auto h-auto" onClick={ ()=>pageForward(codes, index)} src={image} alt={alternate} width={350} height={450}   />
+			<FaHeart onClick={favorites} className="absolute top-[10%] right-[5%] -translate-x-[50%] -translate-y-[50%] hover:text-red-500 focus:text-red-500"/>
+			</div>
 			<p className="h-auto font-medium text-xs">{name}</p>
 			<p className="font-medium text-xs">{price}</p>
 		</>

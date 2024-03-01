@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export default async function fetchedData(path: String, productcode: string, index: String, pagesize:string, category:string ) {
+export default async function fetchedData(category: String, path: string, productcode: String, index:string, pagesize:string, categories:string ) {
   
   const options = {
     method: 'GET',
@@ -12,6 +12,7 @@ export default async function fetchedData(path: String, productcode: string, ind
       productcode: productcode?productcode:'' ,
       currentpage: index,
       pagesize: pagesize,
+      categories: categories
     },
     headers: {
       'X-RapidAPI-Key': '354341de18mshcc5b15c0fa6fd42p1947ebjsn7b6b759452b8',
@@ -29,6 +30,5 @@ export default async function fetchedData(path: String, productcode: string, ind
     console.error(error);
   }
 }
-// this is what it is 
 
 

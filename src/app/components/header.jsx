@@ -12,7 +12,7 @@ import fetchedData from "./fetchedData";
 
 // import Login from '../login/page'
 
-export default function Header() {
+export default function Header({overlay}) {
 	const [variety, setVariety] = useState("");
 	const [group, setGroup] = useState();
 	const [articles, setArticles] = useState("hidden");
@@ -34,11 +34,11 @@ export default function Header() {
 		async function fetchNewData() {
 			try {
 				const response = await fetchedData(
+					"categories",
 					"list",
 					"",
 					"",
-					"",
-					"categories"
+					"",""
 				);
 				for(let i= 0; i< response.length -1;i++ ){
 					if (response[i].CatName === variety){
@@ -47,8 +47,6 @@ export default function Header() {
 						return;
 					}
 				}
-				// setRender(true);
-				// setArticles("hidden");
 			} catch (error) {
 				 console.log("yes this is error", error);
 			}
@@ -60,10 +58,6 @@ export default function Header() {
 	}, [trigger]);
 	
 
-	    
-
-
-
 	function triggerfetchedData() {
 		setTrigger(true)
 		setArticles("");
@@ -73,8 +67,6 @@ export default function Header() {
 		articles !== "hidden" ? setArticles("hidden") : "";
 		setTrigger(false);
 	}
-
-
 
 	return (
 
@@ -95,8 +87,8 @@ export default function Header() {
 							className="h-auto"
 							alt="icon"
 						/>
-						<div className="mr-3">
-							<Link href={"/login"}> login </Link>
+						<div className="mr-3" onClick={overlay}>
+							  Login
 						</div>
 						<Image
 							src={favorites}
@@ -121,8 +113,8 @@ export default function Header() {
 						</div>
 					</nav>
 				</div>
-				<div className="flex items-center sm:flex-col">
-					<ul className="flex font-semibold text-sm justify-evenly my-3 ml-auto w-1/3   sm:flex sm:flex-col sm:items-center sm:justify-normal sm:mx-auto sm:h-2/4    ">
+				<div className="flex items-center justify-between sm:flex-col">
+					<ul className=" font-semibold text-sm  mt-3 ml-[29%] grid grid-rows-1 grid-flow-col gap-11 w-1/3   sm:flex sm:flex-col sm:items-center sm:justify-normal sm:mx-auto sm:h-2/4    ">
 						{navbar.map((e, index) => {
 							const handleMouseEnter = (category) => {
 								setVariety(category);
@@ -138,7 +130,7 @@ export default function Header() {
 										onMouseLeave={
 											triggerWindowCollapse
 										}
-										className="hover:underline underline-offset-4 my-1"
+										className="hover:underline underline-offset-4 "
 										key={index}
 									>
 										{e}
@@ -166,26 +158,25 @@ export default function Header() {
 					onMouseLeave={()=> {
 						setArticles('hidden')
 					}}
-					className={`w-2/4 mx-auto border-t-0 ${articles} border-t-black`}
+					className={`w-full mx-auto border-b-4   border-t-0 ${articles} flex justify-around items-start  text-nowrap text-sm  border-b-black`}
 				>
 					{ group !== undefined || null ? group.CategoriesArray.map(
 						({ CategoryValue, CategoriesArray }, index) => {
+
+							const category = group.CatName
 							return (
-								<>
-									<table key={index}>
+								
+									<table key={index} className="mr-14 w-3/5">
 										<thead>
-											<tr className="mb-8">
-												{" "}
-												{
-													CategoryValue
-												}{" "}
+											<tr className="mb-10 pt-10 font-semibold">
+												{CategoryValue}
 											</tr>
 										</thead>
 										<tbody>
 											{CategoriesArray ? CategoriesArray.map(
 												(
 													{
-														CategoryValue,
+														CategoryValue, tagCodes,CatName
 													},
 													index
 												) => {
@@ -195,11 +186,12 @@ export default function Header() {
 																key={
 																	index
 																}
-																className="my-8 hover:underline underline-offset-4"
+																className="mb-10 hover:underline underline-offset-4 "
+																
 															>
-																{
+																<Link href={`/allProduct/${category}/${tagCodes[0]}/${CatName}`}>{
 																	CategoryValue
-																}
+																}</Link>
 															</tr>
 														</>
 													);
@@ -207,7 +199,7 @@ export default function Header() {
 											): ''}
 										</tbody>
 									</table>
-								</>
+								
 							);
 						}
 					): ''}

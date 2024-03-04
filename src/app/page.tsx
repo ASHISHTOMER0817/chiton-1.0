@@ -9,7 +9,7 @@ import Link from "next/link";
 import Footer from "./components/footer";
 import AndreaImage from "@/../public/AndreaImage.jpg";
 import coat from "@/../public/coat.jpeg";
-import Login from "@/app/login/page";
+import Login from "@/app/components/login";
 import { useEffect, useState } from "react";
 import "./filter.css";
 import trousers from "@/../public/trousers.jpg";

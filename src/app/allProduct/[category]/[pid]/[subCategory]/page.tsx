@@ -2,7 +2,7 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import fetchedData from "../../../../components/fetchedData";
 import Header from "../../../../components/header";
-import Login from "@/app/login/page";
+import Login from "@/app/components/login";
 import "@/app/filter.css";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Link from "next/link";
@@ -30,11 +30,11 @@ export default function page({
 	const [clothProperty, setClothProperty] = useState(params.pid);
 	const [data, setData] = useState<DataState>();
 	const [imageChange, setImageChange] = useState(false);
-	const [favorites, setFavorites] = useState({
-		price: "",
-		image: "",
-		name: "",
-	});
+	// const [favorites, setFavorites] = useState({
+	// 	price: "",
+	// 	image: "",
+	// 	name: "",
+	// });
 	const [sortStt, setSortStt] = useState(false);
 	const [colorStt, setColorStt] = useState(false);
 	const [sizeStt, setSizeStt] = useState(false);
@@ -72,6 +72,7 @@ export default function page({
 			code: string;
 		}[];
 		defaultArticle: { normalPicture: { baseUrl: string }[] };
+		rgbColors:string[]
 	}
 
 	interface DataState {
@@ -143,7 +144,8 @@ export default function page({
 				setData(response);
 				console.log(response);
 
-				{/*const productList = await fetchedData(
+				{
+					/*const productList = await fetchedData(
 					"categories",
 					"list",
 					"",
@@ -167,7 +169,8 @@ export default function page({
 							);
 						}
 					}
-				); */}
+				); */
+				}
 
 				return;
 			} catch (error) {
@@ -177,12 +180,25 @@ export default function page({
 		getData();
 	}, []);
 
-	async function favoriteClothes(name: string, url: string, price: string) {
+	async function favoriteClothes(
+		name: string,
+		url: string,
+		price: string,
+		netQuantity: string,
+		articleCode: string
+	) {
 		try {
-			const favorites = { name, url, price };
+			const productDetails = {
+				url,
+				name,
+				price,
+				netQuantity,
+				articleCode,
+			};
+			const context = 'favorites'
 			const response = await axios.post(
-				"/api/favorites",
-				favorites
+				"/api/productPage",
+				{productDetails, context}
 			);
 			console.log(response);
 		} catch (error) {
@@ -655,6 +671,7 @@ export default function page({
 												price,
 												articles,
 												defaultArticle,
+												rgbColors
 											},
 											index: number
 										) => {
@@ -684,54 +701,56 @@ export default function page({
 													?.code;
 
 											return (
-												
-													<Link
+												<Link
 													key={
 														index
 													}
-														href={`/productPage/${code}`}
-														className="mb-3 mr-3 flex flex-wrap  text-left text-sm cursor-pointer "
-														onMouseEnter={() =>
-															setImageChange(
-																true
-															)
+													href={`/productPage/${code}`}
+													className="mb-3 mr-3 flex flex-col flex-wrap  text-left text-sm cursor-pointer "
+													onMouseEnter={() =>
+														setImageChange(
+															true
+														)
+													}
+													onMouseLeave={() =>
+														setImageChange(
+															false
+														)
+													}
+												>
+													<CardLayout
+														index={
+															index
 														}
-														onMouseLeave={() =>
-															setImageChange(
-																false
-															)
+														image={
+															image
 														}
-													>
-														<CardLayout
-															index={
-																index
-															}
-															image={
-																image
-															}
-															alternate={
-																alternate
-															}
-															name={
-																name
-															}
-															price={
-																actualPrice
-															}
-															codes={
+														alternate={
+															alternate
+														}
+														name={
+															name
+														}
+														price={
+															actualPrice
+														}
+														codes={
+															code
+														}
+														favorites={() => {
+															favoriteClothes(
+																name,
+																images[0]
+																	?.baseUrl,
+																actualPrice,
+
+																"1",
 																code
-															}
-															favorites={() => {
-																favoriteClothes(
-																	name,
-																	images[0]
-																		?.baseUrl,
-																	actualPrice
-																);
-															}}
-														/>
-													</Link>
-												
+															);
+														}}
+														clothColor={rgbColors}
+													/>
+												</Link>
 											);
 										}
 								  )}

@@ -1,12 +1,11 @@
 'use client'
 import React, { useState } from "react";
-import Inputspace from "../components/inputSpace";
+import Inputspace from "./inputSpace";
 import Image from "next/image";
 import  close  from "@/../public/close.png";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import Footer from "../components/footer";
 
 
 export default function Page({className, overlay}:{className:string, overlay: ()=> void}) {
@@ -26,7 +25,7 @@ export default function Page({className, overlay}:{className:string, overlay: ()
 			const message = await response.data.message
 			console.log(verify, message)
 			if(verify === true) {
-				router.push('/member')
+				// router.push('/member')
 
 			}else{
 				console.log(message)
@@ -43,13 +42,11 @@ export default function Page({className, overlay}:{className:string, overlay: ()
 			label: "Email",
 			type: "Email",
 			classList: "mb-2",
-			// login:user.email,
 		},
 		{
 			label: "Password",
 			type: "password",
 			classList: "mb-2",
-			// login: user.password
 		},
 	];
 	return (

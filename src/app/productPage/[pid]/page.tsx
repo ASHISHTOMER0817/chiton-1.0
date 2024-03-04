@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import React, { useEffect, useState } from "react";
 import Header from "@/app/components/header";
 import fetchedData from "../../components/fetchedData";
@@ -38,11 +38,12 @@ export default function Page({ params }: { params: { pid: string } }) {
 		async function fetchData() {
 			try {
 				const data = await fetchedData(
-					"detail",
+					"products",
+					'detail',
 					params.pid,
 					"",
 					"",
-					"products"
+					""
 				);
 
 				setProduct(data?.product);
@@ -70,9 +71,10 @@ export default function Page({ params }: { params: { pid: string } }) {
 
 	async function sendData() {
 		try {
+			const context = 'product'
 			const response = await axios.post(
 				"/api/users/productPage",
-				productDetails
+				{productDetails, context}
 			);
 			console.log("page.tsx --", productDetails);
 			const message = await response.data.message;
@@ -294,13 +296,13 @@ export default function Page({ params }: { params: { pid: string } }) {
 					</h6>
 					<div className="flex justify-between items-center mt-2">
 						<h4 className="text-red-500">
-							{
-								(product?.articlesList[0]?.redPrice?.currency)(product?.articlesList[0]
-									?.redPrice?.price)
-							}
+							
+								{product?.articlesList[0]?.redPrice?.currency}{product?.articlesList[0]
+									?.redPrice?.price}
+							
 						</h4>
-						<h4 className="line-through mr-auto">{(product?.articlesList[0]?.whitePrice?.currency)(product?.articlesList[0]
-									?.redPrice?.price)}</h4>
+						<h4 className="line-through mr-auto">{product?.articlesList[0]?.whitePrice?.currency}{product?.articlesList[0]
+									?.redPrice?.price}</h4>
 
 						{product?.articlesList[0]
 							.percentageDiscount !== undefined ? (
@@ -315,7 +317,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 							""
 						)}
 					</div>
-
+							
 					<h6 className="text-gray-400 font-extrabold mt-7 mb-5">
 						{product?.articlesList[0].colourDescription}
 					</h6>

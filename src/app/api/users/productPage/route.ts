@@ -10,8 +10,9 @@ export async function POST(request: NextRequest) {
       try {
 
             const reqBody = await request.json()
-            const { url, name, price, netQuantity, articleCode } = reqBody
-
+            // const { url, name, price, netQuantity, articleCode } = reqBody
+            const {productDetails, context} = reqBody
+            const { url, name, price, netQuantity, articleCode } = productDetails 
             const getCookies = request.cookies.get('token')?.value || ''
             const decodedToken: any = jwt.verify(getCookies, process.env.SECRET_KEY!)
 
@@ -25,12 +26,12 @@ export async function POST(request: NextRequest) {
                   const { email } = decodedToken
                   const user = await User.findOne({ email })
                   const cart = await Cart.findOne({ email })
-                  console.log('whawt is this -- ', user)
+                  console.log('what is this -- ', user)
 
                   if (cart === null) {
                         const newCart = await new Cart({
                               email: user.email,
-                              product: {
+                              [context]: {
                                     url, name, price, netQuantity, articleCode
                               }
                         })
@@ -43,7 +44,7 @@ export async function POST(request: NextRequest) {
 
                   } else {
                         const query = { email: cart.email };
-                        const update = { $push: { product: { url, name, price, netQuantity, articleCode } } };
+                        const update = { $push: { [context]: { url, name, price, netQuantity, articleCode } } };
                         // const options = { upsert: true };
                         const newProduct = await Cart.updateOne(
                               query, update
@@ -56,18 +57,6 @@ export async function POST(request: NextRequest) {
 
                   }
             }
-
-
-
-
-
-
-
-
-
-
-
-
 
       } catch (error: any) {
             return NextResponse.json({

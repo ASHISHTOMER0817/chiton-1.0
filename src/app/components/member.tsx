@@ -1,6 +1,6 @@
-"use client";
+'use client'
 import React from "react";
-import Inputspace from "../components/inputSpace";
+import Inputspace from "./inputSpace";
 import Image from "next/image";
 import close from "@/../public/close.png";
 import { useState } from "react";
@@ -56,7 +56,7 @@ export default function Page() {
 
 			}
 			else if(success === true) {
-				router.push('/login')
+				// router.push('/login')
 			}
 
 		} catch (error) {

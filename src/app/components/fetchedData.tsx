@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export default async function fetchedData(category: String, path: string, productcode: String, index:string, pagesize:string, categories:string ) {
+export default async function fetchedData(category: String, path: string, productcode: String|null, currentpage:string, pagesize:string, categories:string|null ) {
   
   const options = {
     method: 'GET',
@@ -9,10 +9,10 @@ export default async function fetchedData(category: String, path: string, produc
     params: {
       lang: 'en',
       country: 'us',
-      productcode: productcode?productcode:'' ,
-      currentpage: index,
-      pagesize: pagesize,
-      categories: categories
+      productcode,
+      currentpage,
+      pagesize,
+      categories
     },
     headers: {
       'X-RapidAPI-Key': '354341de18mshcc5b15c0fa6fd42p1947ebjsn7b6b759452b8',
@@ -23,7 +23,7 @@ export default async function fetchedData(category: String, path: string, produc
   try {
     const response = await axios.request(options);
     const data = response.data
-    console.log("the products are: ",    data.results)
+    console.log("the products are: ",    data)
     return data
 
   } catch (error) {

@@ -1,5 +1,4 @@
-"use client";
-import Header from "./components/header";
+'use client'
 import DeliveryStats from "./components/deliveryStats";
 import fetchedData from "@/app/components/fetchedData";
 import Image from "next/image";
@@ -8,7 +7,6 @@ import CardLayout from "./components/cardlayout";
 import Link from "next/link";
 import AndreaImage from "@/../public/AndreaImage.jpg";
 import coat from "@/../public/coat.jpeg";
-import Login from "@/app/components/login";
 import { useEffect, useState } from "react";
 import "./filter.css";
 import trousers from "@/../public/trousers.jpg";
@@ -26,10 +24,6 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FaHeart } from "react-icons/fa";
 
 export default function Page() {
-	const [child, setChild] = useState("hidden");
-	const [parent, setParent] = useState("");
-	const [flow, setFlow] = useState("");
-	const [overlay, setOverlay] = useState(false);
 	const [data, setData] = useState<any>();
 
 	{
@@ -98,11 +92,11 @@ export default function Page() {
 				const response = await fetchedData(
 					"products",
 					"list",
-					"",
+					null,
 					"0",
-					"16",''
+					"30",null
 				);
-				console.log(response);
+				console.log( 'products with carousel',response);
 				setData(response);
 			} catch (error: any) {
 				return console.log(
@@ -114,18 +108,7 @@ export default function Page() {
 		getData();
 	}, []);
 
-	function change() {
-		if (overlay) {
-			setParent("parent");
-			setChild("child");
-			setFlow("overflow-hidden");
-			setOverlay(false);
-		} else {
-			setParent("");
-			setChild("hidden");
-			setFlow("");
-		}
-	}
+	
 
 	return (
 		<div className="relative">
@@ -301,7 +284,7 @@ export default function Page() {
 								<>
 									<div
 										key={index}
-										className="px-3 py-2 rounded-[30px] border hover:bg-red-500"
+										className="px-3 py-2 rounded-[30px] border hover:bg-red-800"
 									>
 										{e}
 									</div>
@@ -311,7 +294,7 @@ export default function Page() {
 					</div>
 
 					{/* BELOW IS THE CAROUSEL FUNCTION */}
-					<div className="relative flex items-center">
+					<div className="relative flex items-center mt-7">
 						<MdChevronLeft
 							className="opacity-50 hover:opacity-100 cursor-pointer "
 							onClick={slideLeft}

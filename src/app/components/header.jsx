@@ -145,7 +145,7 @@ export default function Header() {
 						/>
 						<div className="mr-3">
 							{" "}
-							<Link href={"@/app/shopping"}>
+							<Link href={"/shoppingCart"}>
 								Shopping bag
 							</Link>
 						</div>

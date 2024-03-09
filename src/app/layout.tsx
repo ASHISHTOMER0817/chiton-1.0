@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" >
      
-      <body className={`${inter.className} relative`}>
+      <body className={`${inter.className} relative flex flex-col min-h-[100vh] m-0`}>
       <UserContextProvider>
         <Header/>
         {children}

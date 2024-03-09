@@ -1,12 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 import React, { useEffect, useState } from "react";
-import Header from "@/app/components/header";
 import fetchedData from "../../components/fetchedData";
 import Image from "next/legacy/image";
 import arrowDropDown from "@/../public/arrowDropDown.svg";
-import information from "@/../public/information.svg";
-import heart from "@/../public/heart.svg";
 import axios from "axios";
 import store from "@/../public/store.svg";
 import { FaHeart } from "react-icons/fa";
@@ -634,9 +631,8 @@ export default function Page({ params }: { params: { pid: string } }) {
 							product in calculations.
 						</div>
 
-						{(product?.articlesList[0]?.keyFabrics !==
-							undefined) !==
-						undefined ? (
+						{product?.articlesList[0]?.keyFabrics !==
+							undefined ? 
 							<div className="flex justify-start text-base items-center my-4 ">
 								Material:{" "}
 								{product?.articlesList[0]?.keyFabrics.map(
@@ -656,9 +652,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 									}
 								)}
 							</div>
-						) : (
-							""
-						)}
+						 : ""}
 
 						<h4 className="mt-4 text-base font-bold">
 							Materials in this product explained

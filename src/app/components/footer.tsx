@@ -13,18 +13,18 @@ function Footer() {
 
       const icons = [icons8, pinterest, tik, youtube, facebook]
 	return (
-		<div className="bg-gradient-to-b from-white to-gray-400 text-center mt-6 pt-3 border-t-gray-700">
+		<div className=" bottom-0 bg-gradient-to-b from-white to-gray-400 text-center mt-6 pt-3 border-t-gray-700">
 
 			<ul className=" grid grid-rows-1 grid-flow-col gap-8 justify-center ">
                       
-                        <li className="cursor-pointer">Women</li>
-                        <li className="cursor-pointer">Divided</li>
-                        <li className="cursor-pointer">Men</li>
-                        <li className="cursor-pointer">Baby</li>
-                        <li className="cursor-pointer">Kids</li>
-                        <li className="cursor-pointer">H&M HOME</li>
-                        <li className="cursor-pointer">Beauty </li>
-                        <li className="cursor-pointer">Sport</li>
+                        <li className="cursor-pointer hover:text-gray-600">Women</li>
+                        <li className="cursor-pointer hover:text-gray-600">Divided</li>
+                        <li className="cursor-pointer hover:text-gray-600">Men</li>
+                        <li className="cursor-pointer hover:text-gray-600">Baby</li>
+                        <li className="cursor-pointer hover:text-gray-600">Kids</li>
+                        <li className="cursor-pointer hover:text-gray-600">H&M HOME</li>
+                        <li className="cursor-pointer hover:text-gray-600">Beauty </li>
+                        <li className="cursor-pointer hover:text-gray-600">Sport</li>
                   </ul>
 			<ul>
                         <li  className=" font-serif border border-black inline-block my-7 p-3 duration-500 hover:bg-gradient-to-t from-slate-700 to-black hover:text-white">BUY FROM H & M </li>

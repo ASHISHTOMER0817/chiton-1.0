@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 import React, { useEffect, useState } from "react";
 import Header from "@/app/components/header";
@@ -7,7 +8,6 @@ import arrowDropDown from "@/../public/arrowDropDown.svg";
 import information from "@/../public/information.svg";
 import heart from "@/../public/heart.svg";
 import axios from "axios";
-import Footer from "@/app/components/footer";
 import store from "@/../public/store.svg";
 import { FaHeart } from "react-icons/fa";
 import { CiStar } from "react-icons/ci";
@@ -255,7 +255,6 @@ export default function Page({ params }: { params: { pid: string } }) {
 
 	return (
 		<>
-			{/* <Header /> */}
 
 			<div className="flex my-6  mx-6">
 				<div className="flex justify-around flex-wrap w-[67%]">
@@ -388,11 +387,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 					</button>
 
 					<div className="flex justify-start items-center">
-						{/* <Image
-							src={store}
-							className="w-3 h-3 mr-2"
-							alt="icon"
-						/>  */}
+						
 								<IoStorefrontOutline width={10} height={10} />
 						{product?.articlesList[0]?.inStore ===
 						undefined ? (
@@ -409,11 +404,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 						)}
 					</div>
 					<div className="flex justify-start items-center">
-						{/* <Image
-							src={information}
-							alt={"icon"}
-							className="mr-2 h-3 w-3"
-						/>{" "} */}
+						
 						<IoIosInformationCircleOutline width={10} height={10} />
 						<h6 className="font-bold text-gray-600 ">
 							Delivery time: 2-7 days
@@ -752,11 +743,11 @@ export default function Page({ params }: { params: { pid: string } }) {
 				</section>
 			</div>
 
-			<section className="w-4/5 mx-auto">
+			<section className="w-4/5 mx-auto mt-16">
 				<h1 className="text-left font-bold" onClick={sendData}>
 					Styled with
 				</h1>
-				{/* <div className="flex items-center relative">
+				{/* <div className="flex items-center relative mt-7">
 					<MdChevronLeft
 						className="opacity-50 hover:opacity-100 cursor-pointer "
 						onClick={slideLeft}
@@ -841,7 +832,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 				</div> */}
 				{/* <CardLayout image={} name={undefined} price={product} alternate={""} codes={""} index={0}/> */}
 			</section>
-			<Footer />
+			
 		</>
 	);
 }

@@ -1,8 +1,6 @@
 "use client";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import fetchedData from "../../../../components/fetchedData";
-import Header from "../../../../components/header";
-import Login from "@/app/components/login";
 import "@/app/filter.css";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Link from "next/link";
@@ -11,8 +9,9 @@ import axios from "axios";
 import Image from "next/image";
 import bgImage from "@/../public/bg-Image.jpg";
 import { GiWoodStick } from "react-icons/gi";
+ 
 
-export default function page({
+export default function Page({
 	params,
 }: {
 	params: {
@@ -72,7 +71,7 @@ export default function page({
 			code: string;
 		}[];
 		defaultArticle: { normalPicture: { baseUrl: string }[] };
-		rgbColors:string[]
+		rgbColors: string[];
 	}
 
 	interface DataState {
@@ -144,8 +143,7 @@ export default function page({
 				setData(response);
 				console.log(response);
 
-				{
-					/*const productList = await fetchedData(
+				const productList = await fetchedData(
 					"categories",
 					"list",
 					"",
@@ -169,8 +167,7 @@ export default function page({
 							);
 						}
 					}
-				); */
-				}
+				); 
 
 				return;
 			} catch (error) {
@@ -178,7 +175,7 @@ export default function page({
 			}
 		}
 		getData();
-	}, []);
+	}, [clothProperty, params.category]);  {/*  clothProperty can be a mistake here*/}
 
 	async function favoriteClothes(
 		name: string,
@@ -195,11 +192,11 @@ export default function page({
 				netQuantity,
 				articleCode,
 			};
-			const context = 'favorites'
-			const response = await axios.post(
-				"/api/productPage",
-				{productDetails, context}
-			);
+			const context = "favorites";
+			const response = await axios.post("/api/productPage", {
+				productDetails,
+				context,
+			});
 			console.log(response);
 		} catch (error) {
 			console.log("error while posting favorites", error);
@@ -255,16 +252,10 @@ export default function page({
 	];
 
 	return (
-		<div className={flow}>
-			<div className={parent}>
-				<Header
-					overlay={async () => {
-						setOverlay(true), change();
-					}}
-				/>
-				<Login className={child} overlay={change} />
+		<div className='relative'>
+				
 				<div className="flex">
-					{/* <section className="sticky ml-10">
+					<section className="sticky ml-10">
 						{list !== undefined
 							? list?.map(
 									(
@@ -331,9 +322,9 @@ export default function page({
 									}
 							  )
 							: ""}
-					</section> */}
+					</section>
 					<section className="mt-10 ml-10">
-						{/* <div className="w-auto h-48 relative border text-center mb-3">
+						<div className="w-auto h-48 relative border text-center mb-3">
 							<Image
 								src={bgImage}
 								objectFit="cover"
@@ -367,7 +358,7 @@ export default function page({
 						</div>
 						<div className="font-semibold text-sm">
 							Add all the essential style staples to
-							his wardrobe with our baby boys'
+							his wardrobe with our baby boys`&apos;`
 							clothes. We have T-Shirts, jeans and
 							shorts in various styles
 							<br /> for his everyday rotation,
@@ -375,12 +366,12 @@ export default function page({
 							dressing as easy as ABC. When smarter
 							looks are called for,
 							<br /> scroll no further than our baby
-							boys' shirts and trousers, before
+							boys`&apos;` shirts and trousers, before
 							adding the finishing touches with our
-							baby boys' accessories.
+							baby boys`&apos;` accessories.
 							<br /> Find the perfect gift for
 							little ones in our collection or
-							browse for baby boys' shoes.
+							browse for baby boys`&apos;` shoes.
 						</div>
 						<nav>
 							<section className="grid grid-flow-col grid-rows-1 font-semibold mb-8 mt-10 gap-4 focus:text-red-500 justify-start">
@@ -659,7 +650,7 @@ export default function page({
 									</ul>
 								</div>
 							</section>
-						</nav> */}
+						</nav>
 						<div className="grid grid-cols-4 gap-x-5 gap-y-2">
 							{data?.results === undefined
 								? ""
@@ -671,22 +662,25 @@ export default function page({
 												price,
 												articles,
 												defaultArticle,
-												rgbColors
+												rgbColors,
 											},
 											index: number
 										) => {
 											const image =
+												// defaultArticle
+												// 	.normalPicture[0]
+												// 	.baseUrl &&
+												// !imageChange
+												// 	? defaultArticle
+												// 			.normalPicture[0]
+												// 			.baseUrl
+												// 	: imageChange
+												// 	? images[0]
+												// 			.baseUrl
+												// 	: ""
 												defaultArticle
 													.normalPicture[0]
-													.baseUrl &&
-												!imageChange
-													? defaultArticle
-															.normalPicture[0]
-															.baseUrl
-													: imageChange
-													? images[0]
-															.baseUrl
-													: "";
+													.baseUrl;
 											const actualPrice: string =
 												price.formattedValue;
 											const alternate =
@@ -699,6 +693,7 @@ export default function page({
 											const code =
 												articles[0]
 													?.code;
+												console.log(rgbColors)
 
 											return (
 												<Link
@@ -707,22 +702,33 @@ export default function page({
 													}
 													href={`/productPage/${code}`}
 													className="mb-3 mr-3 flex flex-col flex-wrap  text-left text-sm cursor-pointer "
-													onMouseEnter={() =>
-														setImageChange(
-															true
-														)
-													}
-													onMouseLeave={() =>
-														setImageChange(
-															false
-														)
-													}
+													// onMouseEnter={() =>
+													// 	setImageChange(
+													// 		true
+													// 	)
+													// }
+													// onMouseLeave={() =>
+													// 	setImageChange(
+													// 		false
+													// 	)
+													// }
 												>
 													<CardLayout
 														index={
 															index
 														}
 														image={
+															// defaultArticle
+															// 	.normalPicture[0]
+															// 	.baseUrl &&
+															// !imageChange
+															// 	? defaultArticle
+															// 			.normalPicture[0]
+															// 			.baseUrl
+															// 	: imageChange
+															// 	? images[0]
+															// 			.baseUrl
+															// 	: ""
 															image
 														}
 														alternate={
@@ -737,18 +743,20 @@ export default function page({
 														codes={
 															code
 														}
-														favorites={() => {
-															favoriteClothes(
-																name,
-																images[0]
-																	?.baseUrl,
-																actualPrice,
+														// favorites={() => {
+														// 	favoriteClothes(
+														// 		name,
+														// 		images[0]
+														// 			?.baseUrl,
+														// 		actualPrice,
 
-																"1",
-																code
-															);
-														}}
-														clothColor={rgbColors}
+														// 		"1",
+														// 		code
+														// 	);
+														// }}
+														clothColor={
+															rgbColors
+														}
 													/>
 												</Link>
 											);
@@ -757,7 +765,6 @@ export default function page({
 						</div>
 					</section>
 				</div>
-			</div>
 		</div>
 	);
 }

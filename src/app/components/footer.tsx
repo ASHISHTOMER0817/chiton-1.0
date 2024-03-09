@@ -8,7 +8,7 @@ import facebook from "@/../public/icons8-facebook.svg"
 
 
 
-function footer() {
+function Footer() {
 
 
       const icons = [icons8, pinterest, tik, youtube, facebook]
@@ -17,17 +17,17 @@ function footer() {
 
 			<ul className=" grid grid-rows-1 grid-flow-col gap-8 justify-center ">
                       
-                        <li>Women</li>
-                        <li>Divided</li>
-                        <li>Men</li>
-                        <li>Baby</li>
-                        <li>Kids</li>
-                        <li>H&M HOME</li>
-                        <li>Beauty </li>
-                        <li>Sport</li>
+                        <li className="cursor-pointer">Women</li>
+                        <li className="cursor-pointer">Divided</li>
+                        <li className="cursor-pointer">Men</li>
+                        <li className="cursor-pointer">Baby</li>
+                        <li className="cursor-pointer">Kids</li>
+                        <li className="cursor-pointer">H&M HOME</li>
+                        <li className="cursor-pointer">Beauty </li>
+                        <li className="cursor-pointer">Sport</li>
                   </ul>
 			<ul>
-                        <li  className=" font-serif border border-black inline-block my-7 p-3">BUY FROM H & M </li>
+                        <li  className=" font-serif border border-black inline-block my-7 p-3 duration-500 hover:bg-gradient-to-t from-slate-700 to-black hover:text-white">BUY FROM H & M </li>
                   </ul>
                   <div></div>
 			<div className="grid grid-rows-1 grid-flow-col gap-5 justify-center mb-4">
@@ -45,4 +45,4 @@ function footer() {
 	);
 }
 
-export default footer;
+export default Footer;

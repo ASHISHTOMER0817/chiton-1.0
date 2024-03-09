@@ -12,8 +12,8 @@ interface HomePage {
 	price: String;
 	alternate: string;
 	codes: string;
-	index: number;
-	favorites: () => void;
+	index:number;
+	// favorites: () => void;
 	clothColor: string[]
 }
 
@@ -24,7 +24,7 @@ const CardLayout: React.FC<HomePage> = ({
 	price,
 	codes,
 	index,
-	favorites,
+	// favorites,
 	clothColor
 }) => {
 	const { setUser, setIndexNo } = useContext(UserContext);
@@ -48,12 +48,13 @@ const CardLayout: React.FC<HomePage> = ({
 					height={450}
 				/>
 				<FaHeart
-					onClick={favorites}
+					// onClick={favorites}
 					className="absolute top-[10%] right-[5%] w-5 h-5 -translate-x-[50%] -translate-y-[50%] hover:text-red-500 focus:text-red-500"
 				/>
 			</div>
 			<ul className="grid grid-flow-col grid-rows-3 gap-3 justify-start">
 				{clothColor.map((clr, index)=> {
+					console.log(clr)
 					return (
 						<>
 						<li className={` bg-[${clr}] w-3 h-3 rounded-full `} key={index}></li>

@@ -1,20 +1,21 @@
 'use client'
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Inputspace from "./inputSpace";
 import Image from "next/image";
 import  close  from "@/../public/close.png";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useRef } from "react";
 
 
-export default function Page({className, overlay}:{className:string, overlay: ()=> void}) {
+export default function Login({classList, overlay, memberOverlay}:{classList:boolean, overlay:()=> void, memberOverlay:()=> void}) {
 	const router = useRouter()
 	const [user, setUser] = useState<{[key:string]:string}>({
 		email: '',
 		password: '',
 	})
-
+	const loginRef = useRef<HTMLDivElement>(null)
 	async function loginDetails () {
 		try{
 
@@ -25,7 +26,7 @@ export default function Page({className, overlay}:{className:string, overlay: ()
 			const message = await response.data.message
 			console.log(verify, message)
 			if(verify === true) {
-				// router.push('/member')
+				router.push('/')
 
 			}else{
 				console.log(message)
@@ -49,9 +50,23 @@ export default function Page({className, overlay}:{className:string, overlay: ()
 			classList: "mb-2",
 		},
 	];
+
+	// useEffect(()=>
+	// 	{
+	// 		if(window)
+
+	// 		window.addEventListener("click", (e) => {
+	// 			if (
+	// 				e.target !== loginRef.current
+	// 				) {
+	// 					overlay();
+	// 				}
+				
+	// })},[])
+	
+
 	return (
-		<div className= {`font-sans ${className}`} >
-			<div className="bg-slate-400 p-3 m-auto w-1/3 ">
+		<div ref={loginRef} className= {`font-sans bg-slate-400 p-3 m-auto w-[34%] ${ classList ? 'fixed top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 z-50' : 'hidden'}`} >
 				<div className="flex justify-between text-center items-center">
 					<h2>Sign in</h2>
 					<Image src={close} alt="close" className="h-4 w-4" onClick={overlay} />
@@ -77,7 +92,7 @@ export default function Page({className, overlay}:{className:string, overlay: ()
 				</form>
 				<div className="flex justify-between items-center text-xs">
 					<input type="checkbox" id="checkbox" />
-					<label htmlFor="checkbox" className="mr-auto">
+					<label htmlFor="checkbox" className="mr-auto" onClick={overlay}>
 						Remember me
 					</label>
 					<div className="underline">Forget Password?</div>
@@ -86,8 +101,7 @@ export default function Page({className, overlay}:{className:string, overlay: ()
 				<button className="bg-black text-center text-white py-3 my-4 w-4/5 mx-auto block"  type="submit" onClick={loginDetails}>
 					Sign in
 				</button>
-				<button className="text-center py-3 w-4/5 mx-auto block border border-black" > <Link href={'/member'}> Become a member </Link></button>
-			</div>
+				<button onClick={memberOverlay} className="text-center py-3 w-4/5 mx-auto block border border-black" > Become a member</button>
 			
 		</div>
 	);

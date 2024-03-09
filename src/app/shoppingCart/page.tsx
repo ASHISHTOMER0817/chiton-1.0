@@ -45,7 +45,7 @@ export default function Page() {
 		}
 		getData();
 		console.log(productCard);
-	}, [remove]);
+	}, [remove,productCard]);
 
 	const removeit = () => {
 		if (remove === true){

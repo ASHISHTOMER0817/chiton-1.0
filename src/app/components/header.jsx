@@ -9,16 +9,22 @@ import favorites from "@/../public/favorites.svg";
 import shoppingBag from "@/../public/shopping-bag.svg";
 import { useEffect, useState } from "react";
 import fetchedData from "./fetchedData";
+import Login from "./login"
+import Member from "./member"
+import { useRouter } from "next/navigation";
 
-// import Login from '../login/page'
-
-export default function Header({overlay}) {
+export default function Header() {
 	const [variety, setVariety] = useState("");
 	const [group, setGroup] = useState();
 	const [articles, setArticles] = useState("hidden");
 	const [trigger, setTrigger] = useState(false);
 	const [render, setRender] = useState(false);
 	const [initialRender, setInitialRender] = useState(false)
+	const [login, setLogin] = useState(false)
+	const[member, setMember] = useState(false)
+	const [search, setSearch] = useState('')
+	const router =useRouter()
+	
 	const navbar = [
 		"Women",
 		"Divided",
@@ -55,7 +61,7 @@ export default function Header({overlay}) {
 
 			fetchNewData();
 		}
-	}, [trigger]);
+	}, [variety, trigger]);    {/*  variety could be a mistake here*/}
 	
 
 	function triggerfetchedData() {
@@ -68,9 +74,40 @@ export default function Header({overlay}) {
 		setTrigger(false);
 	}
 
+	function toggleLogin () {
+		setLogin(true)
+		
+	}
+	function toggleMember () {
+		setMember(true)
+		setLogin(false)
+	}
+	function LoginWindowDown() {
+		setLogin(false)
+	}
+	function memberwindowDown() {
+		setMember(false)
+		setLogin(true)
+	}
+	function memberWindowCollapse() {
+		setMember(false)
+	}
+
+	function SearchIncludes () {
+		for(let i=0; i< navbar.length; i++){
+			const category = navbar[i].toLowerCase
+			if(search.includes(category)){
+				router.push(`/allProduct/Men/men_jeans/Jeans}`)
+				
+			}
+		}
+	}
+
 	return (
 
-			<header className=" bg-gray-200 ">
+			<header className={`bg-gray-200 border ${trigger?'border-b-2 border-b-black': ''}`}>
+				<Login classList={login} overlay={LoginWindowDown} memberOverlay={toggleMember}/>
+				<Member classList={member} overlay={memberWindowCollapse} LoginOverlay={memberwindowDown}/>
 				<div className="flex justify-between text-sm">
 					<Image
 						priority={true}
@@ -87,9 +124,10 @@ export default function Header({overlay}) {
 							className="h-auto"
 							alt="icon"
 						/>
-						<div className="mr-3" onClick={overlay}>
+						<div className="mr-3" onClick={toggleLogin}>
 							  Login
 						</div>
+					
 						<Image
 							src={favorites}
 							width={50}
@@ -141,13 +179,19 @@ export default function Header({overlay}) {
 					</ul>
 					<search className="flex border-b border-b-gray-700 ml-auto h-fit sm:w-1/3 sm:mr-0 ">
 						<Image
+							onClick={SearchIncludes}
 							src={searchIcon}
 							alt="icon"
 							className="h-auto"
 						/>
 						<input
+							value={search}
 							className=" text-sm bg-gray-200 focus:outline-none"
 							placeholder="Search..."
+							onChange={(e)=> {
+								setSearch(e.target.value)
+								
+							}}
 						/>
 					</search>
 				</div>
@@ -158,7 +202,7 @@ export default function Header({overlay}) {
 					onMouseLeave={()=> {
 						setArticles('hidden')
 					}}
-					className={`w-full mx-auto border-b-4   border-t-0 ${articles} flex justify-around items-start  text-nowrap text-sm  border-b-black`}
+					className={`w-full mx-auto    border-t-0 ${articles} flex justify-around items-start  text-nowrap text-sm  `}
 				>
 					{ group !== undefined || null ? group.CategoriesArray.map(
 						({ CategoryValue, CategoriesArray }, index) => {

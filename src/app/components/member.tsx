@@ -5,12 +5,19 @@ import Image from "next/image";
 import close from "@/../public/close.png";
 import { useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRef } from "react";
 
-export default function Page() {
-	const [existingUser, setExistingUser] = useState('')
-	const router = useRouter()
+
+export default function Member({
+	classList,
+	overlay, LoginOverlay
+}: {
+	classList: string;
+	overlay:()=> void, LoginOverlay:()=> void
+}) {
+	const [existingUser, setExistingUser] = useState("");
+	const memberRef = useRef<HTMLDivElement>(null)
 	const [user, setUser] = useState<{ [key: string]: string }>({
 		name: "",
 		phonenumber: "",
@@ -49,35 +56,40 @@ export default function Page() {
 		try {
 			const response = await axios.post("/api/users/member", user);
 			console.log("signup successful");
-			const success = response.data.success
-			const messageRecd = await response.data.message
-			if(success !== true) {
-				setExistingUser(messageRecd)
-
+			const success = response.data.success;
+			const messageRecd = await response.data.message;
+			if (success !== true) {
+				setExistingUser(messageRecd);
+			} else if (success === true) {
 			}
-			else if(success === true) {
-				// router.push('/login')
-			}
-
 		} catch (error) {
 			console.log(" Problem in user data function", error);
 		}
 	}
 
+	// window.addEventListener("click", (e) => {
+	// 	if (
+	// 		e.target !== memberRef.current
+			
+	// 	) {
+	// 		overlay();
+	// 	}
+	// });
+
 	return (
-		<div className="">
-			<div className="bg-slate-400 p-3 m-auto w-1/2 ">
+		<div className={`font-sans bg-slate-400 p-3 m-auto w-[34%] ${ classList ? 'fixed top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 z-50' : 'hidden'}`}>
 				<div className="flex justify-between text-center items-center">
 					<h2>Become a member</h2>
-					<Link href={"/"} >
-					<Image
-					height={12}
-					width={12} 
-						src={close}
-						alt="close"
-						className="w-3 h-3"
+					
+						<Image
+						onClick={overlay}
+							height={12}
+							width={12}
+							src={close}
+							alt="close"
+							className="w-3 h-3"
 						/>
-						</Link>
+					
 				</div>
 				<p className="my-4 text-center">
 					Become a member and forgo the deals, offers,
@@ -112,9 +124,7 @@ export default function Page() {
 						}
 					)}
 				</form>
-				<h5 className={`text-red-700 mt-2 `}>
-					{existingUser}
-				</h5>
+				<h5 className={`text-red-700 mt-2 `}>{existingUser}</h5>
 				<div className="flex justify-between items-center mt-3">
 					<input type="checkbox" id="checkbox" />
 					<label
@@ -134,12 +144,9 @@ export default function Page() {
 				>
 					Become a member
 				</button>
-				<button className="text-center w-full py-3">
-					<Link href={'/login'}>
-					Sign in
-					</Link>
+				<button onClick={LoginOverlay} className="text-center w-full py-3">
+					Sign In
 				</button>
-			</div>
 		</div>
 	);
 }

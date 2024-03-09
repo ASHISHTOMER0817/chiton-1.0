@@ -25,6 +25,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 	const [fit, setFit] = useState("hidden");
 	const [material, setMaterial] = useState("hidden");
 	const [guide, setGuide] = useState("hidden");
+	const [changeProduct, setChangeProduct] = useState(params.pid)
 
 	function changeState(fit: string, material: string, guide: string) {
 		setFit(fit);
@@ -40,7 +41,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 				const data = await fetchedData(
 					"products",
 					'detail',
-					params.pid,
+					changeProduct,
 					"",
 					"",
 					""
@@ -53,7 +54,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 		}
 
 		fetchData();
-	}, [params.pid]);
+	}, [changeProduct]);
 
 	const productDetails = {
 		url: product?.articlesList[0]?.galleryDetails[0]?.baseUrl,

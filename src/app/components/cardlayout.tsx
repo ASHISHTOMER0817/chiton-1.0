@@ -1,5 +1,4 @@
-"use client";
-
+'use client'
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
@@ -49,20 +48,20 @@ const CardLayout: React.FC<HomePage> = ({
 				/>
 				<FaHeart
 					// onClick={favorites}
-					className="absolute top-[10%] right-[5%] w-5 h-5 -translate-x-[50%] -translate-y-[50%] hover:text-red-500 focus:text-red-500"
+					className="absolute top-[10%] text-gray-500` right-[5%] w-5 h-5 -translate-x-[50%] -translate-y-[50%] hover:text-red-500 focus:text-red-500"
 				/>
 			</div>
-			<ul className="grid grid-flow-col grid-rows-3 gap-3 justify-start">
+			<ul className="grid grid-flow-col grid-rows-1 gap-3 justify-start mt-2">
 				{clothColor.map((clr, index)=> {
 					console.log(clr)
 					return (
 						<>
-						<li className={` bg-[${clr}] w-3 h-3 rounded-full `} key={index}></li>
+						<li className={` bg-[${clr}] w-3 h-3 rounded-full `} style={{backgroundColor: clr}} key={index}></li>
 						</>
 					)
 				})}
 			</ul>
-			<p className="h-auto font-medium text-[13px]">{name}</p>
+			<p className="h-auto font-medium text-[13px] mt-3">{name}</p>
 			<p className="font-medium text-xs">{price}</p>
 		</>
 	);

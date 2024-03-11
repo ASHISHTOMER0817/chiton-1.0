@@ -7,7 +7,7 @@ import CardLayout from "./components/cardlayout";
 import Link from "next/link";
 import AndreaImage from "@/../public/AndreaImage.jpg";
 import coat from "@/../public/coat.jpeg";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import "./filter.css";
 import trousers from "@/../public/trousers.jpg";
 import sweatshirt from "@/../public/sweatshirt.webp";
@@ -18,13 +18,13 @@ import jeans from "@/../public/jeans.webp";
 import shirts from "@/../public/shirts.jpg";
 import cargoPants from "@/../public/cargoPants.jpg";
 import home from "@/../public/home.jpg";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FaHeart } from "react-icons/fa";
+import HomePageCarousel from "./components/homePageCarousel";
+import Spinner from "./components/spinner";
 
 export default function Page() {
-	const [data, setData] = useState<any>();
+	const [data, setData] = useState();
 
 	{
 		/* Carousel Function Below */
@@ -94,9 +94,10 @@ export default function Page() {
 					"list",
 					null,
 					"0",
-					"30",null
+					"30",
+					null
 				);
-				console.log( 'products with carousel',response);
+				console.log("products with carousel", response);
 				setData(response);
 			} catch (error: any) {
 				return console.log(
@@ -107,8 +108,6 @@ export default function Page() {
 		}
 		getData();
 	}, []);
-
-	
 
 	return (
 		<div className="relative">
@@ -284,7 +283,7 @@ export default function Page() {
 								<>
 									<div
 										key={index}
-										className="px-3 py-2 rounded-[30px] border hover:bg-red-800"
+										className="px-3 py-2 rounded-[30px] border hover:bg-[#FF0000] text-sm"
 									>
 										{e}
 									</div>
@@ -300,7 +299,7 @@ export default function Page() {
 							onClick={slideLeft}
 							size={40}
 						/>
-						<div
+						{/* <div
 							id="slider"
 							className="w-full h-full overflow-scroll overflow-x-scroll flex whitespace-nowrap scrollbar-hide scroll-smooth"
 						>
@@ -313,7 +312,7 @@ export default function Page() {
 												images,
 												price,
 												articles,
-												rgbColors
+												rgbColors,
 											}: {
 												name: String;
 												images: {
@@ -326,7 +325,7 @@ export default function Page() {
 												articles: {
 													code: string;
 												}[];
-												rgbColors:string[]
+												rgbColors: string[];
 											},
 											index: number
 										) => {
@@ -357,7 +356,7 @@ export default function Page() {
 												>
 													<Link
 														href={`/productPage/${code}`}
-														className="mb-3 flex flex-col text-left w-52 text-sm cursor-pointer hover:scale-110 ease-in-out duration-300 max-w-none"
+														className="mb-3 flex flex-col ml-2 text-left w-52 text-sm cursor-pointer hover:scale-110 ease-in-out duration-300 max-w-none"
 													>
 														<CardLayout
 															index={
@@ -387,7 +386,8 @@ export default function Page() {
 											);
 										}
 								  )}
-						</div>
+						</div> */}
+						{data !== undefined ? <Suspense fallback={<Spinner/>}><HomePageCarousel data={data}/></Suspense>  : 'There was an error Plz reload the page'}
 						<MdChevronRight
 							className="opacity-50 hover:opacity-100 cursor-pointer"
 							onClick={slideRight}

@@ -5,20 +5,17 @@ import fetchedData from "../../components/fetchedData";
 import Image from "next/legacy/image";
 import arrowDropDown from "@/../public/arrowDropDown.svg";
 import axios from "axios";
-import store from "@/../public/store.svg";
 import { FaHeart } from "react-icons/fa";
 import { CiStar } from "react-icons/ci";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { GoArrowRight } from "react-icons/go";
-import CardLayout from "@/app/components/cardlayout";
-import Link from "next/link";
 import { IoStorefrontOutline } from "react-icons/io5";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 
 
 
 export default function Page({ params }: { params: { pid: string } }) {
-	const [associatedData, SetassociatedData] = useState<any>();
+	// const [associatedData, SetassociatedData] = useState<any>();
 	const [fit, setFit] = useState("hidden");
 	const [material, setMaterial] = useState("hidden");
 	const [guide, setGuide] = useState("hidden");
@@ -432,7 +429,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 					>
 						{" "}
 						<div className="font-bold">Description and Fit</div>
-						<Image src={arrowDropDown} alt={""} />
+						<Image src={arrowDropDown} className={`${ fit === "" ? 'rotate-180': ""}`} alt={""} />
 					</div>
 					<div
 						className={`${fit} mb-4  text-left flex flex-col text-sm`}
@@ -487,7 +484,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 						}}
 					>
 						<div className="font-bold">Materials</div>
-						<Image src={arrowDropDown} alt={""} />
+						<Image src={arrowDropDown} className={`${ material === "" ? 'rotate-180': ""}`} alt={""} />
 					</div>
 					<div
 						className={`${material} text-xs text-left flex flex-col`}
@@ -701,7 +698,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 						}}
 					>
 						<div>Care Guide</div>
-						<Image src={arrowDropDown} alt={"icon"} />
+						<Image src={arrowDropDown} className={`${ guide === "" ? 'rotate-180': ""}`} alt={"icon"} />
 					</div>
 					<div
 						className={`${guide} text-left text-xs flex flex-col`}

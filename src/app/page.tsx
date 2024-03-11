@@ -1,13 +1,9 @@
 'use client'
 import DeliveryStats from "./components/deliveryStats";
-import fetchedData from "@/app/components/fetchedData";
 import Image from "next/image";
-import menHoodie from "@/../public/menHoodie.jpg";
-import CardLayout from "./components/cardlayout";
-import Link from "next/link";
 import AndreaImage from "@/../public/AndreaImage.jpg";
 import coat from "@/../public/coat.jpeg";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense } from "react";
 import "./filter.css";
 import trousers from "@/../public/trousers.jpg";
 import sweatshirt from "@/../public/sweatshirt.webp";
@@ -18,25 +14,14 @@ import jeans from "@/../public/jeans.webp";
 import shirts from "@/../public/shirts.jpg";
 import cargoPants from "@/../public/cargoPants.jpg";
 import home from "@/../public/home.jpg";
-import { MdChevronLeft, MdChevronRight } from "react-icons/md";
-import { FaHeart } from "react-icons/fa";
 import HomePageCarousel from "./components/homePageCarousel";
 import Spinner from "./components/spinner";
+import Link from "next/link";
 
 export default function Page() {
-	const [data, setData] = useState();
+	
 
-	{
-		/* Carousel Function Below */
-	}
-	const slideLeft = () => {
-		let slider = document.getElementById("slider");
-		slider!.scrollLeft = slider!.scrollLeft - 500;
-	};
-	const slideRight = () => {
-		let slider = document.getElementById("slider");
-		slider!.scrollLeft = slider!.scrollLeft + 500;
-	};
+
 
 	const categoriesCard = [
 		{
@@ -86,29 +71,6 @@ export default function Page() {
 		"Sport",
 	];
 
-	useEffect(() => {
-		async function getData() {
-			try {
-				const response = await fetchedData(
-					"products",
-					"list",
-					null,
-					"0",
-					"30",
-					null
-				);
-				console.log("products with carousel", response);
-				setData(response);
-			} catch (error: any) {
-				return console.log(
-					"there is a problem in home --page.jsx",
-					error
-				);
-			}
-		}
-		getData();
-	}, []);
-
 	return (
 		<div className="relative">
 			<div className="">
@@ -125,19 +87,19 @@ export default function Page() {
 							Rs.799
 						</p>
 						<nav className="grid grid-rows-1 grid-flow-col gap-4 justify-center my-4 text-white">
-							<button className="bg-black p-2 text-sm font-semibold ">
-								Women
+							<button className="bg-black p-2 text-sm hover:text-gray-600 font-semibold ">
+							<Link href={"./allProduct/Women/ladies_blazerswaistcoats/Blazers%20&%20Vests"}>Women</Link>	
 							</button>
-							<button className="bg-black p-2 text-sm font-semibold ">
-								Men
+							<button className="bg-black p-2 text-sm hover:text-gray-600 font-semibold ">
+								<Link href={"./allProduct/Men/men_hoodiessweatshirts/Hoodies%20&%20Sweatshirts"}>Men</Link>
 							</button>
-							<button className="bg-black p-2 text-sm font-semibold ">
+							<button className="bg-black p-2 text-sm hover:text-gray-600 font-semibold ">
 								Kids
 							</button>
-							<button className="bg-black p-2 text-sm font-semibold ">
+							<button className="bg-black p-2 text-sm hover:text-gray-600 font-semibold ">
 								Sports
 							</button>
-							<button className="bg-black p-2 text-sm font-semibold ">
+							<button className="bg-black p-2 text-sm hover:text-gray-600 font-semibold ">
 								Home
 							</button>
 						</nav>
@@ -163,7 +125,7 @@ export default function Page() {
 								A modern update on lace,
 								embroidery and tailoring.
 							</h5>
-							<button className=" bg-white text-black font-extrabold p-2  mt-2">
+							<button className=" bg-white hover:text-gray-600 text-black font-extrabold p-2  mt-2">
 								Look here
 							</button>
 						</div>
@@ -185,7 +147,7 @@ export default function Page() {
 							<h5 className=" text-white text-base font-bold">
 								Cargos with unmatched comfort
 							</h5>
-							<button className=" bg-white text-black font-extrabold p-2  mt-2">
+							<button className=" bg-white hover:text-gray-600 text-black font-extrabold p-2  mt-2">
 								Shop Now
 							</button>
 						</div>
@@ -209,10 +171,10 @@ export default function Page() {
 								page
 							</p>
 							<nav className="  grid grid-rows-1 grid-flow-col gap-4 justify-center mt-4 z-10">
-								<button className="bg-white p-2 text-sm font-bold text-black ">
+								<button className="bg-white p-2 text-sm font-bold hover:text-gray-600 text-black ">
 									Shop now
 								</button>
-								<button className="bg-white p-2 text-sm font-bold text-black ">
+								<button className="bg-white p-2 text-sm font-bold hover:text-gray-600 text-black ">
 									My account
 								</button>
 							</nav>
@@ -268,7 +230,7 @@ export default function Page() {
 								your lil ones!
 							</h4>
 
-							<button className=" bg-white text-black font-extrabold p-2  mt-3">
+							<button className=" bg-white text-black font-extrabold p-2 hover:text-gray-600 mt-3">
 								Look here
 							</button>
 						</div>
@@ -283,305 +245,23 @@ export default function Page() {
 								<>
 									<div
 										key={index}
-										className="px-3 py-2 rounded-[30px] border hover:bg-[#FF0000] text-sm"
+										className="px-3 py-2 rounded-[30px] hover:text-gray-600 border hover:bg-[#FF0000] text-sm cursor-pointer"
 									>
+										<Link href={""}>
 										{e}
+										</Link>
 									</div>
 								</>
 							);
 						})}
 					</div>
-
-					{/* BELOW IS THE CAROUSEL FUNCTION */}
-					<div className="relative flex items-center mt-7">
-						<MdChevronLeft
-							className="opacity-50 hover:opacity-100 cursor-pointer "
-							onClick={slideLeft}
-							size={40}
-						/>
-						{/* <div
-							id="slider"
-							className="w-full h-full overflow-scroll overflow-x-scroll flex whitespace-nowrap scrollbar-hide scroll-smooth"
-						>
-							{data?.results === undefined
-								? ""
-								: data?.results.map(
-										(
-											{
-												name,
-												images,
-												price,
-												articles,
-												rgbColors,
-											}: {
-												name: String;
-												images: {
-													url: string;
-													baseUrl: string;
-												}[];
-												price: {
-													formattedValue: String;
-												};
-												articles: {
-													code: string;
-												}[];
-												rgbColors: string[];
-											},
-											index: number
-										) => {
-											const image =
-												images.length >
-												0
-													? images[0]
-															?.url
-													: "";
-											const actualPrice: String =
-												price.formattedValue;
-											const alternate =
-												images.length >
-												0
-													? images[0]
-															?.baseUrl
-													: "";
-
-											const code =
-												articles[0]
-													?.code;
-
-											return (
-												<div
-													key={
-														index
-													}
-												>
-													<Link
-														href={`/productPage/${code}`}
-														className="mb-3 flex flex-col ml-2 text-left w-52 text-sm cursor-pointer hover:scale-110 ease-in-out duration-300 max-w-none"
-													>
-														<CardLayout
-															index={
-																index
-															}
-															image={
-																image
-															}
-															alternate={
-																alternate
-															}
-															name={
-																name
-															}
-															price={
-																actualPrice
-															}
-															codes={
-																code
-															}
-															clothColor={
-																rgbColors
-															}
-														/>
-													</Link>
-												</div>
-											);
-										}
-								  )}
-						</div> */}
-						{data !== undefined ? <Suspense fallback={<Spinner/>}><HomePageCarousel data={data}/></Suspense>  : 'There was an error Plz reload the page'}
-						<MdChevronRight
-							className="opacity-50 hover:opacity-100 cursor-pointer"
-							onClick={slideRight}
-							size={40}
-						/>
-					</div>
+					{
+						<Suspense fallback={<Spinner />}>
+							<HomePageCarousel/>
+						</Suspense>
+					}
 				</div>
 			</div>
 		</div>
 	);
-}
-
-{
-	/* <div className="flex flex-wrap justify-between ">
-							{data?.results === undefined ? '' : data?.results.map(
-								(
-									{
-										name,
-										images,
-										price,
-										articles,
-									}: {
-										name: String;
-										images: {
-											url: string;
-											baseUrl: string;
-										}[];
-										price: {
-											formattedValue: String;
-										};
-										articles: {
-											code: string;
-										}[];
-									},
-									index: number
-								) => {
-									const image =
-										images.length > 0
-											? images[0]
-													?.url
-											: "";
-									const actualPrice: String =
-										price.formattedValue;
-									const alternate =
-										images.length > 0
-											? images[0]
-													?.baseUrl
-											: "";
-
-									const code =
-										articles[0]?.code;
-
-									return (
-										<div
-											key={index}
-											className="flex flex-col text-left w-52 text-sm"
-										>
-											{" "}
-											<Link
-												href={`/productPage/${code}`}
-												className="mb-3"
-											>
-												<CardLayout
-													index={
-														index
-													}
-													image={
-														image
-													}
-													alternate={
-														alternate
-													}
-													name={
-														name
-													}
-													price={
-														actualPrice
-													}
-													codes={
-														code
-													}
-												/>
-											</Link>
-										</div>
-									);
-								}
-							)}
-						</div> */
-}
-
-{
-	/* <div className="relative flex items-center">
-				<MdChevronLeft
-					className="opacity-50 hover:opacity-100 cursor-pointer "
-					onClick={slideLeft}
-					size={40}
-				/>
-				<div
-					id="slider"
-					className="w-full h-full overflow-x-scroll whitespace-nowrap scrollbar-hide scroll-smooth"
-				>
-					{data?.products.map(
-						(
-							{
-								name,
-								images,
-								price,
-								articles,
-							}: {
-								name: String;
-								images: {
-									url: string;
-									baseUrl: string;
-								}[];
-								price: {
-									formattedValue: String;
-								};
-								articles: { code: string }[];
-							},
-							index: number
-						) => {
-							const image =
-								images.length > 0
-									? images[0]?.url
-									: "";
-							const actualPrice: String =
-								price.formattedValue;
-							const alternate =
-								images.length > 0
-									? images[0]?.baseUrl
-									: "";
-
-							const code = articles[0]?.code;
-
-							return (
-								<div key={index}>
-									<Link
-										href={`/productPage/${code}`}
-										className="mb-3 flex flex-col text-left w-52 text-sm cursor-pointer hover:scale-110 ease-in-out duration-300 max-w-none"
-									>
-										<CardLayout
-											index={index}
-											image={image}
-											alternate={
-												alternate
-											}
-											name={name}
-											price={
-												actualPrice
-											}
-											codes={code}
-										/>
-									</Link>
-								</div>
-							);
-						}
-					)}
-				</div>
-				<MdChevronRight
-					className="opacity-50 hover:opacity-100 cursor-pointer"
-					onClick={slideRight}
-					size={40}
-				/>
-						</div> */
-}
-
-{
-	/* <div className="relative flex items-center ">
-				<MdChevronLeft
-					className="opacity-50 hover:opacity-100 cursor-pointer "
-					onClick={slideLeft}
-					size={40}
-				/>
-				<div
-					id="slider"
-					className="w-full h-full overflow-x-scroll whitespace-nowrap scrollbar-hide scroll-smooth"
-				>
-					{newArrivals.map((e, index) => {
-						return (
-							<>
-								<Image
-									key={index}
-									className=" w-36 mr-3 mb-10 inline-block cursor-pointer hover:scale-110 ease-in-out duration-300 max-w-none"
-									src={e}
-									alt={"alternate"}
-								/>
-							</>
-						);
-					})}
-				</div>
-				<MdChevronRight
-					className="opacity-50 hover:opacity-100 cursor-pointer"
-					onClick={slideRight}
-					size={40}
-				/>
-						</div> */
 }

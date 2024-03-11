@@ -48,12 +48,13 @@ const CardLayout: React.FC<HomePage> = ({
 				/>
 				<FaHeart
 					// onClick={favorites}
-					className="absolute top-[10%] text-gray-500` right-[5%] w-5 h-5 -translate-x-[50%] -translate-y-[50%] hover:text-red-500 focus:text-red-500"
+					className="absolute top-[10%] text-gray-500 right-[5%] w-5 h-5 -translate-x-[50%] -translate-y-[50%] hover:text-red-500 focus:text-red-500"
 				/>
 			</div>
 			<ul className="grid grid-flow-col grid-rows-1 gap-3 justify-start mt-2">
-				{clothColor.map((clr, index)=> {
-					console.log(clr)
+
+				{ clothColor && clothColor.length > 0 && clothColor.map((clr, index)=> {
+					
 					return (
 						<>
 						<li className={` bg-[${clr}] w-3 h-3 rounded-full `} style={{backgroundColor: clr}} key={index}></li>

@@ -1,14 +1,19 @@
 "use client";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import fetchedData from "../../../../components/fetchedData";
+import {
+	Suspense,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import "@/app/filter.css";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import Link from "next/link";
-import CardLayout from "@/app/components/cardlayout";
 import axios from "axios";
 import Image from "next/image";
 import bgImage from "@/../public/bg-Image.jpg";
 import { GiWoodStick } from "react-icons/gi";
+import AllProductList from "@/app/components/allProductList";
+import Spinner from "@/app/components/spinner";
+import CategoryList from "@/app/components/categoryList";
 
 export default function Page({
 	params,
@@ -20,10 +25,8 @@ export default function Page({
 	};
 }) {
 	const [subCategory, setSubCategory] = useState(params.subCategory);
-	const [list, setList] = useState<[groupType]>();
 	const [clothProperty, setClothProperty] = useState(params.pid);
-	const [data, setData] = useState<DataState>();
-	const [imageChange, setImageChange] = useState(false);
+
 	// const [favorites, setFavorites] = useState({
 	// 	price: "",
 	// 	image: "",
@@ -45,33 +48,6 @@ export default function Page({
 	const fitRef = useRef<HTMLDivElement>(null);
 	const fitListRef = useRef<HTMLUListElement>(null);
 
-	interface groupType {
-		CatName: string;
-		CategoriesArray: {
-			CatName: string;
-			tagCodes: string[];
-		}[];
-	}
-
-	interface Product {
-		name: string;
-		images: {
-			url: string;
-			baseUrl: string;
-		}[];
-		price: {
-			formattedValue: string;
-		};
-		articles: {
-			code: string;
-		}[];
-		defaultArticle: { normalPicture: { baseUrl: string }[] };
-		rgbColors: string[];
-	}
-
-	interface DataState {
-		results?: Product[];
-	}
 
 	if (typeof window !== "undefined") {
 		window.addEventListener("click", (e) => {
@@ -124,56 +100,6 @@ export default function Page({
 		});
 	}
 
-	useEffect(() => {
-		async function getData() {
-			try {
-				const response = await fetchedData(
-					"products",
-					"list",
-					"",
-					"0",
-					"30",
-					clothProperty
-				);
-				setData(response);
-				console.log(response);
-
-				const productList = await fetchedData(
-					"categories",
-					"list",
-					"",
-					"",
-					"",
-					""
-				);
-				productList.forEach(
-					({
-						CatName,
-						CategoriesArray,
-					}: {
-						CatName: string;
-						CategoriesArray: [groupType];
-					}) => {
-						if (CatName === params.category) {
-							return setList(CategoriesArray);
-						} else {
-							console.log(
-								"there is no tagcode inside"
-							);
-						}
-					}
-				);
-
-				return;
-			} catch (error) {
-				console.log(error);
-			}
-		}
-		getData();
-	}, [clothProperty, params.category]);
-	{
-		/*  clothProperty can be a mistake here*/
-	}
 
 	async function favoriteClothes(
 		name: string,
@@ -201,10 +127,7 @@ export default function Page({
 		}
 	}
 
-	function changeSubCategory(catname: string, tagcode: string[]) {
-		setSubCategory(catname);
-		setClothProperty(tagcode[0]);
-	}
+	
 
 	const size = ["SX", "S", "M", "L", "XL", "XXL"];
 	const sort = ["recommended", "Newest", "Lowest Price", "highest"];
@@ -236,101 +159,42 @@ export default function Page({
 		"pink",
 	];
 
-	return (
-		<div className="relative">
-			<div className="flex">
-				<section className="sticky ml-10">
-					{list !== undefined
-						? list?.map(
-								(
-									{
-										CatName,
-										CategoriesArray,
-									}: {
-										CatName: string;
-										CategoriesArray: {
-											CatName: string;
-											tagCodes: string[];
-										}[];
-									},
-									index: number
-								) => {
-									return (
-										<div
-											key={index}
-											className=" "
-										>
-											<div className="font-bold mt-10 text-[15px] ">
-												{
-													CatName
-												}
-											</div>
+	
+      function changeSubCategory(catname: string, tagcode: string[]) {
+		setSubCategory(catname);
+		setClothProperty(tagcode[0]);
+	}
 
-											{CategoriesArray
-												? CategoriesArray.map(
-														(
-															{
-																CatName,
-																tagCodes,
-															}: {
-																CatName: string;
-																tagCodes: string[];
-															},
-															index: number
-														) => {
-															return (
-																<div
-																	key={
-																		index
-																	}
-																	className="my-4 ml-4 font-semibold text-sm hover:underline underline-offset-4 hover:text-red-500 cursor-pointer"
-																	onClick={() =>
-																		changeSubCategory(
-																			CatName,
-																			tagCodes
-																		)
-																	}
-																>
-																	{
-																		CatName
-																	}
-																</div>
-															);
-														}
-												  )
-												: ""}
-										</div>
-									);
-								}
-						  )
-						: ""}
-				</section>
-				<section className="mt-10 ml-10">
-					<div className="w-auto h-48 relative border text-center mb-3">
+	return (
+		<div className="relative flex">
+				<Suspense fallback={<Spinner/>}><CategoryList category={params.category} change_sub_category={changeSubCategory}/></Suspense>
+
+				<section className="mt-10 ml-10 w-full relative">
+					<div className="w-auto h-40 relative mr-72 border text-center mb-3">
 						<Image
 							src={bgImage}
 							objectFit="cover"
-							className="overflow-hidden z-1 absolute"
+							className="overflow-hidden object-cover w-full h-full z-1 absolute"
 							alt={""}
 						/>
-						<p className="text-3xl top-[30%] left-[50%] -translate-x-2/4 -translate-y-2/4 absolute z-20 text-red-500 font-bold mt-5 mb-2">
+						<p className="text-3xl top-[30%] left-[50%] -translate-x-2/4 -translate-y-2/4 absolute z-20 text-red-500 font-bold ">
 							Flat 15% off on iconic picks!
 						</p>
 
-						<nav className=" z-20 bottom-[5%] left-[50%] -translate-x-2/4 -translate-y-2/4 absolute grid grid-rows-1 grid-flow-col gap-4 justify-center my-4 text-black">
-							<button className="bg-white p-3 text-sm font-semibold ">
+						<nav className=" z-20 bottom-[0%] left-[50%] -translate-x-2/4 -translate-y-2/4 absolute grid grid-rows-1 grid-flow-col gap-4 justify-center  text-black">
+							<button className="bg-white p-[10px] hover:text-gray-600 text-sm font-semibold ">
 								Women
 							</button>
-							<button className="bg-white p-3 text-sm font-semibold ">
+							<button className="bg-white p-[10px] hover:text-gray-600 text-sm font-semibold ">
 								Men
 							</button>
-							<button className="bg-white p-3 text-sm font-semibold ">
+							<button className="bg-white p-[10px] hover:text-gray-600 text-sm font-semibold ">
 								Kids
 							</button>
-							<button className="bg-white p-3 text-sm font-semibold ">
+							<button className="bg-white p-[10px] hover:text-gray-600 text-sm font-semibold ">
 								Sports
 							</button>
-							<button className="bg-white p-3 text-sm font-semibold ">
+							<button className="bg-white p-[10px] hover:text-gray-600 text-sm font-semibold ">
 								Home
 							</button>
 						</nav>
@@ -340,7 +204,7 @@ export default function Page({
 					</div>
 					<div className="font-semibold text-sm">
 						Add all the essential style staples to his
-						wardrobe with our baby boys`&apos;` clothes.
+						wardrobe with our baby boys&apos; clothes.
 						We have T-Shirts, jeans and shorts in
 						various styles
 						<br /> for his everyday rotation, while
@@ -348,15 +212,14 @@ export default function Page({
 						easy as ABC. When smarter looks are called
 						for,
 						<br /> scroll no further than our baby
-						boys`&apos;` shirts and trousers, before
+						boys&apos; shirts and trousers, before
 						adding the finishing touches with our baby
-						boys`&apos;` accessories.
+						boys&apos; accessories.
 						<br /> Find the perfect gift for little ones
 						in our collection or browse for baby
-						boys`&apos;` shoes.
+						boys&apos; shoes.
 					</div>
-					<nav>
-						<section className="grid grid-flow-col grid-rows-1 font-semibold mb-8 mt-10 gap-4 focus:text-red-500 justify-start">
+						<section className="grid grid-flow-col grid-rows-1 font-semibold mb-8 mt-10 gap-4 focus:text-red-500 justify-start z-10 absolute top-80">
 							<div className="transition  active:bg-gray-200 flex flex-col  ">
 								<div
 									ref={sortRef}
@@ -375,7 +238,7 @@ export default function Page({
 								</div>
 								<ul
 									ref={sortListRef}
-									className={` font-normal text-sm w-40 focus-visible:visible   ${
+									className={` font-normal text-sm w-40 bg-gray-200 focus-visible:visible   ${
 										sortStt
 											? ""
 											: "hidden"
@@ -398,7 +261,7 @@ export default function Page({
 													}
 													className="p-3 flex items-center hover:bg-slate-200 focus:bg-slate-300"
 												>
-													<div className="float-left mr-7 border w-4 h-4 border-gray-600">
+													<div className="float-left mr-6 border w-4 h-4 border-gray-600">
 														{" "}
 														<GiWoodStick className=" hidden focus:block" />
 													</div>
@@ -431,7 +294,7 @@ export default function Page({
 								</div>
 								<ul
 									ref={colorListRef}
-									className={` font-normal text-sm w-40 focus-visible:visible   ${
+									className={` font-normal text-sm w-40 bg-gray-200 focus-visible:visible   ${
 										colorStt
 											? ""
 											: "hidden"
@@ -452,7 +315,7 @@ export default function Page({
 													}
 												>
 													<div
-														className={`bg-${e} mr-7 float-left w-2 h-2`}
+													style={{backgroundColor: `${e}`}}	className={`bg-${e} mr-7 float-left w-2 h-2`}
 													></div>
 													{
 														e
@@ -465,7 +328,7 @@ export default function Page({
 							</div>
 							<div className="  transition active:bg-gray-200 flex flex-col">
 								<div
-									className="flex items-center"
+									className="flex items-center cursor-pointer"
 									ref={sizeRef}
 									onClick={() =>
 										setSizeStt(
@@ -480,7 +343,7 @@ export default function Page({
 								</div>
 								<ul
 									ref={sizeListRef}
-									className={` font-normal text-sm w-40 focus-visible:visible   ${
+									className={` font-normal text-sm w-40 bg-gray-200 focus-visible:visible   ${
 										sizeStt
 											? ""
 											: "hidden"
@@ -494,7 +357,7 @@ export default function Page({
 											return (
 												<>
 													<li
-														className="w-40 p-3 hover:bg-slate-200"
+														className="p-3 flex items-center hover:bg-slate-200 focus:bg-slate-300"
 														onClick={() => {
 															setSizeStt(
 																!sizeStt
@@ -505,7 +368,7 @@ export default function Page({
 														}
 													>
 														{" "}
-														<div className="w-2 mr-7 h-2 float-left">
+														<div className="w-4 mr-7 h-4 float-left">
 															<GiWoodStick className=" hidden focus:block" />
 														</div>
 														{
@@ -520,7 +383,7 @@ export default function Page({
 							</div>
 							<div className="  transition  active:bg-gray-200 flex flex-col">
 								<div
-									className="flex items-center"
+									className="flex items-center cursor-pointer"
 									ref={styletRef}
 									onClick={() =>
 										setStyleStt(
@@ -535,7 +398,7 @@ export default function Page({
 								</div>
 								<ul
 									ref={styleListRef}
-									className={` font-normal text-sm w-40 focus-visible:visible   ${
+									className={` font-normal text-sm w-40 bg-gray-200 focus-visible:visible   ${
 										styleStt
 											? ""
 											: "hidden"
@@ -557,9 +420,9 @@ export default function Page({
 														key={
 															index
 														}
-														className="p-3 hover:bg-slate-200"
+														className="p-3 flex items-center hover:bg-slate-200 focus:bg-slate-300"
 													>
-														<div className="float-left mr-7 border w-2 h-2 border-gray-600">
+														<div className="float-left mr-7 border w-4 h-4 border-gray-600">
 															{" "}
 															<GiWoodStick className=" hidden focus:block" />
 														</div>
@@ -575,7 +438,7 @@ export default function Page({
 							</div>
 							<div className="  transition  active:bg-gray-200 flex flex-col">
 								<div
-									className="flex items-center"
+									className="flex items-center cursor-pointer"
 									ref={fitRef}
 									onClick={() =>
 										setFitStt(
@@ -590,7 +453,7 @@ export default function Page({
 								</div>
 								<ul
 									ref={fitListRef}
-									className={` font-normal text-sm w-40 focus-visible:visible   ${
+									className={` font-normal text-sm w-40 bg-gray-200 focus-visible:visible   ${
 										fitStt
 											? ""
 											: "hidden"
@@ -612,9 +475,9 @@ export default function Page({
 														key={
 															index
 														}
-														className="p-3 hover:bg-slate-200"
+														className="p-3 flex items-center hover:bg-slate-200 focus:bg-slate-300"
 													>
-														<div className="float-left mr-7 border w-2 h-2 border-gray-600">
+														<div className="float-left mr-7 border w-4 h-4 border-gray-600">
 															{" "}
 															<GiWoodStick className=" hidden focus:block" />
 														</div>
@@ -629,112 +492,11 @@ export default function Page({
 								</ul>
 							</div>
 						</section>
-					</nav>
-					<div className="grid grid-cols-4 gap-x-5 gap-y-2">
-						{data?.results === undefined
-							? ""
-							: data?.results.map(
-									(
-										{
-											name,
-											images,
-											price,
-											articles,
-											defaultArticle,
-											rgbColors,
-										},
-										index: number
-									) => {
-										// const image = images[0]?.baseUrl;
-										const actualPrice: string =
-											price.formattedValue;
-										const alternate =
-											images.length >
-											0
-												? images[0]
-														?.baseUrl
-												: "";
-
-										const code =
-											articles[0]
-												?.code;
-										console.log(
-											rgbColors
-										);
-										const defaultImage =
-											defaultArticle
-												.normalPicture[0]
-												.baseUrl;
-										const regularImage =
-											images[0]
-												.baseUrl;
-										const arrOfImages =
-											[
-												defaultImage,
-												regularImage,
-											];
-
-										return (
-											<Link
-												key={
-													index
-												}
-												href={`/productPage/${code}`}
-												className="mb-3 mr-3 flex flex-col flex-wrap  text-left text-sm cursor-pointer "
-												onMouseEnter={() =>
-													setImageChange(
-														true
-													)
-												}
-												onMouseLeave={() =>
-													setImageChange(
-														false
-													)
-												}
-											>
-												<CardLayout
-													index={
-														index
-													}
-													image={
-														imageChange
-															? arrOfImages[0]
-															: arrOfImages[1]
-													}
-													alternate={
-														alternate
-													}
-													name={
-														name
-													}
-													price={
-														actualPrice
-													}
-													codes={
-														code
-													}
-													// favorites={() => {
-													// 	favoriteClothes(
-													// 		name,
-													// 		images[0]
-													// 			?.baseUrl,
-													// 		actualPrice,
-
-													// 		"1",
-													// 		code
-													// 	);
-													// }}
-													clothColor={
-														rgbColors
-													}
-												/>
-											</Link>
-										);
-									}
-							  )}
-					</div>
+					
+						<Suspense fallback={<Spinner />}>
+							<AllProductList clothProperty={clothProperty} />
+						</Suspense>
 				</section>
 			</div>
-		</div>
 	);
 }

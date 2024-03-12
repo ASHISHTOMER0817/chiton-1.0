@@ -25,7 +25,7 @@ interface Products {
 const AllProductList = ({clothProperty}:{clothProperty:string}) => {
       const [data, setData] = useState<Products>();
 
-	const [imageChange, setImageChange] = useState();
+	const [imageChange, setImageChange] = useState<boolean[]>([]);
 
       console.log(imageChange)
 
@@ -51,7 +51,7 @@ const AllProductList = ({clothProperty}:{clothProperty:string}) => {
 			}
 		}
 		getData();
-	}, [clothProperty]);
+	}, [clothProperty, data?.results?.length]);
 
 	const onMouseEnter = (index: number) => {
 		setImageChange((prevState) => prevState.map((state, i) => i === index ? true : state )

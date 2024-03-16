@@ -5,6 +5,7 @@ import Link from "next/link";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import fetchedData from "./fetchedData";
 
+
 interface dataType {
 	results: {
 		name: string;
@@ -24,7 +25,7 @@ const slideRight = () => {
 	slider!.scrollLeft = slider!.scrollLeft + 500;
 };
 
-const HomePageCarousel = () => {
+const HomePageCarousel = ({categories}:{categories:string}) => {
       const [data, setData] = useState<dataType>();
 
 
@@ -37,7 +38,7 @@ const HomePageCarousel = () => {
 					null,
 					"0",
 					"30",
-					null
+					categories
 				);
 				console.log("products with carousel", response);
 				setData(response);
@@ -49,7 +50,7 @@ const HomePageCarousel = () => {
 			}
 		}
 		getData();
-	}, []);
+	}, [categories]);
 
 	return (
 		<>

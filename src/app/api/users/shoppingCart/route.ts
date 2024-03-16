@@ -11,14 +11,14 @@ export async function GET (request: NextRequest) {
             
             const cookie =  cookies().get('token')?.value ||''
             const decodedToken:any =  jwt.verify(cookie, process.env.SECRET_KEY!)
-            console.log(decodedToken)
+            // console.log(decodedToken)
             const {email} = decodedToken;
                         
             if(email !== null) {
                   const cart = await Cart.findOne({email})
-                  console.log('cart--', cart)
+                  // console.log('cart--', cart)
                   const products =  await cart.product
-                  console.log('products ---',products)
+                  // console.log('products ---',products)
                   return NextResponse.json({
                       Headers:  products, success: true, HTTP: 200 , message: 'product being shown in the cart'
                   })

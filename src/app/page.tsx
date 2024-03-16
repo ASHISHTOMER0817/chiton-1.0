@@ -1,9 +1,9 @@
-'use client'
+"use client";
 import DeliveryStats from "./components/deliveryStats";
 import Image from "next/image";
 import AndreaImage from "@/../public/AndreaImage.jpg";
 import coat from "@/../public/coat.jpeg";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import "./filter.css";
 import trousers from "@/../public/trousers.jpg";
 import sweatshirt from "@/../public/sweatshirt.webp";
@@ -19,10 +19,6 @@ import Spinner from "./components/spinner";
 import Link from "next/link";
 
 export default function Page() {
-	
-
-
-
 	const categoriesCard = [
 		{
 			link: sweatshirt,
@@ -60,15 +56,16 @@ export default function Page() {
 			Name: "Shirts",
 		},
 	];
+	const [categories, setCategories] = useState("men_all");
 
 	const preference = [
-		"Ladies",
-		"Men",
-		"Divided",
-		"Baby",
-		"Kids",
-		"H&M HOME",
-		"Sport",
+		{ category: "Ladies", code: "ladies_all" },
+		{ category: "Men", code: "men_all" },
+		{ category: "Divided", code: "ladies_divided" },
+		{ category: "Baby", code: "kids_newbornbaby_viewall" },
+		{ category: "Kids", code: "kids_all" },
+		{ category: "H&M HOME", code: "home_all" },
+		{ category: "Sport", code: "sportswear" },
 	];
 
 	return (
@@ -88,19 +85,49 @@ export default function Page() {
 						</p>
 						<nav className="grid grid-rows-1 grid-flow-col gap-4 justify-center my-4 text-white">
 							<button className="bg-black p-2 text-sm hover:text-gray-600 font-semibold ">
-							<Link href={"./allProduct/Women/ladies_blazerswaistcoats/Blazers%20&%20Vests"}>Women</Link>	
+								<Link
+									href={
+										"./allProduct/Women/ladies_blazerswaistcoats/Blazers%20&%20Vests"
+									}
+								>
+									Women
+								</Link>
 							</button>
 							<button className="bg-black p-2 text-sm hover:text-gray-600 font-semibold ">
-								<Link href={"./allProduct/Men/men_hoodiessweatshirts/Hoodies%20&%20Sweatshirts"}>Men</Link>
+								<Link
+									href={
+										"./allProduct/Men/men_hoodiessweatshirts/Hoodies%20&%20Sweatshirts"
+									}
+								>
+									Men
+								</Link>
 							</button>
 							<button className="bg-black p-2 text-sm hover:text-gray-600 font-semibold ">
-								Kids
+								<Link
+									href={
+										"./allProduct/Kids/kids_boys_shoes/Shoes"
+									}
+								>
+									Kids
+								</Link>
 							</button>
 							<button className="bg-black p-2 text-sm hover:text-gray-600 font-semibold ">
-								Sports
+								<Link
+									href={
+										"./allProduct/Sport/sportswear_kids_accessories/Sports%20Accessories"
+									}
+								>
+									Sports
+								</Link>
 							</button>
 							<button className="bg-black p-2 text-sm hover:text-gray-600 font-semibold ">
-								Home
+								<Link
+									href={
+										"./allProduct/H&M%20HOME/home_furnitures/Furniture"
+									}
+								>
+									Home
+								</Link>
 							</button>
 						</nav>
 					</div>
@@ -240,25 +267,30 @@ export default function Page() {
 					</h4>
 
 					<div className="w-full grid-rows-1 grid-flow-col mt-3 text-center grid gap-2 justify-start">
-						{preference.map((e, index) => {
-							return (
-								<>
-									<div
-										key={index}
-										className="px-3 py-2 rounded-[30px] hover:text-gray-600 border hover:bg-[#FF0000] text-sm cursor-pointer"
-									>
-										<Link href={""}>
-										{e}
-										</Link>
-									</div>
-								</>
-							);
-						})}
+						{preference.map(
+							({ category, code }, index) => {
+								return (
+									<>
+										<div
+											key={index}
+											className="px-3 py-2 rounded-[30px] hover:text-gray-600 border hover:bg-[#FF0000] text-sm cursor-pointer"
+											onClick={() =>
+												setCategories(
+													code
+												)
+											}
+										>
+											{category}
+										</div>
+									</>
+								);
+							}
+						)}
 					</div>
 					{
-						<Suspense fallback={<Spinner />}>
-							<HomePageCarousel/>
-						</Suspense>
+						// <Suspense fallback={<Spinner />}>
+						// 	<HomePageCarousel categories={categories} />
+						// </Suspense>
 					}
 				</div>
 			</div>

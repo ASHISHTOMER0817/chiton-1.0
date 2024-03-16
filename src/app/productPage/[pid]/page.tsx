@@ -296,7 +296,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 							
 						</h4>
 						<h4 className="line-through mr-auto">{product?.articlesList[0]?.whitePrice?.currency}{product?.articlesList[0]
-									?.redPrice?.price}</h4>
+									?.whitePrice?.price}</h4>
 
 						{product?.articlesList[0]
 							.percentageDiscount !== undefined ? (
@@ -429,7 +429,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 					>
 						{" "}
 						<div className="font-bold">Description and Fit</div>
-						<Image src={arrowDropDown} className={`${ fit === "" ? 'rotate-180': ""}`} alt={""} />
+						<Image src={arrowDropDown} className={`${ fit === "" ? 'rotate-180 transition': "transition"}`} alt={""} />
 					</div>
 					<div
 						className={`${fit} mb-4  text-left flex flex-col text-sm`}
@@ -484,7 +484,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 						}}
 					>
 						<div className="font-bold">Materials</div>
-						<Image src={arrowDropDown} className={`${ material === "" ? 'rotate-180': ""}`} alt={""} />
+						<Image src={arrowDropDown} className={`${ material === "" ? 'rotate-180 transition': "transition"}`} alt={""} />
 					</div>
 					<div
 						className={`${material} text-xs text-left flex flex-col`}
@@ -698,7 +698,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 						}}
 					>
 						<div>Care Guide</div>
-						<Image src={arrowDropDown} className={`${ guide === "" ? 'rotate-180': ""}`} alt={"icon"} />
+						<Image src={arrowDropDown} className={`${ guide === "" ? 'rotate-180 transition': "transition"}`} alt={"icon"} />
 					</div>
 					<div
 						className={`${guide} text-left text-xs flex flex-col`}

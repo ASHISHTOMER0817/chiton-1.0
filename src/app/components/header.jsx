@@ -123,14 +123,14 @@ export default function Header() {
 				LoginOverlay={memberwindowDown}
 			/>
 			<div className="flex justify-between text-sm">
-				<Image
+				<Link href={"./"}><Image
 					priority={true}
 					quality={100}
 					width={150}
 					className="max-w-40 h-auto"
 					src={Logo}
 					alt="Logo"
-				/>
+				/></Link>
 				<nav className="flex items-center">
 					<Image
 						src={selectPatientIcon}

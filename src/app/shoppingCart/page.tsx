@@ -20,9 +20,11 @@ export default function Page() {
 		quantity: string;
 	}
 	const [productCard, setProductCard] = useState<[card]>();
+	const [confirmation, setConfirmation] = useState(false)
+	const [data, setData] = useState('')
 
 	useEffect(() => {
-		async function getData() {
+		const getData = async()=> {
 			try {
 				const response = await axios.get(
 					"/api/users/shoppingCart"
@@ -30,7 +32,7 @@ export default function Page() {
 				const data = response.data.Headers;
 				
 				setProductCard(data);
-
+				
 				const message = await response.data.message;
 				console.log(message);
 				return message;
@@ -44,15 +46,27 @@ export default function Page() {
 		}
 		getData();
 		console.log(productCard);
-	}, [ productCard]);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+	
 
-	// const removeit = () => {
-	// 	if (remove === true) {
-	// 		setRemove(false);
-	// 	} else {
-	// 		setRemove(true);
-	// 	}
-	// };
+	const removeit = async() => {
+		try{
+			console.log(data)
+			const response = await axios.delete("/api/users/removeProduct",{data})
+			const success = await response.data.success
+			console.log(success, await response.data.message)
+		}catch(error:any){
+			console.log("failed to remove the product"), error.message
+		}
+	};
+
+	const removeProduct = (d:string)=> {
+		console.log(d)
+		setData(d)
+		removeit()
+	}
+	
 
 	return (
 		<div className="bg-gray-200 flex-grow ">
@@ -67,7 +81,7 @@ export default function Page() {
 					{productCard === undefined ? (
 						<div className="font-semibold text-sm text-center text-red-800">
 							You should login/ Be a member First OR
-							Else you didn `&apos;`t select choose
+							Else you didn&apos;t select choose
 							any product
 						</div>
 					) : (
@@ -92,23 +106,22 @@ export default function Page() {
 														160
 													}
 												/>
-
 												<div className="pt-3 text-sm mx-5 w-full ">
 													<div className=" font-bold">
 														{
 															e?.name
 														}{" "}
 														<Image
-															// onClick={
-															// 	removeit
-															// }
+															onClick={
+																()=>removeProduct(e?.articleCode)
+															}
 															src={
 																trash
 															}
 															alt={
 																"iamge"
 															}
-															className="  w-4 float-right"
+															className="  w-4 float-right cursor-pointer"
 														/>
 													</div>
 													<div className="text-lg text-red-600">
@@ -150,7 +163,7 @@ export default function Page() {
 															Total{" "}
 														</li>
 														<li>
-															rs.65,745{" "}
+															{e?.price}
 														</li>
 													</ul>
 													<div className="flex items-center">

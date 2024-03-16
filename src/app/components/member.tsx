@@ -87,7 +87,7 @@ export default function Member({
 							width={12}
 							src={close}
 							alt="close"
-							className="w-3 h-3"
+							className="w-3 h-3 cursor-pointer"
 						/>
 					
 				</div>

@@ -15,6 +15,8 @@ export default function Login({classList, overlay, memberOverlay}:{classList:boo
 		email: '',
 		password: '',
 	})
+	const [warning, setWarning] = useState(true)
+
 	const loginRef = useRef<HTMLDivElement>(null)
 	async function loginDetails () {
 		try{
@@ -22,11 +24,12 @@ export default function Login({classList, overlay, memberOverlay}:{classList:boo
 			const response = await axios.post('/api/users/login', user)
 			
 			const verify = await response.data.success
-			
+			setWarning(verify)
 			const message = await response.data.message
 			console.log(verify, message)
 			if(verify === true) {
-				router.push('/')
+				
+				overlay()
 
 			}else{
 				console.log(message)
@@ -69,7 +72,8 @@ export default function Login({classList, overlay, memberOverlay}:{classList:boo
 		<div ref={loginRef} className= {`font-sans bg-slate-400 p-3 m-auto w-[34%] ${ classList ? 'fixed top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 z-50' : 'hidden'}`} >
 				<div className="flex justify-between text-center items-center">
 					<h2>Sign in</h2>
-					<Image src={close} alt="close" className="h-4 w-4" onClick={overlay} />
+					<p className= {`text-red-600 text-sm ${warning && "hidden"}`}>The password/Email doesn&apos;t belong to one of our member</p>
+					<Image src={close} alt="close" className="h-4 w-4 cursor-pointer" onClick={overlay} />
 				</div>
 				<p className="my-4 text-center">
 					Become a member and never forgo the deals, offers,
@@ -92,10 +96,10 @@ export default function Login({classList, overlay, memberOverlay}:{classList:boo
 				</form>
 				<div className="flex justify-between items-center text-xs">
 					<input type="checkbox" id="checkbox" />
-					<label htmlFor="checkbox" className="mr-auto" onClick={overlay}>
+					<label htmlFor="checkbox" className="mr-auto cursor-pointer">
 						Remember me
 					</label>
-					<div className="underline">Forget Password?</div>
+					<div className="underline cursor-pointer">Forget Password?</div>
 				</div>
 
 				<button className="bg-black text-center text-white py-3 my-4 w-4/5 mx-auto block"  type="submit" onClick={loginDetails}>

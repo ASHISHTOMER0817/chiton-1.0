@@ -159,6 +159,14 @@ export default function Page({
 		"pink",
 	];
 
+	const type = [
+		"Women",
+		"Men",
+		"Kids",
+		"Sports",
+		"Home"
+	] 
+
 	
       function changeSubCategory(catname: string, tagcode: string[]) {
 		setSubCategory(catname);
@@ -182,21 +190,15 @@ export default function Page({
 						</p>
 
 						<nav className=" z-20 bottom-[0%] left-[50%] -translate-x-2/4 -translate-y-2/4 absolute grid grid-rows-1 grid-flow-col gap-4 justify-center  text-black">
-							<button className="bg-white p-[10px] hover:text-gray-600 text-sm font-semibold ">
-								Women
-							</button>
-							<button className="bg-white p-[10px] hover:text-gray-600 text-sm font-semibold ">
-								Men
-							</button>
-							<button className="bg-white p-[10px] hover:text-gray-600 text-sm font-semibold ">
-								Kids
-							</button>
-							<button className="bg-white p-[10px] hover:text-gray-600 text-sm font-semibold ">
-								Sports
-							</button>
-							<button className="bg-white p-[10px] hover:text-gray-600 text-sm font-semibold ">
-								Home
-							</button>
+							{type.map((e)=>{
+								return(
+									<>
+									<button className="bg-white p-[10px] hover:text-gray-600 text-sm font-semibold">
+										{e}
+									</button>
+									</>
+								)
+							})}
 						</nav>
 					</div>
 					<div className="font-extrabold text-5xl mb-10 ">

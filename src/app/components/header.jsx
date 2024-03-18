@@ -9,21 +9,18 @@ import favorites from "@/../public/favorites.svg";
 import shoppingBag from "@/../public/shopping-bag.svg";
 import { useEffect, useState } from "react";
 import fetchedData from "./fetchedData";
-import Login from "./login";
-import Member from "./member";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function Header() {
 	const [variety, setVariety] = useState("");
 	const [group, setGroup] = useState();
 	const [articles, setArticles] = useState("hidden");
 	const [trigger, setTrigger] = useState(false);
-	// const [render, setRender] = useState(false);
-	// const [initialRender, setInitialRender] = useState(false)
-	const [login, setLogin] = useState(false);
-	const [member, setMember] = useState(false);
 	const [search, setSearch] = useState("");
 	const router = useRouter();
+	const [toggle, setToggle] = useState(false)
+	const [logout, setLogout] = useState(false)
 
 	const navbar = [
 		"Women",
@@ -57,6 +54,8 @@ export default function Header() {
 						return;
 					}
 				}
+
+				
 			} catch (error) {
 				console.log("yes this is error", error);
 			}
@@ -69,6 +68,29 @@ export default function Header() {
 		/*  variety could be a mistake here*/
 	}
 
+	useEffect(()=> {
+		async function identification () {
+			try{
+				const response = await axios.get('./api/knownPerson' ,{logout})
+				const success = await response.success
+				console.log(success)
+				setToggle(success)
+			}catch{
+				console.log('failed to get token data')
+			}
+		}
+		identification()
+		if(setLogout){
+			router.refresh()
+		}
+		
+	},[logout, router])
+
+	const triggerLogout=()=> {
+		 setLogout(true)
+	}
+
+	//Header dropdown menu Start
 	function triggerfetchedData() {
 		setTrigger(true);
 		setArticles("");
@@ -79,24 +101,6 @@ export default function Header() {
 		setTrigger(false);
 	}
 
-	function toggleLogin() {
-		setLogin(true);
-	}
-	function toggleMember() {
-		setMember(true);
-		setLogin(false);
-	}
-	function LoginWindowDown() {
-		setLogin(false);
-	}
-	function memberwindowDown() {
-		setMember(false);
-		setLogin(true);
-	}
-	function memberWindowCollapse() {
-		setMember(false);
-	}
-
 	function SearchIncludes() {
 		for (let i = 0; i < navbar.length; i++) {
 			const category = navbar[i].toLowerCase;
@@ -105,23 +109,12 @@ export default function Header() {
 			}
 		}
 	}
-
 	return (
 		<header
 			className={`bg-gray-200 border ${
 				trigger ? "border-b-2 border-b-black" : ""
 			}`}
 		>
-			<Login
-				classList={login}
-				overlay={LoginWindowDown}
-				memberOverlay={toggleMember}
-			/>
-			<Member
-				classList={member}
-				overlay={memberWindowCollapse}
-				LoginOverlay={memberwindowDown}
-			/>
 			<div className="flex justify-between text-sm">
 				<Link href={"./"}><Image
 					priority={true}
@@ -140,9 +133,11 @@ export default function Header() {
 					/>
 					<div
 						className="mr-3 hover:text-gray-600 cursor-pointer"
-						onClick={toggleLogin}
-					>
-						Login
+						// onClick={toggleLogin}
+					> {!toggle ? <div
+						className="mr-3 hover:text-gray-600 cursor-pointer"
+						// onClick={toggleLogin}
+					> <Link href={'/login'}>Login</Link></div> : <div className="mr-3 hover:text-gray-600 cursor-pointer" onClick={triggerLogout}>Logout</div> } 
 					</div>
 
 					<Image

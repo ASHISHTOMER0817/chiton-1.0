@@ -9,9 +9,9 @@ import { cookies } from "next/headers";
 dbConfig()
 export async function POST(request: NextRequest) {
       try {
-
+            
             const reqBody = await request.json()
-            const { email, password } = reqBody
+            const { email, password,  } = reqBody
             console.log(reqBody)
 
             const user = await User.findOne({ email })
@@ -27,15 +27,15 @@ export async function POST(request: NextRequest) {
                   })
             }
 
-
             else {
                   const tokenData = {
                         user_id: user._id,
                         username: user.username,
                         email: user.email
                   }
-                  const token = jwt.sign(tokenData, process.env.SECRET_KEY!, { expiresIn: "10h" })
-                  cookies().set('token', token, { secure: true })
+                  const token = jwt.sign(tokenData, process.env.SECRET_KEY!)
+                  const timeLeft =   30 * 1000
+                  cookies().set('token', token, { expires: Date.now() - timeLeft, secure: true })
                   const response = NextResponse.json({
                         message: "User Logged In",
                         success: true

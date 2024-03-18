@@ -8,6 +8,7 @@ import trash from "@/../public/trash-can-svgrepo-com (1).svg";
 import heart from "@/../public/heart.svg";
 import delivery from "@/../public/package-delivery-box-13-svgrepo-com.svg";
 import arrowDropDown from "@/../public/arrowDropDown.svg";
+import Link from "next/link";
 
 export default function Page() {
 	interface card {
@@ -20,8 +21,10 @@ export default function Page() {
 		quantity: string;
 	}
 	const [productCard, setProductCard] = useState<[card]>();
-	const [confirmation, setConfirmation] = useState(false)
+	const [totalPrice, setTotalPrice] = useState(0)
 	const [data, setData] = useState('')
+
+
 
 	useEffect(() => {
 		const getData = async()=> {
@@ -32,6 +35,10 @@ export default function Page() {
 				const data = response.data.Headers;
 				
 				setProductCard(data);
+				if (data.length > 0) {
+					const totalPrice = data.reduce((acc:number, { price }:{price:string}) => acc + parseInt(price), 0);
+					setTotalPrice(totalPrice);
+				  }
 				
 				const message = await response.data.message;
 				console.log(message);
@@ -87,13 +94,14 @@ export default function Page() {
 					) : (
 						<>
 							<div className="flex flex-col float-left border w-7/12 ">
-								{productCard.map((e) => {
+								{productCard.map(({url,name,articleCode, size, color, price,}) => {
+									// setTotalPrice((prevState)=> prevState + parseInt(price))
 									return (
 										<>
 											<section className=" bg-white mt-7 py-3  flex  border border-gray-300">
 												<Image
 													src={
-														e?.url
+														url
 													}
 													alt={
 														"iamge"
@@ -109,11 +117,11 @@ export default function Page() {
 												<div className="pt-3 text-sm mx-5 w-full ">
 													<div className=" font-bold">
 														{
-															e?.name
+															name
 														}{" "}
 														<Image
 															onClick={
-																()=>removeProduct(e?.articleCode)
+																()=>removeProduct(articleCode)
 															}
 															src={
 																trash
@@ -128,7 +136,7 @@ export default function Page() {
 														{" "}
 														Rs.
 														{
-															e?.price
+															price
 														}{" "}
 													</div>
 													<ul className="text-xs grid  grid-cols-4 my-4 mt-5 gap-x-2">
@@ -138,7 +146,7 @@ export default function Page() {
 														</li>
 														<li>
 															{
-																e?.articleCode
+																articleCode
 															}{" "}
 														</li>
 														<li>
@@ -147,7 +155,7 @@ export default function Page() {
 														<li>
 															{productCard !==
 															undefined
-																? e?.size
+																? size
 																: "something"}{" "}
 														</li>
 														<li>
@@ -156,14 +164,14 @@ export default function Page() {
 														<li>
 															{productCard !==
 															undefined
-																? e?.color
+																? color
 																: "something"}{" "}
 														</li>
 														<li>
 															Total{" "}
 														</li>
 														<li>
-															{e?.price}
+															{price}
 														</li>
 													</ul>
 													<div className="flex items-center">
@@ -195,8 +203,8 @@ export default function Page() {
 									Login in to use your
 									personal offers !
 								</p>
-								<button className=" border border-black font-extrabold hover:text-gray-500 p-3 mt-1 mb-4 w-full mx-auto">
-									Login
+								<button className="border border-black font-extrabold hover:text-gray-500 p-3 mt-1 mb-4 w-full mx-auto">
+								<Link href="/login"></Link>	Login
 								</button>
 								<hr className="mb-3" />
 
@@ -224,7 +232,7 @@ export default function Page() {
 								<hr className=" mt-7 border-black " />
 								<div className="text-sm mt-1 font-bold">
 									<div className="float-right font-bold">
-										Rs.45433
+										Rs.{totalPrice}
 									</div>
 									Total
 								</div>

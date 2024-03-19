@@ -153,7 +153,7 @@ export default function Page() {
 								embroidery and tailoring.
 							</h5>
 							<button className=" bg-white hover:text-gray-600 text-black font-extrabold p-2  mt-2">
-								Look here
+									<Link href={'/allProduct/Men/men_blazerssuits/Blazers%20&%20Suits'}></Link> Look here
 							</button>
 						</div>
 					</div>
@@ -175,7 +175,7 @@ export default function Page() {
 								Cargos with unmatched comfort
 							</h5>
 							<button className=" bg-white hover:text-gray-600 text-black font-extrabold p-2  mt-2">
-								Shop Now
+							<Link href={'/allProduct/Men/men_casual_lookbook/Casual%20Looks'}></Link>	Shop Now
 							</button>
 						</div>
 					</div>

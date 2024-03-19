@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import UserContextProvider from './components/abc'
+import './filter.css'
+
 import Header from './components/header'
 import Footer from './components/footer'
 
@@ -14,17 +15,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  auth
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
+  auth:React.ReactNode
 }) {
   return (
     <html lang="en" >
-      <body className={`${inter.className} relative flex flex-col min-h-[100vh] m-0`}>
-      <UserContextProvider>
+      <body className={`${inter.className} relative flex flex-col min-h-[100vh] m-0 bg-[#FAF9F8]`}>
         <Header/>
+        {auth}
         {children}
         <Footer/>
-      </UserContextProvider>
         </body>
         
       

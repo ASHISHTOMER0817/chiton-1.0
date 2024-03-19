@@ -1,44 +1,30 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import Inputspace from "./inputSpace";
-import Image from "next/image";
-import close from "@/../public/close.png";
-import Link from "next/link";
+'use client'
+import React, { ReactNode, useState } from "react";
+import InputSpace from "@/app/components/inputSpace";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useRef } from "react";
-// import { useNavigate } from "react-router-dom";
+import Link from "next/link";
 
-export default function Login({
-	classList,
-	overlay,
-	memberOverlay,
-}: {
-	classList: boolean;
-	overlay: () => void;
-	memberOverlay: () => void;
-}) {
+export default function Login({children}:{children:ReactNode | null}) {
+
 	const router = useRouter();
 	const [user, setUser] = useState<{ [key: string]: string }>({
 		email: "",
 		password: "",
+		
 	});
 	const [warning, setWarning] = useState(true);
 
-	const loginRef = useRef<HTMLDivElement>(null);
 	async function loginDetails() {
 		try {
 			const response = await axios.post("/api/users/login", user);
-
-			const verify = await response.data.success;
-			setWarning(verify);
+			const success = await response.data.success;
+			setWarning(success);
 			const message = await response.data.message;
-			console.log(verify, message);
-			if (verify === true) {
+			console.log(success, message);
+			if (success) {
 				if (window.history.length > 1) {
-					console.log(window.history.length)
 					router.back();
-					overlay();
 				} else {
 					router.push("/");
 				}
@@ -77,14 +63,7 @@ export default function Login({
 	// })},[])
 
 	return (
-		<div
-			ref={loginRef}
-			className={`font-sans bg-slate-400 p-3 m-auto w-[34%] ${
-				classList
-					? "fixed top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 z-50"
-					: "hidden"
-			}`}
-		>
+		<div>
 			<div className="flex justify-between text-center items-center">
 				<h2>Sign in</h2>
 				<p
@@ -95,24 +74,19 @@ export default function Login({
 					The password/Email doesn&apos;t belong to one of
 					our member
 				</p>
-				<Image
-					src={close}
-					alt="close"
-					className="h-4 w-4 cursor-pointer"
-					onClick={overlay}
-				/>
+				{children}
 			</div>
 			<p className="my-4 text-center">
 				Become a member and never forgo the deals, offers,
 				discounts and bonus vouchers.
 			</p>
-			<form className="flex flex-col">
+			<form className="flex flex-col" action={loginDetails}>
 				{inputarr.map(({ label, type, classList }, index) => {
 					const stateChange = label
 						.toLowerCase()
 						.replace(" ", "");
 					return (
-						<Inputspace
+						<InputSpace
 							key={index}
 							label={label}
 							type={type}
@@ -131,33 +105,33 @@ export default function Login({
 						/>
 					);
 				})}
-			</form>
-			<div className="flex justify-between items-center text-xs">
-				<input type="checkbox" id="checkbox" />
-				<label
-					htmlFor="checkbox"
-					className="mr-auto cursor-pointer"
-				>
-					Remember me
-				</label>
-				<div className="underline cursor-pointer">
-					Forget Password?
+				<div className="flex justify-between items-center text-xs">
+					<input type="checkbox" id="checkbox" />
+					<label
+						htmlFor="checkbox"
+						className="mr-auto cursor-pointer"
+					>
+						Remember me
+					</label>
+					<div
+						className="underline cursor-pointer"
+					>
+						<Link href={'/resetPassword'}></Link>Forget Password?
+					</div>
 				</div>
-			</div>
 
-			<button
-				className="bg-black text-center text-white py-3 my-4 w-4/5 mx-auto block"
-				type="submit"
-				onClick={loginDetails}
-			>
-				Sign in
-			</button>
-			<button
-				onClick={memberOverlay}
-				className="text-center py-3 w-4/5 mx-auto block border border-black"
-			>
-				{" "}
-				Become a member
+				<button
+					className="bg-black text-center text-white py-3 my-4 w-4/5 mx-auto block"
+					type="submit"
+				>
+					Sign in
+					
+				</button>
+			</form>
+
+			<button className="text-center py-3 w-4/5 mx-auto block border border-black">
+				{" "}<Link href={"/member"}>Become a member</Link>
+				
 			</button>
 		</div>
 	);

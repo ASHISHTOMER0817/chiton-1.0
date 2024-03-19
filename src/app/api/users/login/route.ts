@@ -9,9 +9,9 @@ import { cookies } from "next/headers";
 dbConfig()
 export async function POST(request: NextRequest) {
       try {
-            
+
             const reqBody = await request.json()
-            const { email, password,  } = reqBody
+            const { email, password, } = reqBody
             console.log(reqBody)
 
             const user = await User.findOne({ email })
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
             const validPassword = await bcryptjs.compare(
                   password, user.password
             )
-                  console.log( validPassword)
+            console.log(validPassword)
             if (!user || !validPassword) {
                   return NextResponse.json({
                         message: 'Email or Password is not correct !', success: false
@@ -34,13 +34,12 @@ export async function POST(request: NextRequest) {
                         email: user.email
                   }
                   const token = jwt.sign(tokenData, process.env.SECRET_KEY!)
-                  const timeLeft =   30 * 1000
-                  cookies().set('token', token, { expires: Date.now() - timeLeft, secure: true })
-                  const response = NextResponse.json({
+                  const oneDay = 60 * 60 * 1000
+                  cookies().set('name', token, { expires: Date.now() + oneDay, httpOnly: true })                  // cookies().set('token', token)
+                  return NextResponse.json({
                         message: "User Logged In",
                         success: true
                   })
-                  return response
             }
       } catch (error: any) {
             return NextResponse.json({

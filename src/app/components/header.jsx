@@ -3,14 +3,15 @@
 import Logo from "../../../public/Logo.svg";
 import Image from "next/image";
 import Link from "next/link";
-import searchIcon from "@/../public/search-icon.svg";
-import selectPatientIcon from "@/../public/select-patient-icon.svg";
-import favorites from "@/../public/favorites.svg";
-import shoppingBag from "@/../public/shopping-bag.svg";
+import { CiHeart, CiSearch, CiShoppingCart } from "react-icons/ci";
 import { useEffect, useState } from "react";
 import fetchedData from "./fetchedData";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { CiLogout } from "react-icons/ci";
+import { CiLogin } from "react-icons/ci";
+// import { cookies } from "next/headers";
+import Cookies from "js-cookie"
 
 export default function Header() {
 	const [variety, setVariety] = useState("");
@@ -19,8 +20,7 @@ export default function Header() {
 	const [trigger, setTrigger] = useState(false);
 	const [search, setSearch] = useState("");
 	const router = useRouter();
-	const [toggle, setToggle] = useState(false)
-	const [logout, setLogout] = useState(false)
+	const [toggle, setToggle] = useState(false);
 
 	const navbar = [
 		"Women",
@@ -54,8 +54,6 @@ export default function Header() {
 						return;
 					}
 				}
-
-				
 			} catch (error) {
 				console.log("yes this is error", error);
 			}
@@ -68,26 +66,32 @@ export default function Header() {
 		/*  variety could be a mistake here*/
 	}
 
-	useEffect(()=> {
-		async function identification () {
-			try{
-				const response = await axios.get('./api/knownPerson' ,{logout})
-				const success = await response.success
-				console.log(success)
-				setToggle(success)
-			}catch{
-				console.log('failed to get token data')
+	useEffect(() => {
+		async function identification() {
+			try {
+				const response = await axios.get("/api/users/knownPerson");
+				const success = await response.data.success;
+				console.log( "token check operation --",success, message);
+				setToggle(success);
+			} catch {
+				console.log("Failed");
 			}
 		}
-		identification()
-		if(setLogout){
-			router.refresh()
-		}
-		
-	},[logout, router])
+		identification();
+	}, []);
 
-	const triggerLogout=()=> {
-		 setLogout(true)
+	async function triggerLogout() {
+		try{
+			const response = await axios.delete("/api/users/removeToken")
+			const success = await response.data.success
+			const message = await response.data.message
+			console.log(success, message)
+			if(success){
+				router.refresh()
+			}
+		}catch{
+			console.log("Something went Wrong, please try again later")
+		}
 	}
 
 	//Header dropdown menu Start
@@ -111,54 +115,60 @@ export default function Header() {
 	}
 	return (
 		<header
-			className={`bg-gray-200 border ${
+			className={`border ${
 				trigger ? "border-b-2 border-b-black" : ""
 			}`}
 		>
 			<div className="flex justify-between text-sm">
-				<Link href={"./"}><Image
-					priority={true}
-					quality={100}
-					width={150}
-					className="max-w-40 h-auto"
-					src={Logo}
-					alt="Logo"
-				/></Link>
+				<Link href={"./"}>
+					<Image
+						priority={true}
+						quality={100}
+						width={150}
+						className="max-w-40 h-auto"
+						src={Logo}
+						alt="Logo"
+					/>
+				</Link>
 				<nav className="flex items-center">
-					<Image
-						src={selectPatientIcon}
-						width={19}
-						className="h-auto"
-						alt="icon"
-					/>
-					<div
-						className="mr-3 hover:text-gray-600 cursor-pointer"
-						// onClick={toggleLogin}
-					> {!toggle ? <div
-						className="mr-3 hover:text-gray-600 cursor-pointer"
-						// onClick={toggleLogin}
-					> <Link href={'/login'}>Login</Link></div> : <div className="mr-3 hover:text-gray-600 cursor-pointer" onClick={triggerLogout}>Logout</div> } 
+					
+					<div className="mr-3 hover:text-gray-600 cursor-pointer">
+						{" "}
+						{!toggle ? (
+						
+								<Link
+									className="flex items-center"
+									href={"/login"}
+								>  <CiLogin className="w-5 h-5 mr-2"/>
+									<div className="mr-3 hover:text-gray-600 cursor-pointer">
+										Login
+									</div>
+								</Link>
+							
+						) : (
+							<div
+								onClick={triggerLogout}
+								className="flex items-center"
+							>
+								<CiLogout className="w-5 h-5 mr-2" />
+								<div className="mr-3 hover:text-gray-600 cursor-pointer">
+									Logout
+								</div>
+							</div>
+						)}
 					</div>
+					{/* <div className="mr-3 hover:text-gray-600 cursor-pointer"><Link href={'/login'}>Login</Link> </div> */}
 
-					<Image
-						src={favorites}
-						width={50}
-						className="h-auto -mr-3"
-						alt="icon"
-					/>
-					<div className="mr-3 hover:cursor-pointer hover:text-gray-600">
+					<CiHeart className="mr-2 w-5 h-5"/>
+					<div className="mr-3 hover:cursor-pointer hover:text-gray-600" >
 						Favorites
 					</div>
-					<Image
-						src={shoppingBag}
-						width={21}
-						className="h-auto"
-						alt="icon"
+					<CiShoppingCart className="mr-2 w-5 h-5"
 					/>
 					<div className="mr-3 hover:text-gray-600 cursor-pointer">
 						{" "}
 						<Link href={"/shoppingCart"}>
-							Shopping bag 
+							Shopping bag
 						</Link>
 					</div>
 				</nav>
@@ -189,17 +199,12 @@ export default function Header() {
 						);
 					})}
 				</ul>
-				<search className="flex border-b border-b-gray-700 ml-auto h-fit sm:w-1/3 sm:mr-0 ">
-					<Image
-						onClick={SearchIncludes}
-						src={searchIcon}
-						alt="icon"
-						className="h-auto"
-					/>
+				<search className="flex ml-auto h-fit sm:w-1/3 sm:mr-0 ">
+					<CiSearch />
 					<input
 						value={search}
-						className=" text-sm bg-gray-200 focus:outline-none"
-						placeholder="Search..."
+						className=" text-sm focus:outline-none underline underline-offset-2 bg-[#FAF9F8]"
+						placeholder="Search...                        "
 						onChange={(e) => {
 							setSearch(e.target.value);
 						}}

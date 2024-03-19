@@ -25,7 +25,7 @@ interface Products {
 const AllProductList = ({clothProperty}:{clothProperty:string}) => {
       const [data, setData] = useState<Products>();
 
-	const [imageChange, setImageChange] = useState<boolean[]>();
+	const [imageChange, setImageChange] = useState<boolean[]>([]);
 
       console.log(imageChange)
 
@@ -41,7 +41,7 @@ const AllProductList = ({clothProperty}:{clothProperty:string}) => {
 					clothProperty
 				);
 				setData(response);
-                        setImageChange(Array(data?.results?.length || 0).fill(false))
+                        setImageChange(Array(response?.results?.length || 0).fill(false))
 
 				console.log(response);
 
@@ -53,18 +53,16 @@ const AllProductList = ({clothProperty}:{clothProperty:string}) => {
 		getData();
 	}, [clothProperty, data?.results?.length]);
 
-	const onMouseEnter = (index: number) => {
-		setImageChange((prevState) =>
-		prevState &&
-		prevState.map((state, i) => i === index ? true : state )
+	const onMouseEnter = async(index: number) => {
+	 setImageChange((prevState) => prevState &&
+			prevState.map((state, i) => i === index ? true : state)
 		);
+		console.log('this is the array -- onMouseEnter', imageChange)
 	};
 
-	const onMouseLeave = (index: number) => {
+	const onMouseLeave = async(index: number) => {
             setImageChange((prevState) => prevState && prevState.map((state, i) => i === index ? false : state )
-		);	};
-
-            console.log(imageChange)
+		)};
 
 	return (
 		<div className="grid grid-cols-4 gap-x-5 gap-y-2 mt-20">
@@ -91,7 +89,6 @@ const AllProductList = ({clothProperty}:{clothProperty:string}) => {
 									: "";
 
 							const code = articles[0]?.code;
-							console.log(rgbColors);
 							const defaultImage =
 								defaultArticle.normalPicture[0]
 									.baseUrl;
@@ -117,9 +114,9 @@ const AllProductList = ({clothProperty}:{clothProperty:string}) => {
 									<CardLayout
 										index={index}
 										image={
-											imageChange
-												? arrOfImages[1]
-												: arrOfImages[0]
+											imageChange[index] 
+												? arrOfImages[0]
+												: arrOfImages[1]
 										}
 										alternate={
 											alternate

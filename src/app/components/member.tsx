@@ -1,23 +1,18 @@
-'use client'
+"use client";
 import React from "react";
-import Inputspace from "./inputSpace";
-import Image from "next/image";
-import close from "@/../public/close.png";
+import InputSpace from "@/app/components/inputSpace";
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useRef } from "react";
-
 
 export default function Member({
-	classList,
-	overlay, LoginOverlay
+	children,
 }: {
-	classList: string;
-	overlay:()=> void, LoginOverlay:()=> void
+	children: React.ReactNode | null;
 }) {
-	const [existingUser, setExistingUser] = useState("");
-	const memberRef = useRef<HTMLDivElement>(null)
+	const router = useRouter();
+	const [error, setError] = useState("");
 	const [user, setUser] = useState<{ [key: string]: string }>({
 		name: "",
 		phonenumber: "",
@@ -30,25 +25,21 @@ export default function Member({
 			label: "Name",
 			type: "text",
 			classList: "mb-2",
-			//  value :user.name
 		},
 		{
 			label: "phoneNumber",
 			type: "text",
 			classList: "mb-2",
-			// value :user.phonenumber
 		},
 		{
 			label: "Email",
 			type: "email",
 			classList: "mb-2",
-			// value :user.email
 		},
 		{
 			label: "Password",
 			type: "password",
 			classList: "mb-2",
-			// value :user.password
 		},
 	];
 
@@ -57,10 +48,16 @@ export default function Member({
 			const response = await axios.post("/api/users/member", user);
 			console.log("signup successful");
 			const success = response.data.success;
-			const messageRecd = await response.data.message;
-			if (success !== true) {
-				setExistingUser(messageRecd);
-			} else if (success === true) {
+			const existingUser = await response.data.message;
+			if (!success) {
+				setError(existingUser);
+			} else if (success) {
+				if (window.history.length > 1) {
+					console.log(window.history.length);
+					router.back();
+				} else {
+					router.push("/");
+				}
 			}
 		} catch (error) {
 			console.log(" Problem in user data function", error);
@@ -70,61 +67,49 @@ export default function Member({
 	// window.addEventListener("click", (e) => {
 	// 	if (
 	// 		e.target !== memberRef.current
-			
+
 	// 	) {
 	// 		overlay();
 	// 	}
 	// });
 
 	return (
-		<div className={`font-sans bg-slate-400 p-3 m-auto w-[34%] ${ classList ? 'fixed top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 z-50' : 'hidden'}`}>
-				<div className="flex justify-between text-center items-center">
-					<h2>Become a member</h2>
-					
-						<Image
-						onClick={overlay}
-							height={12}
-							width={12}
-							src={close}
-							alt="close"
-							className="w-3 h-3 cursor-pointer"
+		<div>
+			<div className="flex justify-between text-center items-center">
+				<h2>Become a member</h2>
+				<h5 className='text-red-600 text-sm'>{error}</h5>
+				{children}
+			</div>
+			<p className="my-4 text-center">
+				Become a member and forgo the deals, offers, discounts
+				and bonus vouchers.
+			</p>
+			<form className="flex flex-col" onSubmit={userData}>
+				{inputarr.map(({ label, type, classList }, index) => {
+					const stateChange = label
+						.toLowerCase()
+						.replace(" ", "");
+					return (
+						<InputSpace
+							key={index}
+							label={label}
+							type={type}
+							classList={classList}
+							placeholder=""
+							value={user[stateChange]}
+							setValue={(
+								e: React.ChangeEvent<HTMLInputElement>
+							) => {
+								setUser({
+									...user,
+									[stateChange]:
+										e.target.value,
+								});
+							}}
 						/>
-					
-				</div>
-				<p className="my-4 text-center">
-					Become a member and forgo the deals, offers,
-					discounts and bonus vouchers.
-				</p>
-				<form className="flex flex-col">
-					{inputarr.map(
-						({ label, type, classList }, index) => {
-							const stateChange = label
-								.toLowerCase()
-								.replace(" ", "");
-							return (
-								<Inputspace
-									key={index}
-									label={label}
-									type={type}
-									classList={classList}
-									placeholder=""
-									value={user[stateChange]}
-									setValue={(
-										e: React.ChangeEvent<HTMLInputElement>
-									) => {
-										setUser({
-											...user,
-											[stateChange]:
-												e.target
-													.value,
-										});
-									}}
-								/>
-							);
-						}
-					)}
-				</form>
-				<h5 className={`text-red-700 mt-2 `}>{existingUser}</h5>
+					);
+				})}
+
 				<div className="flex justify-between items-center mt-3">
 					<input type="checkbox" id="checkbox" />
 					<label
@@ -140,13 +125,15 @@ export default function Member({
 
 				<button
 					className="bg-black text-center py-3 text-white w-full"
-					onClick={userData}
+					type="submit"
 				>
 					Become a member
 				</button>
-				<button onClick={LoginOverlay} className="text-center w-full py-3">
-					Sign In
-				</button>
+			</form>
+
+			<button className="text-center w-full py-3">
+				<Link href={"/login"}>Sign In</Link>
+			</button>
 		</div>
 	);
 }

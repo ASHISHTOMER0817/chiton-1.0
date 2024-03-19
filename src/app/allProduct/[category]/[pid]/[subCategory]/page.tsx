@@ -1,7 +1,6 @@
 "use client";
 import {
 	Suspense,
-	useEffect,
 	useRef,
 	useState,
 } from "react";
@@ -190,10 +189,10 @@ export default function Page({
 						</p>
 
 						<nav className=" z-20 bottom-[0%] left-[50%] -translate-x-2/4 -translate-y-2/4 absolute grid grid-rows-1 grid-flow-col gap-4 justify-center  text-black">
-							{type.map((e)=>{
+							{type.map((e, index)=>{
 								return(
 									<>
-									<button className="bg-white p-[10px] hover:text-gray-600 text-sm font-semibold">
+									<button key={index} className="bg-white p-[10px] hover:text-gray-600 text-sm font-semibold">
 										{e}
 									</button>
 									</>

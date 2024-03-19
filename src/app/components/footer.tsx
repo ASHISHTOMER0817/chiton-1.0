@@ -7,8 +7,11 @@ import Link from "next/link";
 
 function Footer() {
 	return (
-		<div className=" bottom-0 bg-gradient-to-b from-white to-gray-400 text-center mt-6 pt-3 border-t-gray-700">
-			<ul className=" grid grid-rows-1 grid-flow-col gap-8 justify-center ">
+		<div className=" bottom-0 bg-[#E4E4E4] text-center mt-6 pt-3 flex items-center flex-col">
+			<div className="grid grid-rows-1 grid-flow-col gap-[12rem] text-sm justify-center w-3/5">
+
+			<ul className=" grid grid-cols-1 grid-flow-row gap-[10px] text-sm justify-center footer_underline">
+				<li className="font-semibold text-base no-underline">SHOP</li>
 				<li className="cursor-pointer hover:text-gray-600">
 					<Link href={""}>Women</Link>
 				</li>
@@ -35,8 +38,30 @@ function Footer() {
 					<Link href={""}>Sport</Link>
 				</li>
 			</ul>
-			<ul>
-				<li className=" font-serif border border-black inline-block my-7 p-3 duration-500 hover:bg-gradient-to-t from-slate-700 to-black hover:text-white">
+
+			<ul className="grid grid-cols-1 grid-flow-row gap-[10px] text-sm justify-center footer_underline">
+				<li className="font-semibold text-base no-underline ">CORPORATE INFO</li>
+				<li>Career at Chiton</li>
+				<li>About Chiton group</li>
+				<li>Sustainability Chiton group</li>
+				<li>Press</li>
+				<li>Investor relations</li>
+				<li>Corporate Governance</li>
+			</ul>
+			<ul className="grid grid-cols-1 grid-flow-row gap-[10px] text-sm justify-center footer_underline">
+				<li className="font-semibold text-base no-underline">HELP</li>
+				<li>Customer Service</li>
+				<li>My Chiton</li>
+				<li>Find a store</li>
+				<li>Legal & Privacy</li>
+				<li>Contact</li>
+				<li>Report Scam</li>
+				<li>Cookie Notice</li>
+				<li>Cookie Settings</li>
+			</ul>
+			</div>
+
+				<button className=" font-serif border border-black inline-block my-7 p-3 duration-500 hover:bg-gradient-to-t from-slate-700 to-black hover:text-white">
 					<Link
 						href={
 							"https://www2.hm.com/en_in/index.html"
@@ -44,8 +69,7 @@ function Footer() {
 					>
 						BUY FROM H & M
 					</Link>{""}
-				</li>
-			</ul>
+				</button>
 			<div></div>
 			<div className="grid grid-rows-1 grid-flow-col gap-5 justify-center mb-4">
 				<Link href={"https://www.linkedin.com/in/ashish-tomer-08172004-thatsme/"}>

@@ -94,11 +94,10 @@ export default function Page() {
 					) : (
 						<>
 							<div className="flex flex-col float-left border w-7/12 ">
-								{productCard.map(({url,name,articleCode, size, color, price,}) => {
-									// setTotalPrice((prevState)=> prevState + parseInt(price))
+								{productCard.map(({url,name,articleCode, size, color, price,}, index) => {
 									return (
 										<>
-											<section className=" bg-white mt-7 py-3  flex  border border-gray-300">
+											<section key={index} className=" bg-white mt-7 py-3  flex  border border-gray-300">
 												<Image
 													src={
 														url

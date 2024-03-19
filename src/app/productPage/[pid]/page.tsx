@@ -256,7 +256,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 					{product?.articlesList[0]?.galleryDetails.map(
 						(
 							{ baseUrl }: { baseUrl: string },
-							index: string
+							index: number
 						) => {
 							return (
 								<>

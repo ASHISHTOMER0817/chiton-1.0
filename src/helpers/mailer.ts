@@ -34,7 +34,6 @@ const mailResponse = await transport.sendMail(mailOptions)
 
       return mailResponse
       }catch(error: any) {
-
       }
 }
 

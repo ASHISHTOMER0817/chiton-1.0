@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import close from "@/../public/close.png";
 import { useRouter } from "next/navigation";
 import Login from "@/app/components/login";

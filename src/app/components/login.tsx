@@ -49,19 +49,6 @@ export default function Login({children}:{children:ReactNode | null}) {
 		},
 	];
 
-	// useEffect(()=>
-	// 	{
-	// 		if(window)
-
-	// 		window.addEventListener("click", (e) => {
-	// 			if (
-	// 				e.target !== loginRef.current
-	// 				) {
-	// 					overlay();
-	// 				}
-
-	// })},[])
-
 	return (
 		<div>
 			<div className="flex justify-between text-center items-center">

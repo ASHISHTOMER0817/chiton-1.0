@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import axios from "axios";
 import DeliveryStats from "../components/deliveryStats";
 import Image from "next/image";

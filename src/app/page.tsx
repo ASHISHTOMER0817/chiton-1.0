@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import DeliveryStats from "./components/deliveryStats";
 import Image from "next/image";
 import AndreaImage from "@/../public/AndreaImage.jpg";
@@ -213,7 +213,7 @@ export default function Page() {
 					</h2>
 					<div className="flex justify-around w-full text-sm m-5">
 						{categoriesCard.map(
-							({ link, Gender, Name }, index) => {
+							({ link, Gender, Name }, index:number) => {
 								return (
 									<div
 										key={index}
@@ -237,13 +237,13 @@ export default function Page() {
 							}
 						)}
 					</div>
-					<div className="bg-no-repeat bg-center relative mx-auto h-[620px] border border-black">
+					<div className="bg-no-repeat bg-center relative mx-auto h-[620px]">
 						{" "}
 						<Image
 							src={AndreaImage}
 							className="absolute overflow-hidden"
 							quality={100}
-							fill={true}
+							// fill={true}
 							priority={true}
 							objectFit="cover"
 							alt={"image"}
@@ -268,11 +268,11 @@ export default function Page() {
 
 					<div className="w-full grid-rows-1 grid-flow-col mt-3 text-center grid gap-2 justify-start">
 						{preference.map(
-							({ category, code }, index) => {
+							({ category, code }) => {
 								return (
 									<>
 										<div
-											key={index}
+											key={code}
 											className="px-3 py-2 rounded-[30px] hover:text-gray-600 border hover:bg-[#FF0000] text-sm cursor-pointer"
 											onClick={() =>
 												setCategories(

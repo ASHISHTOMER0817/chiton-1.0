@@ -1,5 +1,4 @@
 "use client";
-
 import Logo from "../../../public/Logo.svg";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,8 +9,10 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { CiLogout } from "react-icons/ci";
 import { CiLogin } from "react-icons/ci";
+import DeleteCookie from "./deleteCookie";
 // import { cookies } from "next/headers";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
+import HasCookie from "./hasCookie";
 
 export default function Header() {
 	const [variety, setVariety] = useState("");
@@ -66,32 +67,44 @@ export default function Header() {
 		/*  variety could be a mistake here*/
 	}
 
-	useEffect(() => {
-		async function identification() {
-			try {
-				const response = await axios.get("/api/users/knownPerson");
-				const success = await response.data.success;
-				console.log( "token check operation --",success, message);
-				setToggle(success);
-			} catch {
-				console.log("Failed");
-			}
-		}
-		identification();
-	}, []);
+	// useEffect(() => {
+	// 	async function identification() {
+	// 		try {
+	// 			const response = await axios.get("/api/users/knownPerson");
+	// 			const success = await response.data.success;
+	// 			console.log( "token check operation --",success, message);
+	// 			setToggle(success);
+	// 		} catch {
+	// 			console.log("Failed");
+	// 		}
+	// 	}
+	// 	identification();
+	// }, []);
+
+	// async function triggerLogout() {
+	// 	try{
+	// 		const response = await axios.delete("/api/users/removeToken")
+	// 		const success = await response.data.success
+	// 		const message = await response.data.message
+	// 		console.log(success, message)
+	// 		if(success){
+	// 			router.refresh()
+	// 		}
+	// 	}catch{
+	// 		console.log("Something went Wrong, please try again later")
+	// 	}
+	// }
+
+	const presenceOfToken = HasCookie();
+	console.log(presenceOfToken);
+	presenceOfToken.then((pr)=>console.log(pr))
+	// if (presenceOfToken) {
+	// 	console.log("true");
+	// }
+	//  console.log("false");
 
 	async function triggerLogout() {
-		try{
-			const response = await axios.delete("/api/users/removeToken")
-			const success = await response.data.success
-			const message = await response.data.message
-			console.log(success, message)
-			if(success){
-				router.refresh()
-			}
-		}catch{
-			console.log("Something went Wrong, please try again later")
-		}
+		 DeleteCookie();
 	}
 
 	//Header dropdown menu Start
@@ -131,20 +144,19 @@ export default function Header() {
 					/>
 				</Link>
 				<nav className="flex items-center">
-					
 					<div className="mr-3 hover:text-gray-600 cursor-pointer">
 						{" "}
 						{!toggle ? (
-						
-								<Link
-									className="flex items-center"
-									href={"/login"}
-								>  <CiLogin className="w-5 h-5 mr-2"/>
-									<div className="mr-3 hover:text-gray-600 cursor-pointer">
-										Login
-									</div>
-								</Link>
-							
+							<Link
+								className="flex items-center"
+								href={"/login"}
+							>
+								{" "}
+								<CiLogin className="w-5 h-5 mr-2" />
+								<div className="mr-3 hover:text-gray-600 cursor-pointer">
+									Login
+								</div>
+							</Link>
 						) : (
 							<div
 								onClick={triggerLogout}
@@ -159,12 +171,11 @@ export default function Header() {
 					</div>
 					{/* <div className="mr-3 hover:text-gray-600 cursor-pointer"><Link href={'/login'}>Login</Link> </div> */}
 
-					<CiHeart className="mr-2 w-5 h-5"/>
-					<div className="mr-3 hover:cursor-pointer hover:text-gray-600" >
+					<CiHeart className="mr-2 w-5 h-5" />
+					<div className="mr-3 hover:cursor-pointer hover:text-gray-600">
 						Favorites
 					</div>
-					<CiShoppingCart className="mr-2 w-5 h-5"
-					/>
+					<CiShoppingCart className="mr-2 w-5 h-5" />
 					<div className="mr-3 hover:text-gray-600 cursor-pointer">
 						{" "}
 						<Link href={"/shoppingCart"}>

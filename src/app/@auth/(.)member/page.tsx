@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import { useRouter } from "next/navigation";
 import Member from "@/app/components/member";
 import Image from "next/image";

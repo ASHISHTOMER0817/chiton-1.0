@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import React from "react";
 import InputSpace from "@/app/components/inputSpace";
 import { useState } from "react";
@@ -85,13 +85,13 @@ export default function Member({
 				and bonus vouchers.
 			</p>
 			<form className="flex flex-col" onSubmit={userData}>
-				{inputarr.map(({ label, type, classList }, index) => {
+				{inputarr.map(({ label, type, classList }) => {
 					const stateChange = label
 						.toLowerCase()
 						.replace(" ", "");
 					return (
 						<InputSpace
-							key={index}
+							key={label}
 							label={label}
 							type={type}
 							classList={classList}

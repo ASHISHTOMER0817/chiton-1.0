@@ -131,7 +131,7 @@ export default function Page() {
 							</button>
 						</nav>
 					</div>
-					<div className="relative mx-auto h-[620px] border border-black">
+					<div className="relative mx-auto h-[620px]">
 						<Image
 							src={coat}
 							className="absolute overflow-hidden"

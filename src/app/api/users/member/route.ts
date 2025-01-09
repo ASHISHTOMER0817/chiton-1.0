@@ -1,6 +1,6 @@
 import dbConfig from "@/dbConfig/dbConfig";
 import { NextRequest, NextResponse } from "next/server";
-import {User} from "@/model/schema";
+import { User } from "@/model/schema";
 import bcryptjs from 'bcryptjs'
 
 dbConfig()
@@ -15,7 +15,8 @@ export async function POST(request: NextRequest) {
             const user = await User.findOne({ email });
             if (user) {
                   return NextResponse.json(
-                        {message:'the Email belongs to existing member', success: false
+                        {
+                              message: 'the Email belongs to existing member', success: false
                         }
                         // console.log('User already exist !!')
 
@@ -29,7 +30,7 @@ export async function POST(request: NextRequest) {
                   name,
                   phonenumber,
                   email,
-                  password:hashedPassword,
+                  password: hashedPassword,
             })
 
             //Saving new member
@@ -39,7 +40,7 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({
                   message: "User created successfully",
                   success: true,
-                 
+
             })
       } catch (error: any) {
             console.log("route.ts got some problem")

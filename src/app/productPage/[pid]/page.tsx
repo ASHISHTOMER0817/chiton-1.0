@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import fetchedData from "../../components/fetchedData";
 import Image from "next/legacy/image";
@@ -12,14 +12,12 @@ import { GoArrowRight } from "react-icons/go";
 import { IoStorefrontOutline } from "react-icons/io5";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 
-
-
 export default function Page({ params }: { params: { pid: string } }) {
 	// const [associatedData, SetassociatedData] = useState<any>();
 	const [fit, setFit] = useState("hidden");
 	const [material, setMaterial] = useState("hidden");
 	const [guide, setGuide] = useState("hidden");
-	const [changeProduct, setChangeProduct] = useState(params.pid)
+	const [changeProduct, setChangeProduct] = useState(params.pid);
 
 	function changeState(fit: string, material: string, guide: string) {
 		setFit(fit);
@@ -34,7 +32,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 			try {
 				const data = await fetchedData(
 					"products",
-					'detail',
+					"detail",
 					changeProduct,
 					"",
 					"",
@@ -66,11 +64,11 @@ export default function Page({ params }: { params: { pid: string } }) {
 
 	async function sendData() {
 		try {
-			const context = 'product'
-			const response = await axios.post(
-				"/api/users/productPage",
-				{productDetails, context}
-			);
+			const context = "product";
+			const response = await axios.post("/api/users/productPage", {
+				productDetails,
+				context,
+			});
 			console.log("page.tsx --", productDetails);
 			const message = await response.data.message;
 			if (response.data.success !== false) {
@@ -85,17 +83,36 @@ export default function Page({ params }: { params: { pid: string } }) {
 
 	const allDetails = [
 		{
-			value: <div><span className="font-semibold">Length: </span> <span>{product?.lengthCollection[0]?.value[0]}</span> </div>,
+			value: (
+				<div>
+					<span className="font-semibold">Length: </span>{" "}
+					<span>
+						{product?.lengthCollection[0]?.value[0]}
+					</span>{" "}
+				</div>
+			),
 		},
 		{
-			value: <div><span className="font-semibold"> Sleeve Length: </span> <span>{product?.lengthCollection[1]?.value[0]}</span></div>,
+			value: (
+				<div>
+					<span className="font-semibold">
+						{" "}
+						Sleeve Length:{" "}
+					</span>{" "}
+					<span>
+						{product?.lengthCollection[1]?.value[0]}
+					</span>
+				</div>
+			),
 		},
 		{
 			value:
 				product?.styleCollection[0]?.value[0] !== undefined ? (
 					<div>
 						{" "}
-						<span className="font-semibold">Neck Style:</span>
+						<span className="font-semibold">
+							Neck Style:
+						</span>
 						{product?.styleCollection[0]?.value[0]}{" "}
 					</div>
 				) : (
@@ -105,7 +122,10 @@ export default function Page({ params }: { params: { pid: string } }) {
 		{
 			value:
 				product?.fits !== undefined ? (
-					<div><span className="font-semibold"> Fit:</span> {product?.fits[0]} </div>
+					<div>
+						<span className="font-semibold"> Fit:</span>{" "}
+						{product?.fits[0]}{" "}
+					</div>
 				) : (
 					""
 				),
@@ -113,8 +133,11 @@ export default function Page({ params }: { params: { pid: string } }) {
 		{
 			value: (
 				<div>
-					<span className="font-semibold">Description:</span>{product?.articlesList[0]?.color.text}
-					, ${product?.articlesList[0]?.pattern}
+					<span className="font-semibold">
+						Description:
+					</span>
+					{product?.articlesList[0]?.color.text}, $
+					{product?.articlesList[0]?.pattern}
 				</div>
 			),
 		},
@@ -122,7 +145,9 @@ export default function Page({ params }: { params: { pid: string } }) {
 			value:
 				product?.articlesList[0]?.concepts === undefined ? (
 					<div>
-						<span className="font-semibold">Concept:</span>{" "}
+						<span className="font-semibold">
+							Concept:
+						</span>{" "}
 						{
 							product?.articlesList[0]
 								?.genericDescription
@@ -130,7 +155,10 @@ export default function Page({ params }: { params: { pid: string } }) {
 					</div>
 				) : (
 					<div>
-						<span className="font-semibold">Concept:</span> {product?.articlesList[0]?.concepts}{" "}
+						<span className="font-semibold">
+							Concept:
+						</span>{" "}
+						{product?.articlesList[0]?.concepts}{" "}
 					</div>
 				), ///////left OFF --------
 		},
@@ -138,7 +166,8 @@ export default function Page({ params }: { params: { pid: string } }) {
 			value:
 				product?.articlesList[0].whitePrice !== undefined ? (
 					<div>
-						<span className="font-semibold">Price</span>(
+						<span className="font-semibold">Price</span>
+						(
 						{
 							product?.articlesList[0].whitePrice
 								.currency
@@ -156,7 +185,9 @@ export default function Page({ params }: { params: { pid: string } }) {
 				product?.articlesList[0]?.countryOfProduction !==
 				undefined ? (
 					<div>
-						<span className="font-semibold">Country of Production:</span>{" "}
+						<span className="font-semibold">
+							Country of Production:
+						</span>{" "}
 						{
 							product?.articlesList[0]
 								?.countryOfProduction
@@ -164,7 +195,9 @@ export default function Page({ params }: { params: { pid: string } }) {
 					</div>
 				) : (
 					<div>
-						<span className="font-semibold">Country of Production:</span>
+						<span className="font-semibold">
+							Country of Production:
+						</span>
 						{
 							product?.articlesList[0]
 								?.articleCountryOfProduction
@@ -179,12 +212,16 @@ export default function Page({ params }: { params: { pid: string } }) {
 			value:
 				product?.articlesList[0]?.netQuantity !== undefined ? (
 					<div>
-						<span className="font-semibold">Net Quantity:</span>{" "}
+						<span className="font-semibold">
+							Net Quantity:
+						</span>{" "}
 						{product?.articlesList[0]?.netQuantity}
 					</div>
 				) : (
 					<div>
-						<span className="font-semibold">Visual Description:</span>{" "}
+						<span className="font-semibold">
+							Visual Description:
+						</span>{" "}
 						{
 							product?.articlesList[0]
 								?.visualDescription
@@ -196,7 +233,9 @@ export default function Page({ params }: { params: { pid: string } }) {
 			value:
 				product?.articlesList[0]?.importedBy !== undefined ? (
 					<div>
-						<span className="font-semibold">Marketed and imported by:</span>{" "}
+						<span className="font-semibold">
+							Marketed and imported by:
+						</span>{" "}
 						{product?.articlesList[0]?.importedBy}
 					</div>
 				) : (
@@ -207,7 +246,9 @@ export default function Page({ params }: { params: { pid: string } }) {
 			value:
 				product?.articlesList[0]?.importedBy !== undefined ? (
 					<div>
-						<span className="font-semibold">Date of import:</span>{" "}
+						<span className="font-semibold">
+							Date of import:
+						</span>{" "}
 						{product?.articlesList[0]?.importedDate}
 					</div>
 				) : (
@@ -220,7 +261,9 @@ export default function Page({ params }: { params: { pid: string } }) {
 					Customer service: In case of consumer complaint,
 					write to H&M Hennes & Mauritz Retail PVT. Ltd, A
 					Wing, D3, 2nd Floor,...{" "}
-					<span className="underline font-bold">Read more</span>
+					<span className="underline font-bold">
+						Read more
+					</span>
 				</div>
 			),
 		},
@@ -230,7 +273,9 @@ export default function Page({ params }: { params: { pid: string } }) {
 					Disclaimer: This information is based on sample of
 					the product displayed on website. There may be
 					change in the...{" "}
-					<span className="underline font-bold">Read more</span>{" "}
+					<span className="underline font-bold">
+						Read more
+					</span>{" "}
 				</div>
 			),
 		},
@@ -250,7 +295,6 @@ export default function Page({ params }: { params: { pid: string } }) {
 
 	return (
 		<>
-
 			<div className="flex my-6  mx-6">
 				<div className="flex justify-around flex-wrap w-[67%]">
 					{product?.articlesList[0]?.galleryDetails.map(
@@ -290,13 +334,25 @@ export default function Page({ params }: { params: { pid: string } }) {
 					</h6>
 					<div className="flex justify-between items-center mt-2">
 						<h4 className="text-red-500">
-							
-								{product?.articlesList[0]?.redPrice?.currency}{product?.articlesList[0]
-									?.redPrice?.price}
-							
+							{
+								product?.articlesList[0]
+									?.redPrice?.currency
+							}
+							{
+								product?.articlesList[0]
+									?.redPrice?.price
+							}
 						</h4>
-						<h4 className="line-through mr-auto">{product?.articlesList[0]?.whitePrice?.currency}{product?.articlesList[0]
-									?.whitePrice?.price}</h4>
+						<h4 className="line-through mr-auto">
+							{
+								product?.articlesList[0]
+									?.whitePrice?.currency
+							}
+							{
+								product?.articlesList[0]
+									?.whitePrice?.price
+							}
+						</h4>
 
 						{product?.articlesList[0]
 							.percentageDiscount !== undefined ? (
@@ -311,7 +367,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 							""
 						)}
 					</div>
-							
+
 					<h6 className="text-gray-400 font-extrabold mt-7 mb-5">
 						{product?.articlesList[0].colourDescription}
 					</h6>
@@ -322,12 +378,12 @@ export default function Page({ params }: { params: { pid: string } }) {
 							onClick={slideLeft}
 							size={30}
 						/>
-						                       {/* Dicarded CSS can be helpful --  flex justify-start flex-wrap */}
+						{/* Dicarded CSS can be helpful --  flex justify-start flex-wrap */}
 						<div
 							id="slider"
 							className="w-full h-full overflow-x-scroll flex whitespace-nowrap scrollbar-hide scroll-smooth"
 						>
-							                    {/*Try to use Object Fit "cover" on <Image/> tag It can work  */}
+							{/*Try to use Object Fit "cover" on <Image/> tag It can work  */}
 							{product?.articlesList.map(
 								(
 									{
@@ -357,7 +413,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 												// }
 												// height={60}
 												// layout="fixed"
-												
+
 												alt={
 													"image..."
 												}
@@ -382,8 +438,10 @@ export default function Page({ params }: { params: { pid: string } }) {
 					</button>
 
 					<div className="flex justify-start items-center">
-						
-								<IoStorefrontOutline width={10} height={10} />
+						<IoStorefrontOutline
+							width={10}
+							height={10}
+						/>
 						{product?.articlesList[0]?.inStore ===
 						undefined ? (
 							""
@@ -399,8 +457,10 @@ export default function Page({ params }: { params: { pid: string } }) {
 						)}
 					</div>
 					<div className="flex justify-start items-center">
-						
-						<IoIosInformationCircleOutline width={10} height={10} />
+						<IoIosInformationCircleOutline
+							width={10}
+							height={10}
+						/>
 						<h6 className="font-bold text-gray-600 ">
 							Delivery time: 2-7 days
 						</h6>
@@ -428,8 +488,18 @@ export default function Page({ params }: { params: { pid: string } }) {
 						}
 					>
 						{" "}
-						<div className="font-bold">Description and Fit</div>
-						<Image src={arrowDropDown} className={`${ fit === "" ? 'rotate-180 transition': "transition"}`} alt={""} />
+						<div className="font-bold">
+							Description and Fit
+						</div>
+						<Image
+							src={arrowDropDown}
+							className={`${
+								fit === ""
+									? "rotate-180 transition"
+									: "transition"
+							}`}
+							alt={""}
+						/>
 					</div>
 					<div
 						className={`${fit} mb-4  text-left flex flex-col text-sm`}
@@ -463,7 +533,10 @@ export default function Page({ params }: { params: { pid: string } }) {
 						{allDetails.map(({ value }, index) => {
 							return (
 								<>
-									<div className="text-sm my-2" key={index}>
+									<div
+										className="text-sm my-2"
+										key={index}
+									>
 										{value}
 									</div>
 								</>
@@ -484,7 +557,15 @@ export default function Page({ params }: { params: { pid: string } }) {
 						}}
 					>
 						<div className="font-bold">Materials</div>
-						<Image src={arrowDropDown} className={`${ material === "" ? 'rotate-180 transition': "transition"}`} alt={""} />
+						<Image
+							src={arrowDropDown}
+							className={`${
+								material === ""
+									? "rotate-180 transition"
+									: "transition"
+							}`}
+							alt={""}
+						/>
 					</div>
 					<div
 						className={`${material} text-xs text-left flex flex-col`}
@@ -526,7 +607,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 										}
 								  )}{" "}
 							{product?.articlesList[0]
-								?.compositions[1] === undefined
+								?.compositions === undefined
 								? ""
 								: product?.articlesList[0]?.compositions[1].materials.map(
 										(
@@ -629,7 +710,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 						</div>
 
 						{product?.articlesList[0]?.keyFabrics !==
-							undefined ? 
+						undefined ? (
 							<div className="flex justify-start text-base items-center my-4 ">
 								Material:{" "}
 								{product?.articlesList[0]?.keyFabrics.map(
@@ -649,7 +730,9 @@ export default function Page({ params }: { params: { pid: string } }) {
 									}
 								)}
 							</div>
-						 : ""}
+						) : (
+							""
+						)}
 
 						<h4 className="mt-4 text-base font-bold">
 							Materials in this product explained
@@ -668,19 +751,23 @@ export default function Page({ params }: { params: { pid: string } }) {
 							) => {
 								return (
 									<>
-										<div className="font-bold" key={index}>
+										<div
+											className="font-bold"
+											key={index}
+										>
 											{name}{" "}
 										</div>
 										<p>
 											{description}{" "}
 										</p>
-										</>
-									
+									</>
 								);
 							}
 						)}
 						<button className="h-11 flex justify-center items-center">
-							<div className="text-base font-bold bg-slate-400">Supplier Information</div>{" "}
+							<div className="text-base font-bold bg-slate-400">
+								Supplier Information
+							</div>{" "}
 							<GoArrowRight className="w-4 h-4 ml-1" />
 						</button>
 					</div>
@@ -698,7 +785,15 @@ export default function Page({ params }: { params: { pid: string } }) {
 						}}
 					>
 						<div>Care Guide</div>
-						<Image src={arrowDropDown} className={`${ guide === "" ? 'rotate-180 transition': "transition"}`} alt={"icon"} />
+						<Image
+							src={arrowDropDown}
+							className={`${
+								guide === ""
+									? "rotate-180 transition"
+									: "transition"
+							}`}
+							alt={"icon"}
+						/>
 					</div>
 					<div
 						className={`${guide} text-left text-xs flex flex-col`}
@@ -824,7 +919,6 @@ export default function Page({ params }: { params: { pid: string } }) {
 				</div> */}
 				{/* <CardLayout image={} name={undefined} price={product} alternate={""} codes={""} index={0}/> */}
 			</section>
-			
 		</>
 	);
 }

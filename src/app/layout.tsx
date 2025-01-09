@@ -26,7 +26,7 @@ export default function RootLayout({
 			<body
 				className={`${inter.className} relative flex flex-col min-h-[100vh] m-0 bg-[#FAF9F8]`}
 			>
-					<Header />
+					{/* <Header /> */}
 					{auth}
 					{children}
 					<Footer />

@@ -18,7 +18,7 @@ import HomePageCarousel from "./components/homePageCarousel";
 import Spinner from "./components/spinner";
 import Link from "next/link";
 
-export default function Page() {
+ function Home() {
 	const categoriesCard = [
 		{
 			link: sweatshirt,
@@ -273,7 +273,7 @@ export default function Page() {
 									<>
 										<div
 											key={code}
-											className="px-3 py-2 rounded-[30px] hover:text-gray-600 border hover:bg-[#FF0000] text-sm cursor-pointer"
+											className="px-3 py-2 rounded-[30px] hover:text-white border hover:bg-[#FF0000] text-sm cursor-pointer"
 											onClick={() =>
 												setCategories(
 													code
@@ -297,3 +297,5 @@ export default function Page() {
 		</div>
 	);
 }
+
+export default Home;

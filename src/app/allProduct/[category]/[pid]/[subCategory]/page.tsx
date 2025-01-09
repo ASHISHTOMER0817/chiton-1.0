@@ -174,7 +174,7 @@ export default function Page({
 
 	return (
 		<div className="relative flex">
-				<Suspense fallback={<Spinner/>}><CategoryList category={params.category} change_sub_category={changeSubCategory}/></Suspense>
+				{/* <Suspense fallback={<Spinner/>}><CategoryList category={params.category} change_sub_category={changeSubCategory}/></Suspense> */}
 
 				<section className="mt-10 ml-10 w-full relative">
 					<div className="w-auto h-40 relative mr-72 border text-center mb-3">

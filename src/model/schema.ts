@@ -24,59 +24,63 @@ const UserSchema = new mongoose.Schema({
 
 })
 
-const favorites = new mongoose.Schema({
-      name: {
-            type: String,
-            required: true,
-      },
-      url:{
-            type:String,
-            required: true,
-      },
-      price:{
-            type:String,
-            required:true
-      }
-})
+const User = mongoose.models.users || mongoose.model('users', UserSchema)
 
-const products = new mongoose.Schema({
-      url: {
+const productsSchema = new mongoose.Schema({
+      img: {
             type: String,
-            required: true,
       },
       name: {
             type: String,
-            required: true,
       },
       price: {
             type: String,
-            
+
       },
-      netQuantity: {
+      colour: {
             type: String,
-            
+
       },
       articleCode: {
             type: String,
-            required: true,
-            unique: true
       },
 })
 
+const Product = mongoose.models.products || mongoose.model('products', productsSchema)
 
-const User = mongoose.models.users || mongoose.model('users', UserSchema)
-const CartSchema = new mongoose.Schema({
-      email: {
-            type: String,
-            unique: true,
-            required: true
+const favoritesSchema = new mongoose.Schema({
+      user: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'users'
       },
-      product: [products],
-      favorite: [favorites]
-           
-      
+      product: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'products',
+      },
+      favorite: {
+            type: Boolean,
+            // required:true
+      },
+      cart: {
+            type: Boolean,
+      }
 })
 
-const Cart = mongoose.models.carts || mongoose.model('carts', CartSchema)
-export {User, Cart}
+const Favorite = mongoose.models.favorites || mongoose.model('favorites', favoritesSchema)
+
+
+// const CartSchema = new mongoose.Schema({
+//       email: {
+//             type: String,
+//             unique: true,
+//             required: true
+//       },
+//       product: [productsSchema],
+//       favorite: [favorites]
+
+
+// })
+
+// const Cart = mongoose.models.carts || mongoose.model('carts', CartSchema)
+export { User, Favorite, Product }
 

@@ -2,7 +2,7 @@
 import axios from "axios";
 import DeliveryStats from "../components/deliveryStats";
 import Image from "next/image";
-import Header from "../components/header";
+// import Header from "../components/header";
 import { useEffect, useState } from "react";
 import trash from "@/../public/trash-can-svgrepo-com (1).svg";
 import heart from "@/../public/heart.svg";
@@ -39,6 +39,7 @@ export default function Page() {
 					const totalPrice = data.reduce((acc:number, { price }:{price:string}) => acc + parseInt(price), 0);
 					setTotalPrice(totalPrice);
 				  }
+				  
 				
 				const message = await response.data.message;
 				console.log(message);

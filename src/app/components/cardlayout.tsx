@@ -44,22 +44,20 @@ const CardLayout: React.FC<HomePage> = ({
 		router.push("@/app/productPage");
 	}
 
-	async function addFavorite(e:React.MouseEvent<SVGElement, MouseEvent>) {
+	async function addFavorite(e: React.MouseEvent<SVGElement, MouseEvent>) {
 		e.preventDefault();
 		e.stopPropagation();
 
 		try {
-			const favProduct = {
-				img: defaultImage,
-				name,
-				price,
-				articleCode: code,
-				colour: colorName,
-			};
-			console.log("this favProduct", favProduct);
 			const res = await axios.post(
 				"/api/users/favorite/addtoFavorite?query=addtoFavorite",
-				favProduct
+				{
+					img: defaultImage,
+					name,
+					price,
+					articleCode: code,
+					colour: colorName,
+				}
 			);
 			console.log(res.data.message);
 		} catch (err) {

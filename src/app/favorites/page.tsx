@@ -15,8 +15,9 @@ const Favorites = () => {
 				const res = await axios.get(
 					"/api/users/favorite/showFavorites"
 				);
-				console.log(res.data.data, res.data.message);
-				setData(res.data.data);
+				const {message, data, status} = res.data;
+				console.log( message, data);
+				status === 200 && setData(res.data.data);
 			} catch (err) {
 				console.error(err);
 			}
@@ -43,7 +44,7 @@ const Favorites = () => {
 				Favorites
 			</div>
 			{data.length >= 1 ? (
-				<div className="flex flex-col items-start mb-10 border w-4/5 mx-auto text-sm border-black">
+				<div className="flex justify-between flex-wrap items-start mb-10 border w-4/5 mx-auto text-sm border-black">
 					{data.map(({ product, _id }, index) => {
 						const {
 							img,

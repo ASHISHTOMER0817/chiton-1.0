@@ -33,8 +33,8 @@ export async function POST(request: NextRequest) {
                         username: user.username,
                         email: user.email
                   }
-                  const token = jwt.sign(tokenData, process.env.SECRET_KEY!)
-                  const oneDay = 60 * 60 * 1000
+                  const token = jwt.sign(tokenData, process.env.SECRET_KEY!,{expiresIn:'7d'})
+                  const oneDay = 60 * 60 * 24 * 7 * 1000;
                   cookies().set('name', token, { expires: Date.now() + oneDay, httpOnly: true })
                   return NextResponse.json({
                         message: "User Logged In",

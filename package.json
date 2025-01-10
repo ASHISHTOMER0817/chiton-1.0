@@ -17,7 +17,7 @@
     "@headlessui/react": "^1.7.18",
     "@sendgrid/mail": "^8.1.1",
     "@stripe/react-stripe-js": "^2.6.2",
-    "@stripe/stripe-js": "^3.0.10",
+    "@stripe/stripe-js": "^3.5.0",
     "axios": "^1.6.5",
     "bcryptjs": "^2.4.3",
     "js-cookie": "^3.0.5",
@@ -30,6 +30,7 @@
     "react-icons": "^5.0.1",
     "react-router-dom": "^6.22.3",
     "sharp": "^0.33.2",
+    "stripe": "^17.5.0",
     "swr": "^2.2.4",
     "tailwind-scrollbar-hide": "^1.1.7"
   },

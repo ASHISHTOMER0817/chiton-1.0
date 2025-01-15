@@ -5,7 +5,7 @@ import { Stripe } from "stripe";
 export async function POST(req: NextRequest) {
 
       try {
-            const stripe = new Stripe("sk_test_51OximYSBnrUlVANBWuJnkEQqgzzybtNBnPuC3v8vtcEj475dmBLMULuRxMhb8ObPAEoweilqaQw7b5vkQlk1Hu2R00OydQNaTd")
+            const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
             const {productCard} = await req.json()
             console.log('this is checkoutProduct', productCard)

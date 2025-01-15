@@ -51,7 +51,7 @@ export default function Page() {
 
 	async function gotoCheckout(){
 		try{
-			await loadStripe("pk_test_51OximYSBnrUlVANBpDrKw2qt87nI89sTE14IwAH8YZnUVC3EHGrfVHE0UzeGq7II2b8BwukuLb95xp4XbInmp8by00ytlJHqHP");
+			await loadStripe(process.env.STRIPE_PUBLISHABLE_KEY!);
 			const res = await axios.post('/api/users/checkout', {productCard})
 			console.log(res.data.message)
 			window.location.href = res.data.url;

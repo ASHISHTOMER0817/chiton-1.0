@@ -17,7 +17,6 @@ export default function Page({ params }: { params: { pid: string } }) {
 	const [fit, setFit] = useState("hidden");
 	const [material, setMaterial] = useState("hidden");
 	const [guide, setGuide] = useState("hidden");
-	const [changeProduct, setChangeProduct] = useState(params.pid);
 
 	function changeState(fit: string, material: string, guide: string) {
 		setFit(fit);
@@ -33,7 +32,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 				const data = await fetchedData(
 					"products",
 					"detail",
-					changeProduct,
+					params.pid,
 					"",
 					"",
 					""
@@ -46,7 +45,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 		}
 
 		fetchData();
-	}, [changeProduct]);
+	}, [params.pid]);
 
 	const productDetails = {
 		url: product?.articlesList[0]?.galleryDetails[0]?.baseUrl,
@@ -60,15 +59,14 @@ export default function Page({ params }: { params: { pid: string } }) {
 				? product?.articlesList[0]?.netQuantity
 				: "",
 		articleCode: product?.articlesList[0]?.code,
+		colour: product?.articlesList[0]?.color.text,
 	};
 
 	async function sendData() {
 		try {
-			const context = "product";
-			const response = await axios.post("/api/users/productPage", {
+			const response = await axios.post("/api/users/productPage", 
 				productDetails,
-				context,
-			});
+			);
 			console.log("page.tsx --", productDetails);
 			const message = await response.data.message;
 			if (response.data.success !== false) {
@@ -431,8 +429,13 @@ export default function Page({ params }: { params: { pid: string } }) {
 					</div>
 
 					<button
+						type="button"
 						className="h-11 font-extrabold bg-black text-white w-full my-7"
-						onClick={sendData}
+						onClick={(e) => {
+							e.preventDefault();
+							console.log("its working");
+							sendData();
+						}}
 					>
 						Add{" "}
 					</button>
@@ -575,7 +578,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 							{product?.articlesList[0]
 								?.compositions === undefined
 								? ""
-								: product?.articlesList[0]?.compositions[0].materials.map(
+								: product?.articlesList[0]?.compositions[0]?.materials?.map(
 										(
 											{
 												name,
@@ -609,7 +612,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 							{product?.articlesList[0]
 								?.compositions === undefined
 								? ""
-								: product?.articlesList[0]?.compositions[1].materials.map(
+								: product?.articlesList[0]?.compositions[1]?.materials?.map(
 										(
 											{
 												name,
@@ -655,7 +658,7 @@ export default function Page({ params }: { params: { pid: string } }) {
 									product contains:
 								</div>{" "}
 								<ul className="">
-									{product?.articlesList[0]?.aggregatedSustainabilityCompositions.map(
+									{product?.articlesList[0]?.aggregatedSustainabilityCompositions?.map(
 										(
 											{
 												sustainabilityName,

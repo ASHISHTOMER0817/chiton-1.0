@@ -69,18 +69,6 @@ const favoritesSchema = new mongoose.Schema({
 const Favorite = mongoose.models.favorites || mongoose.model('favorites', favoritesSchema)
 
 
-// const CartSchema = new mongoose.Schema({
-//       email: {
-//             type: String,
-//             unique: true,
-//             required: true
-//       },
-//       product: [productsSchema],
-//       favorite: [favorites]
 
-
-// })
-
-// const Cart = mongoose.models.carts || mongoose.model('carts', CartSchema)
 export { User, Favorite, Product }
 

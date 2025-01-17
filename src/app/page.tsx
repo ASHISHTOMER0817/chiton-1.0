@@ -288,9 +288,9 @@ import Link from "next/link";
 						)}
 					</div>
 					{
-						// <Suspense fallback={<Spinner />}>
-						// 	<HomePageCarousel categories={categories} />
-						// </Suspense>
+						<Suspense fallback={<Spinner />}>
+							<HomePageCarousel categories={categories} />
+						</Suspense>
 					}
 				</div>
 			</div>

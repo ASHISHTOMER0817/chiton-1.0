@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import CardLayout from "./cardlayout";
 import fetchedData from "./fetchedData";
 
-interface Products {
+export interface Products {
 	results: {
 		name: string;
 		images: {

@@ -1,20 +1,10 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import CardLayout from "./cardlayout";
 import Link from "next/link";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import fetchedData from "./fetchedData";
-
-
-interface dataType {
-	results: {
-		name: string;
-		images: { url: string; baseUrl: string }[];
-		price: { formattedValue: string };
-		articles: { code: string }[];
-		rgbColors: string[];
-	}[];
-}
+import { Products } from "./allProductList";
 
 const slideLeft = () => {
 	let slider = document.getElementById("slider");
@@ -25,11 +15,10 @@ const slideRight = () => {
 	slider!.scrollLeft = slider!.scrollLeft + 500;
 };
 
-const HomePageCarousel = ({categories}:{categories:string}) => {
-      const [data, setData] = useState<dataType>();
+const HomePageCarousel = ({ categories }: { categories: string }) => {
+	const [data, setData] = useState<Products>();
 
-
-      useEffect(() => {
+	useEffect(() => {
 		async function getData() {
 			try {
 				const response = await fetchedData(
@@ -73,69 +62,61 @@ const HomePageCarousel = ({categories}:{categories:string}) => {
 										images,
 										price,
 										articles,
+										defaultArticle,
 										rgbColors,
-									}: {
-										name: string;
-										images: {
-											url: string;
-											baseUrl: string;
-										}[];
-										price: {
-											formattedValue: string;
-										};
-										articles: {
-											code: string;
-										}[];
-										rgbColors: string[];
+										articleColorNames,
 									},
-									index: number
+									index
 								) => {
-									const image =
-										images.length > 0
-											? images[0]
-													?.url
-											: "";
-									const actualPrice: String =
-										price.formattedValue;
-									const alternate =
-										images.length > 0
-											? images[0]
-													?.baseUrl
-											: "";
-
-									const code =
-										articles[0]?.code;
 
 									return (
 										<div key={index}>
-											<Link
+											{/* <Link
 												href={`/productPage/${code}`}
 												className="mb-3 flex flex-col ml-2 text-left w-52 text-sm cursor-pointer hover:scale-110 ease-in-out duration-300 max-w-none"
-											>
+											> */}
 												<CardLayout
+													key={
+														index
+													}
+													defaultImage={
+														defaultArticle
+															.normalPicture[0]
+															.baseUrl
+													}
+													regularImage={
+														images[0]
+															.baseUrl
+													}
 													index={
 														index
 													}
-													image={
-														image
-													}
 													alternate={
-														alternate
+														images.length >
+														0
+															? images[0]
+																	?.baseUrl
+															: ""
 													}
 													name={
 														name
 													}
 													price={
-														actualPrice
+														price.formattedValue
 													}
-													codes={
-														code
+													code={
+														articles[0]
+															?.code ||
+														defaultArticle?.code
 													}
 													clothColor={
 														rgbColors
 													}
+													colorName={
+														articleColorNames[0]
+													}
 												/>
-											</Link>
+											{/* </Link> */}
 										</div>
 									);
 								}

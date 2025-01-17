@@ -28,11 +28,6 @@ export default function Page() {
 				console.log(res.data);
 				console.log("these are cart products", res.data);
 				setProductCard(cartProducts);
-
-				// if (data.length > 0) {
-				// 	const totalPrice = data.reduce((acc:number, { price }:{price:string}) => acc + parseInt(price), 0);
-				// 	setTotalPrice(totalPrice);
-				//   }
 				let total = 0;
 				for (let i = 0; i < cartProducts.length; i++) {
 					const price = Number(
